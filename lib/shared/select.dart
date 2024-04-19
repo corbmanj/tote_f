@@ -1,13 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/consumers/update_outfit.dart';
 import '../models/user/outfit_template.dart';
 
 class Select extends ConsumerStatefulWidget {
-  final List<OutfitTemplate> options;
-  final OutfitTemplate typeFinal;
-  final int dayIndex;
-  final int ordering;
   const Select(
       {super.key,
       required this.options,
@@ -15,18 +11,22 @@ class Select extends ConsumerStatefulWidget {
       required this.dayIndex,
       required this.ordering});
 
+  final List<OutfitTemplate> options;
+  final OutfitTemplate typeFinal;
+  final int dayIndex;
+  final int ordering;
+
   @override
-  SelectState createState() => SelectState();
+  ConsumerState<Select> createState() => _SelectState();
 }
 
-class SelectState extends ConsumerState<Select> {
+class _SelectState extends ConsumerState<Select> {
   // var dropdownValue = widget.type as OutfitTemplate;
   late OutfitTemplate dropdownValue = widget.typeFinal;
-  @override
-  void initState() {
-    super.initState();
-    ref.read(tripProvider);
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -38,8 +38,8 @@ class SelectState extends ConsumerState<Select> {
         setState(() {
           dropdownValue = value!;
           ref
-              .read(tripProvider.notifier)
-              .changeOutfitType(widget.dayIndex, widget.ordering, value);
+              .read(updateOutfitProvider.notifier)
+              .updateOutfitType(widget.dayIndex, widget.ordering, value);
         });
       },
       items: widget.options.map<DropdownMenuItem<OutfitTemplate>>((

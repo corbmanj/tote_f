@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/models/tote/outfit.dart';
 import 'package:tote_f/models/user/outfit_item.dart';
 
-class AssignOutfitItems extends HookConsumerWidget {
+class AssignOutfitItems extends ConsumerWidget {
   final Outfit outfit;
   final int dayIndex;
   const AssignOutfitItems({

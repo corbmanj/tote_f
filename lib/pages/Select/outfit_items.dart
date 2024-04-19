@@ -1,16 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/consumers/update_outfit.dart';
 import 'package:tote_f/models/tote/outfit.dart';
-import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/models/user/outfit_item.dart';
+import 'package:tote_f/providers/trip_provider.dart';
 
-class OutfitItems extends HookConsumerWidget {
+class OutfitItems extends ConsumerWidget {
   final Outfit outfit;
   final int dayIndex;
   const OutfitItems({super.key, required this.outfit, required this.dayIndex});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final outfitRef = ref.watch(tripProvider.select((trip) => trip
+    final outfitRef = ref.watch(tripNotifierProvider.select((trip) => trip
         .days[dayIndex].outfits
         ?.firstWhere((element) => element.ordering == outfit.ordering)));
     if (outfitRef == null) {
@@ -25,7 +26,7 @@ class OutfitItems extends HookConsumerWidget {
 
   Widget _buildItem(
       OutfitItem item, int dayIndex, int outfitOrdering, WidgetRef ref) {
-    final itemRef = ref.watch(tripProvider.select((trip) {
+    final itemRef = ref.watch(tripNotifierProvider.select((trip) {
       try {
         return trip.days[dayIndex].outfits
             ?.firstWhere((element) => element.ordering == outfitOrdering)
@@ -47,7 +48,7 @@ class OutfitItems extends HookConsumerWidget {
         selectedColor: Colors.lightBlueAccent,
         onSelected: (bool value) {
           ref
-              .read(tripProvider.notifier)
+              .read(updateOutfitProvider.notifier)
               .selectItem(dayIndex, outfitOrdering, item, value);
         },
       ),

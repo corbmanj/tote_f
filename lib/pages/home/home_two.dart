@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../models/container.dart';
 import '../../models/member.dart';
 
-class HomeTwo extends HookConsumerWidget {
+class HomeTwo extends ConsumerWidget {
   const HomeTwo({super.key});
 
   @override

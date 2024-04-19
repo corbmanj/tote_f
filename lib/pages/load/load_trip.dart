@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/providers/trip_provider.dart';
 import '../../fixtures/mock_trip.dart';
 import '../Select/select_outfits.dart';
 
@@ -28,7 +28,7 @@ class LoadTrip extends ConsumerWidget {
     final state = currentTrip.city.split(',')[1].trim();
     return ListTile(
       onTap: () {
-        ref.read(tripProvider.notifier).loadTrip(trip);
+        ref.read(tripNotifierProvider.notifier).loadTrip(trip);
         Navigator.push(context,
             MaterialPageRoute(builder: (context) => const SelectOutfits()));
       },

@@ -1,7 +1,3 @@
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tote_f/models/tote/outfit.dart';
-import 'package:tote_f/models/user/outfit_item.dart';
-import 'package:tote_f/models/user/outfit_template.dart';
 import 'package:uuid/uuid.dart';
 import './tote/day.dart';
 import './tote/tote.dart';
@@ -68,104 +64,104 @@ extension MutableTrip on Trip {
   }
 }
 
-class TripNotifier extends StateNotifier<Trip> {
-  TripNotifier(Trip newTrip)
-      : super(
-          Trip(
-              city: newTrip.city,
-              days: newTrip.days,
-              tote: newTrip.tote,
-              startDate: newTrip.startDate,
-              endDate: newTrip.endDate),
-        );
+// class TripNotifier extends StateNotifier<Trip> {
+//   TripNotifier(Trip newTrip)
+//       : super(
+//           Trip(
+//               city: newTrip.city,
+//               days: newTrip.days,
+//               tote: newTrip.tote,
+//               startDate: newTrip.startDate,
+//               endDate: newTrip.endDate),
+//         );
 
-  // **** UPDATE TRIP FUNCTIONS **** //
+//   // **** UPDATE TRIP FUNCTIONS **** //
 
-  void loadTrip(Trip trip) {
-    state = trip;
-  }
+//   void loadTrip(Trip trip) {
+//     state = trip;
+//   }
 
-  void setStartDate(DateTime newDate) {
-    state = Trip(
-      startDate: newDate,
-      city: state.city,
-      days: state.days,
-      tote: state.tote,
-      endDate: state.endDate,
-    );
-  }
+//   void setStartDate(DateTime newDate) {
+//     state = Trip(
+//       startDate: newDate,
+//       city: state.city,
+//       days: state.days,
+//       tote: state.tote,
+//       endDate: state.endDate,
+//     );
+//   }
 
-  void setEndDate(DateTime newDate) {
-    state = Trip(
-      endDate: newDate,
-      city: state.city,
-      days: state.days,
-      tote: state.tote,
-      startDate: state.startDate,
-    );
-  }
+//   void setEndDate(DateTime newDate) {
+//     state = Trip(
+//       endDate: newDate,
+//       city: state.city,
+//       days: state.days,
+//       tote: state.tote,
+//       startDate: state.startDate,
+//     );
+//   }
 
-  void updateCity(String cityName) {
-    state = Trip(
-      city: cityName,
-      endDate: state.endDate,
-      days: state.days,
-      tote: state.tote,
-      startDate: state.startDate,
-    );
-  }
+//   void updateCity(String cityName) {
+//     state = Trip(
+//       city: cityName,
+//       endDate: state.endDate,
+//       days: state.days,
+//       tote: state.tote,
+//       startDate: state.startDate,
+//     );
+//   }
 
-  // **** UPDATE ITEM FUNCTIONS **** //
+//   // **** UPDATE ITEM FUNCTIONS **** //
 
-  void selectItem(
-      int dayIndex, int outfitOrdering, OutfitItem item, bool value) {
-    state = state.selectOutfitItem(dayIndex, outfitOrdering, item.type, value);
-  }
+//   void selectItem(
+//       int dayIndex, int outfitOrdering, OutfitItem item, bool value) {
+//     state = state.selectOutfitItem(dayIndex, outfitOrdering, item.type, value);
+//   }
 
-  void changeOutfitType(
-      int dayIndex, int outfitOrdering, OutfitTemplate newType) {
-    List<Day> newDays = [...state.days];
-    if (newDays[dayIndex].outfits != null) {
-      newDays[dayIndex].outfits![outfitOrdering] =
-          Outfit.fromTemplate(newType, outfitOrdering);
-    }
+//   void changeOutfitType(
+//       int dayIndex, int outfitOrdering, OutfitTemplate newType) {
+//     List<Day> newDays = [...state.days];
+//     if (newDays[dayIndex].outfits != null) {
+//       newDays[dayIndex].outfits![outfitOrdering] =
+//           Outfit.fromTemplate(newType, outfitOrdering);
+//     }
 
-    state = Trip(
-      city: state.city,
-      endDate: state.endDate,
-      tote: state.tote,
-      startDate: state.startDate,
-      days: newDays,
-    );
-  }
+//     state = Trip(
+//       city: state.city,
+//       endDate: state.endDate,
+//       tote: state.tote,
+//       startDate: state.startDate,
+//       days: newDays,
+//     );
+//   }
 
-  void addOutfitToDay(int dayIndex, OutfitTemplate outfitTemplate) {
-    List<Day> newDays = [...state.days];
-    if (newDays[dayIndex].outfits != null) {
-      newDays[dayIndex].addOutfit(Outfit.fromTemplate(
-          outfitTemplate, newDays[dayIndex].outfits!.length));
-    }
-    state = Trip(
-      city: state.city,
-      endDate: state.endDate,
-      tote: state.tote,
-      startDate: state.startDate,
-      days: newDays,
-    );
-  }
+//   void addOutfitToDay(int dayIndex, OutfitTemplate outfitTemplate) {
+//     List<Day> newDays = [...state.days];
+//     if (newDays[dayIndex].outfits != null) {
+//       newDays[dayIndex].addOutfit(Outfit.fromTemplate(
+//           outfitTemplate, newDays[dayIndex].outfits!.length));
+//     }
+//     state = Trip(
+//       city: state.city,
+//       endDate: state.endDate,
+//       tote: state.tote,
+//       startDate: state.startDate,
+//       days: newDays,
+//     );
+//   }
 
-  // void replaceOutfitItem(
-  //     int dayIndex, int outfitOrdering, OutfitItem newItem) {
-  //       final newDay = state.
-  //     }
-}
+//   // void replaceOutfitItem(
+//   //     int dayIndex, int outfitOrdering, OutfitItem newItem) {
+//   //       final newDay = state.
+//   //     }
+// }
 
-final tripProvider = StateNotifierProvider<TripNotifier, Trip>((ref) {
-  // final days = ref.watch(dayListProvider);
-  return TripNotifier(Trip(
-    city: "",
-    days: [],
-    startDate: DateTime.now(),
-    endDate: DateTime.now(),
-  ));
-});
+// final tripProvider = StateNotifierProvider<TripNotifier, Trip>((ref) {
+//   // final days = ref.watch(dayListProvider);
+//   return TripNotifier(Trip(
+//     city: "",
+//     days: [],
+//     startDate: DateTime.now(),
+//     endDate: DateTime.now(),
+//   ));
+// });

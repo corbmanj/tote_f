@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/pages/Select/outfit_items.dart';
-import 'package:tote_f/shared/Select.dart';
+import 'package:tote_f/shared/select.dart';
 import '../../models/user/outfit_template.dart';
 import '../../view_models/expansion_outfit.dart';
 import '../../fixtures/mock_trip.dart';
 
 final expansionProvider = StateProvider<List<int>>((ref) => [-1, -1]);
 
-class OutfitList extends HookConsumerWidget {
+class OutfitList extends ConsumerWidget {
   final int dayIndex;
   final List<ExpansionOutfit> outfits;
   const OutfitList({super.key, required this.outfits, required this.dayIndex});

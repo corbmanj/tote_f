@@ -26,10 +26,6 @@ class Day {
   ]) {
     outfits = outfits ?? [];
   }
-
-  void addOutfit(Outfit outfit) {
-    outfits?.add(outfit);
-  }
 }
 
 extension MutableDay on Day {
@@ -58,6 +54,30 @@ extension MutableDay on Day {
         .toList();
   }
 
+  Day copyWith({
+    int? dayCode,
+    double? low,
+    double? high,
+    String? icon,
+    double? precip,
+    int? sunrise,
+    int? sunset,
+    String? summary,
+    List<Outfit>? outfits,
+  }) {
+    return Day(
+      dayCode ?? this.dayCode,
+      low ?? this.low,
+      high ?? this.high,
+      icon ?? this.icon,
+      precip ?? this.precip,
+      sunrise ?? this.sunrise,
+      sunset ?? this.sunset,
+      summary ?? this.summary,
+      outfits ?? this.outfits,
+    );
+  }
+
   Day updateOutfitList({required List<Outfit> newOutfits}) {
     return Day(
         dayCode, low, high, icon, precip, sunrise, sunset, summary, newOutfits);
@@ -74,68 +94,22 @@ extension MutableDay on Day {
             newSelected: newSelected));
   }
 
+  Day addOutfit(OutfitTemplate newType) {
+    if (outfits == null) {
+      return copyWith(outfits: [Outfit.fromTemplate(newType, 0)]);
+    }
+    return copyWith(outfits: [...outfits!, Outfit.fromTemplate(newType, outfits!.length)]);
+  }
+
   Day changeOutfitType(int outfitOrdering, OutfitTemplate newType) {
     if (outfits != null) {
-      return Day(dayCode, low, high, icon, precip, sunrise, sunset, summary);
+      return this;
     }
-    return Day(
-      dayCode,
-      low,
-      high,
-      icon,
-      precip,
-      sunrise,
-      sunset,
-      summary,
-      outfits!.map((Outfit outfit) => outfit.ordering == outfitOrdering ? outfit.changeType(newType) : outfit).toList()
-    );
+    return copyWith(
+        outfits: outfits!
+            .map((Outfit outfit) => outfit.ordering == outfitOrdering
+                ? outfit.changeType(newType)
+                : outfit)
+            .toList());
   }
 }
-
-// class DayNotifier extends StateNotifier<Day> {
-//   DayNotifier(Day day)
-//       : super(Day(
-//           day.dayCode,
-//           day.low,
-//           day.high,
-//           day.icon,
-//           day.precip,
-//           day.sunrise,
-//           day.sunset,
-//           day.summary,
-//           day.outfits,
-//         ));
-// }
-
-// final dayProvider = StateNotifierProvider<DayNotifier, Day>((ref) {
-//   final outfits = ref.watch(outfitListProvider);
-//   return DayNotifier(Day(0, 0, 0, "", 0, 0, 0, "", outfits));
-// });
-
-// class DayListNotifier extends StateNotifier<List<Day>> {
-//   DayListNotifier(List<Day> dayList)
-//       : super(dayList
-//             .map((Day day) => Day(day.dayCode, day.low, day.high, day.icon,
-//                 day.precip, day.sunrise, day.sunset, day.summary, day.outfits))
-//             .toList());
-
-//   void updateOutfits(int dayCode, List<Outfit> newOutfits) {
-//     final List<Day> newDays = state;
-//     state = newDays
-//         .map((Day day) => day.dayCode == dayCode
-//             ? day.updateOutfitList(newOutfits: newOutfits)
-//             : day)
-//         .toList();
-//   }
-
-//   void addDay(Day newDay) {
-//     final List<Day> newDays = state;
-//     newDays.add(newDay);
-//     state = newDays;
-//   }
-// }
-
-// final dayListProvider =
-//     StateNotifierProvider<DayListNotifier, List<Day>>((ref) {
-//   return DayListNotifier([]);
-// });

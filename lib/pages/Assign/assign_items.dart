@@ -1,17 +1,17 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/pages/Select/select_outfits.dart';
+import 'package:tote_f/providers/trip_provider.dart';
 
 import 'assign_day.dart';
 
-class AssignItems extends HookConsumerWidget {
+class AssignItems extends ConsumerWidget {
   // final Trip trip;
   const AssignItems({super.key}); // , required this.trip});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tripRef = ref.watch(tripProvider);
+    final tripRef = ref.watch(tripNotifierProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Assign Items')),
       body: ListView.builder(

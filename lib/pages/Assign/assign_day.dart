@@ -1,11 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'package:tote_f/models/trip.dart';
-
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/providers/trip_provider.dart';
 import '../../shared/day_header.dart';
 import 'assign_outfit.dart';
 
-class AssignDay extends HookConsumerWidget {
+class AssignDay extends ConsumerWidget {
   final int index;
   // final Trip trip;
   const AssignDay({
@@ -15,7 +14,7 @@ class AssignDay extends HookConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final dayRef = ref.watch(tripProvider.select((trip) => trip.days[index]));
+    final dayRef = ref.watch(tripNotifierProvider.select((trip) => trip.days[index]));
     return Padding(
       padding: const EdgeInsets.symmetric(vertical: 16.0),
       child: Container(
