@@ -5,17 +5,17 @@ import 'package:tote_f/pages/Select/select_day.dart';
 import '../../models/trip.dart';
 
 class SelectOutfits extends HookConsumerWidget {
-  // final Trip trip;
-  const SelectOutfits({super.key}); //, required this.trip});
+  const SelectOutfits({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tripRef = ref.watch(tripProvider);
+    final int dayCountRef = ref.watch(tripProvider.select((value) => value.days.length));
+    final String cityNameRef = ref.watch(tripProvider.select((value) => value.city));
     return Scaffold(
-      appBar: AppBar(title: Text(tripRef.city)),
+      appBar: AppBar(title: Text(cityNameRef)),
       body: ListView.builder(
         padding: const EdgeInsets.all(8.0),
-        itemCount: tripRef.days.length,
+        itemCount: dayCountRef,
         itemBuilder: (BuildContext context, int index) =>
             SelectDay(index: index),
       ),

@@ -4,9 +4,9 @@ import 'package:tote_f/pages/Select/select_outfit.dart';
 import '../../models/trip.dart';
 import '../../shared/day_header.dart';
 
-class SelectDay extends HookConsumerWidget {
+class SelectDay extends ConsumerWidget {
   final int index;
-  const SelectDay({super.key, required this.index}); // required this.trip});
+  const SelectDay({super.key, required this.index});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

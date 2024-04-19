@@ -61,7 +61,7 @@ extension MutableTrip on Trip {
     final dayToUpdate = days.firstWhere((Day day) => day.dayCode == dayCode);
     return Trip(
       city: city,
-      days: replaceDayByDayCode(dayCode, dayToUpdate.),
+      days: replaceDayByDayCode(dayCode, dayToUpdate.changeOutfitType(outfitOrdering, newType)),
       startDate: startDate,
       endDate: endDate,
     );

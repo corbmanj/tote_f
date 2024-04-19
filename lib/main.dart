@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:tote_f/pages/home/home_two.dart';
 import './pages/home/home.dart';
 // import 'package:flutter_hooks/flutter_hooks.dart';
 import 'package:hooks_riverpod/hooks_riverpod.dart';
@@ -28,7 +27,7 @@ class ToteApp extends StatelessWidget {
         // is not restarted.
         primarySwatch: Colors.blue,
       ),
-      home: const HomeTwo(),
+      home: const Home(),
     );
   }
 }

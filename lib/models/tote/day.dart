@@ -1,4 +1,3 @@
-// import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 
 import './outfit.dart';
@@ -75,16 +74,10 @@ extension MutableDay on Day {
             newSelected: newSelected));
   }
 
-  List<Outfit> updateOutfitType(int outfitOrdering, OutfitTemplate newType) {
-    return outfits!.map((Outfit outfit) => outfit.ordering == outfitOrdering ? outfit.changeType(newType))
-  }
-
   Day changeOutfitType(int outfitOrdering, OutfitTemplate newType) {
     if (outfits != null) {
       return Day(dayCode, low, high, icon, precip, sunrise, sunset, summary);
     }
-    final outfitToUpdate = outfits!
-        .firstWhere((Outfit outfit) => outfit.ordering == outfitOrdering);
     return Day(
       dayCode,
       low,
@@ -94,6 +87,7 @@ extension MutableDay on Day {
       sunrise,
       sunset,
       summary,
+      outfits!.map((Outfit outfit) => outfit.ordering == outfitOrdering ? outfit.changeType(newType) : outfit).toList()
     );
   }
 }

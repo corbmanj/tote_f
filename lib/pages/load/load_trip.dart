@@ -4,7 +4,7 @@ import 'package:tote_f/models/trip.dart';
 import '../../fixtures/mock_trip.dart';
 import '../Select/select_outfits.dart';
 
-class LoadTrip extends HookConsumerWidget {
+class LoadTrip extends ConsumerWidget {
   const LoadTrip({super.key});
 
   @override
