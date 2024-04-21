@@ -354,39 +354,39 @@ Unnamed u3 = Unnamed("Rundies", 3);
 Unnamed u4 = Unnamed("Running Socks", 2);
 
 // named items
-Named n1 = Named("Black Atreus", "shoes");
-Named n2 = Named("Black work pants", "bottoms");
-Named n3 = Named("Tan bra", "bras");
-Named n4 = Named("Work top 1", "tops");
-Named n5 = Named("Sweater 1", "sweaters&sweatshirts");
-Named n6 = Named("Black Patagonia coat", "coats");
-Named n7 = Named("Tan ear warmer", "hats");
-Named n8 = Named("Black gloves", "gloves");
-Named n9 = Named("Simple necklace & earrings", "jewelry");
-Named n10 = Named("Rainbow scarf", "scarves");
-Named n11 = Named("Sleep leggings", "bottoms");
-Named n12 = Named("Sleep bra", "bras");
-Named n13 = Named("Sleep shirt", "tops");
-Named n14 = Named("Black sweatshirt", "sweaters&sweatshirts");
-Named n15 = Named("Run shorts", "bottoms");
-Named n16 = Named("Sports bra 1", "bras");
-Named n17 = Named("Running tank", "tops");
-Named n18 = Named("LS run shirt", "coats");
-Named n19 = Named("Black ear warmer", "hts");
-Named n20 = Named("Run mittens", "gloves");
-Named n21 = Named("Jeans", "bottoms");
-Named n22 = Named("Black belt", "belts");
-Named n23 = Named("under-sweater tank", "tops");
-Named n24 = Named("Tan sweater", "sweaters&sweatshirts");
-Named n25 = Named("Run tights", "bottoms");
-Named n26 = Named("Sports bra 2", "bras");
-Named n27 = Named("SS run shirt", "tops");
-Named n28 = Named("Blue windbreaker", "coats");
-Named n29 = Named("Black work pants 2", "bottoms");
-Named n30 = Named("Work top 2", "tops");
-Named n31 = Named("Work top 3", "tops");
+Named n1 = Named("Black Atreus", "shoes", 1);
+Named n2 = Named("Black work pants", "bottoms", 2);
+Named n3 = Named("Tan bra", "bras", 3);
+Named n4 = Named("Work top 1", "tops", 4);
+Named n5 = Named("Sweater 1", "sweaters&sweatshirts", 5);
+Named n6 = Named("Black Patagonia coat", "coats", 6);
+Named n7 = Named("Tan ear warmer", "hats", 7);
+Named n8 = Named("Black gloves", "gloves", 8);
+Named n9 = Named("Simple necklace & earrings", "jewelry", 9);
+Named n10 = Named("Rainbow scarf", "scarves", 10);
+Named n11 = Named("Sleep leggings", "bottoms", 11);
+Named n12 = Named("Sleep bra", "bras", 12);
+Named n13 = Named("Sleep shirt", "tops", 13);
+Named n14 = Named("Black sweatshirt", "sweaters&sweatshirts", 14);
+Named n15 = Named("Run shorts", "bottoms", 15);
+Named n16 = Named("Sports bra 1", "bras", 16);
+Named n17 = Named("Running tank", "tops", 17);
+Named n18 = Named("LS run shirt", "coats", 18);
+Named n19 = Named("Black ear warmer", "hts", 19);
+Named n20 = Named("Run mittens", "gloves", 20);
+Named n21 = Named("Jeans", "bottoms", 21);
+Named n22 = Named("Black belt", "belts", 22);
+Named n23 = Named("under-sweater tank", "tops", 23);
+Named n24 = Named("Tan sweater", "sweaters&sweatshirts", 24);
+Named n25 = Named("Run tights", "bottoms", 25);
+Named n26 = Named("Sports bra 2", "bras", 26);
+Named n27 = Named("SS run shirt", "tops", 27);
+Named n28 = Named("Blue windbreaker", "coats", 28);
+Named n29 = Named("Black work pants 2", "bottoms", 29);
+Named n30 = Named("Work top 2", "tops", 30);
+Named n31 = Named("Work top 3", "tops", 31);
 
-Tote tote = Tote(named: [
+List<Named> namedList = [
   n1,
   n2,
   n3,
@@ -418,7 +418,9 @@ Tote tote = Tote(named: [
   n29,
   n30,
   n31
-], unnamed: [
+];
+
+Tote tote = Tote(named: namedList, unnamed: [
   u1,
   u2,
   u3,
