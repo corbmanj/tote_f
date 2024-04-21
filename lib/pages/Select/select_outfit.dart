@@ -20,6 +20,7 @@ class SelectOutfit extends ConsumerWidget {
         .map((outfit) => ExpansionOutfit(
               expandedValue: outfit,
               headerValue: outfit.name,
+              ordering: outfit.ordering,
             ))
         .toList();
     if (dayRef.outfits == null) {

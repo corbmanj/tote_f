@@ -11,6 +11,11 @@ part 'update_outfit.g.dart';
 class UpdateOutfit extends _$UpdateOutfit {
   @override
   void build() {}
+
+  void replaceDayAndUpdateTrip(Trip trip, Day newDay) {
+    Trip updatedTrip = trip.replaceDayInTrip(newDay.dayCode, newDay);
+    ref.read(tripNotifierProvider.notifier).loadTrip(updatedTrip);
+  }
   
   void updateOutfitType(
     int dayIndex,
@@ -19,9 +24,17 @@ class UpdateOutfit extends _$UpdateOutfit {
   ) {
     final Trip tripRef = ref.watch(tripNotifierProvider);
     Day newDay = tripRef.days[dayIndex].changeOutfitType(outfitOrdering, newType);
-    Trip updatedTrip = tripRef.replaceDayInTrip(newDay.dayCode, newDay);
-    ref.read(tripNotifierProvider.notifier).loadTrip(updatedTrip);
+    replaceDayAndUpdateTrip(tripRef, newDay);
+  }
 
+  void updateOutfitName(
+    int dayIndex,
+    int outfitOrdering,
+    String newName,
+  ) {
+    final Trip tripRef = ref.watch(tripNotifierProvider);
+    Day newDay = tripRef.days[dayIndex].changeOutfitName(outfitOrdering, newName);
+    replaceDayAndUpdateTrip(tripRef, newDay);
   }
 
   void selectItem(int dayIndex, int outfitOrdering, OutfitItem item, bool value) {

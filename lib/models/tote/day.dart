@@ -98,17 +98,30 @@ extension MutableDay on Day {
     if (outfits == null) {
       return copyWith(outfits: [Outfit.fromTemplate(newType, 0)]);
     }
-    return copyWith(outfits: [...outfits!, Outfit.fromTemplate(newType, outfits!.length)]);
+    return copyWith(
+        outfits: [...outfits!, Outfit.fromTemplate(newType, outfits!.length)]);
   }
 
   Day changeOutfitType(int outfitOrdering, OutfitTemplate newType) {
-    if (outfits != null) {
+    if (outfits == null) {
       return this;
     }
     return copyWith(
         outfits: outfits!
             .map((Outfit outfit) => outfit.ordering == outfitOrdering
                 ? outfit.changeType(newType)
+                : outfit)
+            .toList());
+  }
+
+  Day changeOutfitName(int outfitOrdering, String newName) {
+    if (outfits == null) {
+      return this;
+    }
+    return copyWith(
+        outfits: outfits!
+            .map((Outfit outfit) => outfit.ordering == outfitOrdering
+                ? outfit.copyWith(name: newName)
                 : outfit)
             .toList());
   }

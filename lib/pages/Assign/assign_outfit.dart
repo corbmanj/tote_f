@@ -15,6 +15,7 @@ class AssignOutfit extends StatelessWidget {
         .map((outfit) => ExpansionOutfit(
               expandedValue: outfit,
               headerValue: outfit.name,
+              ordering: outfit.ordering,
             ))
         .toList();
     if (day.outfits == null) {

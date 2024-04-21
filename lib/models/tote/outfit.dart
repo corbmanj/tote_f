@@ -58,37 +58,11 @@ extension MutableOutfit on Outfit {
   Outfit changeType(OutfitTemplate newType) {
     return Outfit.fromTemplate(newType, ordering);
   }
+
+  Outfit copyWith({String? type,
+  String? name,
+  List<OutfitItem>? items,
+  int? ordering}) {
+    return Outfit(type ?? this.type, name ?? this.name, items ?? this.items, ordering ?? this.ordering);
+  }
 }
-
-// class OutfitNotifier extends StateNotifier<Outfit> {
-//   OutfitNotifier(Outfit outfit)
-//       : super(Outfit(
-//           outfit.type,
-//           outfit.name,
-//           outfit.items,
-//           outfit.ordering,
-//         ));
-// }
-
-// final outfitProvider = StateNotifierProvider<OutfitNotifier, Outfit>((ref) {
-//   final outfitItems = ref.watch(outfitItemsProvider);
-//   return OutfitNotifier(Outfit("", "", outfitItems, 0));
-// });
-
-// class OutfitListNotifier extends StateNotifier<List<Outfit>> {
-//   OutfitListNotifier(List<Outfit> outfitList)
-//       : super(outfitList
-//             .map((Outfit outfit) =>
-//                 Outfit(outfit.type, outfit.name, outfit.items, outfit.ordering))
-//             .toList());
-
-//   void addOutfit(Outfit newOutfit) {
-//     final List<Outfit> newOutfits = state;
-//     newOutfits.add(newOutfit);
-//     state = newOutfits;
-//   }
-// }
-
-// final outfitListProvider =
-//     StateNotifierProvider<OutfitListNotifier, List<Outfit>>(
-//         (ref) => OutfitListNotifier([]));

@@ -7,7 +7,6 @@ import '../models/tote/additional_item_section.dart';
 import '../models/tote/additional_item.dart';
 import '../models/tote/day.dart';
 import '../models/tote/outfit.dart';
-import '../models/user/outfit_item.dart';
 import '../models/user/outfit_template.dart';
 import '../models/user/item_template.dart';
 
@@ -435,10 +434,10 @@ Tote tote = Tote(named: [
 // Build Trip
 Trip trip = Trip(
   city: "Boulder, CO",
-  days: [day0, day1, day2, day3],
+  days: [day0, day1, day2],
   tote: tote,
   startDate: DateTime(2022, 10, 18),
-  endDate: DateTime(2022, 10, 21),
+  endDate: DateTime(2022, 10, 20),
 );
 
 Trip trip2 = Trip(

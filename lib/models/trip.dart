@@ -62,6 +62,16 @@ extension MutableTrip on Trip {
       endDate: endDate,
     );
   }
+
+  Trip copyWith({
+    String? city,
+    List<Day>? days,
+    Tote? tote,
+    DateTime? startDate,
+    DateTime? endDate,
+  }) {
+    return Trip(city: city ?? this.city, days: days ?? this.days, tote: tote ?? this.tote, startDate: startDate ?? this.startDate, endDate: endDate ?? this.endDate);
+  }
 }
 
 // class TripNotifier extends StateNotifier<Trip> {

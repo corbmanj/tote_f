@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/pages/Select/outfit_header.dart';
 import 'package:tote_f/pages/Select/outfit_items.dart';
-import 'package:tote_f/shared/select.dart';
-import '../../models/user/outfit_template.dart';
 import '../../view_models/expansion_outfit.dart';
-import '../../fixtures/mock_trip.dart';
 
 final expansionProvider = StateProvider<List<int>>((ref) => [-1, -1]);
 
@@ -24,30 +22,15 @@ class OutfitList extends ConsumerWidget {
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         ref.read(expansionProvider.notifier).state =
-            isExpanded ? [-1, -1] : [dayIndex, index];
+            isExpanded ? [dayIndex, index] : [-1, -1];
       },
       children: outfits.map<ExpansionPanel>((ExpansionOutfit outfit) {
-        final List<OutfitTemplate> optionsList =
-            outfitTypeList; // will eventually be a list of the user's outfit types
         return ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) {
-            return ListTile(
-              title: Text(outfit.headerValue),
-              trailing: Select(
-                options: optionsList,
-                typeFinal: optionsList.firstWhere((element) =>
-                    outfit.expandedValue.type.toLowerCase() ==
-                    element.type.toLowerCase()),
-                dayIndex: dayIndex,
-                ordering: outfit.expandedValue.ordering,
-              ),
-              onLongPress: () {
-                print('long pressed');
-              },
-            );
+            return OutfitHeader(isExpanded: isExpanded, outfit: outfit, dayIndex: dayIndex);
           },
           body: OutfitItems(outfit: outfit.expandedValue, dayIndex: dayIndex),
-          isExpanded: expansionRef == [dayIndex, -1]
+          isExpanded: expansionRef == [-1, -1]
               ? false
               : expansionRef[0] == dayIndex &&
                   outfit.expandedValue.ordering ==
