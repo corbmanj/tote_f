@@ -24,21 +24,6 @@ class LoadTrip extends ConsumerWidget {
       ),
     );
   }
-
-  // Widget _buildTile(BuildContext context, int index, WidgetRef ref) {
-  //   final currentTrip = trips[index];
-  //   final state = currentTrip.city.split(',')[1].trim();
-  //   return ListTile(
-  //     onTap: () {
-  //       ref.read(tripNotifierProvider.notifier).loadTrip(trip);
-  //       Navigator.push(context,
-  //           MaterialPageRoute(builder: (context) => const SelectOutfits()));
-  //     },
-  //     leading: CircleAvatar(child: Text(state)),
-  //     title: Text(currentTrip.city),
-  //     subtitle: Text(currentTrip.startDate.toString()),
-  //   );
-  // }
 }
 
 class TripTile extends ConsumerWidget {

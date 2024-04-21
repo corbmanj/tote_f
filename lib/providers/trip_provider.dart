@@ -16,18 +16,6 @@ class TripNotifier extends _$TripNotifier {
   }
 
   void loadTrip(Trip trip) {
-    // final Trip newTrip = Trip(
-    //   city: trip.city,
-    //   days: trip.days,
-    //   startDate: trip.startDate,
-    //   endDate: trip.endDate,
-    // );
-    final Trip newTrip = state.copyWith(
-        city: trip.city,
-        days: trip.days,
-        startDate: trip.startDate,
-        endDate: trip.endDate);
-    print('${newTrip.city}, ${newTrip.days.length}');
-    state = newTrip;
+    state = trip;
   }
 }

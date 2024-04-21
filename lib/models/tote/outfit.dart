@@ -51,18 +51,16 @@ extension MutableOutfit on Outfit {
     String itemType,
     bool newSelected,
   ) {
-    return Outfit(
-        type, name, selectItemByType(itemType, newSelected), ordering);
+    return copyWith(items: selectItemByType(itemType, newSelected));
   }
 
   Outfit changeType(OutfitTemplate newType) {
     return Outfit.fromTemplate(newType, ordering);
   }
 
-  Outfit copyWith({String? type,
-  String? name,
-  List<OutfitItem>? items,
-  int? ordering}) {
-    return Outfit(type ?? this.type, name ?? this.name, items ?? this.items, ordering ?? this.ordering);
+  Outfit copyWith(
+      {String? type, String? name, List<OutfitItem>? items, int? ordering}) {
+    return Outfit(type ?? this.type, name ?? this.name, items ?? this.items,
+        ordering ?? this.ordering);
   }
 }

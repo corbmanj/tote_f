@@ -18,77 +18,16 @@ class OutfitItem {
 }
 
 extension MutableOutfitItem on OutfitItem {
+  OutfitItem copyWith({String? type, bool? hasDropdown, String? parentType, bool? selected, Named? namedItem}) {
+    return OutfitItem(type ?? this.type, hasDropdown ?? this.hasDropdown, parentType ?? this.parentType, selected ?? this.selected, namedItem ?? this.namedItem);
+  }
+
   OutfitItem nameItem({required Named newNamedItem}) {
-    return OutfitItem(type, hasDropdown, parentType, selected, newNamedItem);
+    return copyWith(namedItem: newNamedItem);
   }
 
   OutfitItem selectItem({required bool newSelected}) {
-    return OutfitItem(type, hasDropdown, parentType, newSelected, namedItem);
-  }
-
-  OutfitItem updateItem({
-    required String newType,
-    required bool newHasDropdown,
-    required String newParentType,
-    required bool newSelected,
-    required Named newNamed,
-  }) {
-    return OutfitItem(
-        newType, newHasDropdown, newParentType, newSelected, newNamed);
+    return copyWith(selected: newSelected);
   }
 }
 
-// class OutfitItemNotifier extends StateNotifier<OutfitItem> {
-//   OutfitItemNotifier(OutfitItem item)
-//       : super(OutfitItem(
-//           item.type,
-//           item.hasDropdown,
-//           item.parentType,
-//           item.selected,
-//           item.namedItem,
-//         ));
-
-//   void updateItem(
-//       {required String newType,
-//       required bool newHasDropdown,
-//       required String newParentType,
-//       required bool newSelected,
-//       required Named newNamed}) {
-//     state = OutfitItem(
-//       newType,
-//       newHasDropdown,
-//       newParentType,
-//       newSelected,
-//       newNamed,
-//     );
-//   }
-// }
-
-// final outfitItemProvider =
-//     StateNotifierProvider<OutfitItemNotifier, OutfitItem>((ref) {
-//   final namedItem = ref.watch(namedItemProvider);
-//   return OutfitItemNotifier(OutfitItem("", false, "", false, namedItem));
-// });
-
-// class OutfitItemsNotifier extends StateNotifier<List<OutfitItem>> {
-//   OutfitItemsNotifier(List<OutfitItem> outfitItemList)
-//       : super(outfitItemList
-//             .map((OutfitItem item) => OutfitItem(
-//                   item.type,
-//                   item.hasDropdown,
-//                   item.parentType,
-//                   item.selected,
-//                   item.namedItem,
-//                 ))
-//             .toList());
-
-//   void addItem(OutfitItem newItem) {
-//     final List<OutfitItem> newItems = state;
-//     newItems.add(newItem);
-//     state = newItems;
-//   }
-// }
-
-// final outfitItemsProvider =
-//     StateNotifierProvider<OutfitItemsNotifier, List<OutfitItem>>(
-//         (ref) => OutfitItemsNotifier([]));

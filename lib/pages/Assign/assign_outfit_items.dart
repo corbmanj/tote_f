@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/tote/outfit.dart';
 import 'package:tote_f/models/user/outfit_item.dart';
-import 'package:tote_f/providers/named_items_provider.dart';
+import 'package:tote_f/pages/Assign/named_chips.dart';
 
 class AssignOutfitItems extends ConsumerStatefulWidget {
   final Outfit outfit;
@@ -29,7 +28,6 @@ class _AssignOutfitItemsState extends ConsumerState<AssignOutfitItems> {
 
   @override
   Widget build(BuildContext context) {
-    final namedItems = ref.watch(namedItemsNotifierProvider);
     final outfitItems = widget.outfit.items
         .where((item) => !!item.hasDropdown && !!item.selected!)
         .toList();
@@ -62,14 +60,7 @@ class _AssignOutfitItemsState extends ConsumerState<AssignOutfitItems> {
                   thickness: 2,
                   color: Colors.grey,
                 ),
-                Expanded(
-                  child: Column(
-                    children: namedItems
-                        .where((Named named) => named.parentType == _selectedItem!.parentType)
-                        .map((Named named) => Text(named.name))
-                        .toList(),
-                  ),
-                )
+                NamedChips(selectedItem: _selectedItem!)
               ],
             ),
           ),
