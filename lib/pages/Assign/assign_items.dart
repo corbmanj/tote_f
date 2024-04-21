@@ -6,8 +6,7 @@ import 'package:tote_f/providers/trip_provider.dart';
 import 'assign_day.dart';
 
 class AssignItems extends ConsumerWidget {
-  // final Trip trip;
-  const AssignItems({super.key}); // , required this.trip});
+  const AssignItems({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

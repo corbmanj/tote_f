@@ -6,11 +6,10 @@ import 'assign_outfit.dart';
 
 class AssignDay extends ConsumerWidget {
   final int index;
-  // final Trip trip;
   const AssignDay({
     super.key,
     required this.index,
-  }); // required this.trip});
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {

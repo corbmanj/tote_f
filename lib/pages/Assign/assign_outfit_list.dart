@@ -28,7 +28,7 @@ class _AssignOutfitListState extends State<AssignOutfitList> {
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         setState(() {
-          widget.outfits[index].isExpanded = !isExpanded;
+          widget.outfits[index].isExpanded = isExpanded;
         });
       },
       children: widget.outfits.map<ExpansionPanel>((ExpansionOutfit outfit) {
