@@ -16,4 +16,10 @@ class NamedItemsNotifier extends _$NamedItemsNotifier {
         item.ordering == ordering ? item.updateName(newName: newName) : item).toList();
     state = newList;
   }
+
+  void addNamed(Named newItem) {
+    List<Named> newList = [...state];
+    newList.add(newItem.copyWith(ordering: state.length));
+    state = newList;
+  }
 }
