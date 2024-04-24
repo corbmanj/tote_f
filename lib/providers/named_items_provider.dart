@@ -13,13 +13,13 @@ class NamedItemsNotifier extends _$NamedItemsNotifier {
 
   void updateName(String newName, int ordering) {
     List<Named> newList = state.map((Named item) =>
-        item.ordering == ordering ? item.updateName(newName: newName) : item).toList();
+        item.ordering == ordering ? item.copyWith(name: newName, ordering: ordering == -1 ? state.length : ordering) : item).toList();
     state = newList;
   }
 
   void addNamed(Named newItem) {
     List<Named> newList = [...state];
-    newList.add(newItem.copyWith(ordering: state.length));
+    newList.add(newItem);
     state = newList;
   }
 }

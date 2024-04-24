@@ -13,4 +13,8 @@ class UpdateNamed extends _$UpdateNamed {
     final newItem = Named('new name', parentType, -1);
     ref.read(namedItemsNotifierProvider.notifier).addNamed(newItem);
   }
+
+  void updateName(String newName, int ordering) {
+    ref.read(namedItemsNotifierProvider.notifier).updateName(newName, ordering);
+  }
 }
