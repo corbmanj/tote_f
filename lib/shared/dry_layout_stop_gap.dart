@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/rendering.dart';
+// attribution: https://gist.github.com/matthew-carroll/65411529a5fafa1b527a25b7130187c6
 
 /// Same as `IntrinsicWidth` except that when this widget is instructed
 /// to `computeDryLayout()`, it doesn't invoke that on its child, instead
