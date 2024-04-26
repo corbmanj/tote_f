@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/providers/assign_items_state.dart';
 import 'package:tote_f/view_models/expansion_outfit.dart';
-
 import 'assign_outfit_items.dart';
 
-class AssignOutfitList extends StatefulWidget {
+class AssignOutfitList extends ConsumerWidget {
   final List<ExpansionOutfit> outfits;
   final int dayIndex;
   const AssignOutfitList({
@@ -13,31 +14,30 @@ class AssignOutfitList extends StatefulWidget {
   });
 
   @override
-  State<AssignOutfitList> createState() => _AssignOutfitListState();
-}
-
-class _AssignOutfitListState extends State<AssignOutfitList> {
-  @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Container(
-      child: _buildPanel(),
+      child: _buildPanel(ref),
     );
   }
 
-  Widget _buildPanel() {
+  Widget _buildPanel(WidgetRef ref) {
+    final assignItemNotifier = ref.read(assignItemsStateProvider.notifier);
+    final isExpandedRef = ref.watch(assignItemsStateProvider).expanded;
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
-        setState(() {
-          widget.outfits[index].isExpanded = isExpanded;
-        });
+        assignItemNotifier.setExpanded(dayIndex, index);
       },
-      children: widget.outfits.map<ExpansionPanel>((ExpansionOutfit outfit) {
+      children: outfits.asMap().entries.map<ExpansionPanel>((entry) {
+        final int idx = entry.key;
+        final ExpansionOutfit outfit = entry.value;
         return ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) =>
               Text(outfit.headerValue),
           body: AssignOutfitItems(
-              outfit: outfit.expandedValue, dayIndex: widget.dayIndex),
-          isExpanded: outfit.isExpanded,
+            outfit: outfit.expandedValue,
+            dayIndex: dayIndex,
+          ),
+          isExpanded: isExpandedRef[0] == dayIndex && isExpandedRef[1] == idx,
         );
       }).toList(),
     );

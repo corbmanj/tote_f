@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'named_items_provider.dart';
+part of 'assign_items_state.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$namedItemsNotifierHash() =>
-    r'38232cecafdebf2d21b934de4bc9b767efb90a97';
+String _$assignItemsStateHash() => r'aa75ae75689140343139e8a02ee7a579fb8e9d50';
 
-/// See also [NamedItemsNotifier].
-@ProviderFor(NamedItemsNotifier)
-final namedItemsNotifierProvider =
-    AutoDisposeNotifierProvider<NamedItemsNotifier, List<Named>>.internal(
-  NamedItemsNotifier.new,
-  name: r'namedItemsNotifierProvider',
+/// See also [AssignItemsState].
+@ProviderFor(AssignItemsState)
+final assignItemsStateProvider =
+    AutoDisposeNotifierProvider<AssignItemsState, AssignStateType>.internal(
+  AssignItemsState.new,
+  name: r'assignItemsStateProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$namedItemsNotifierHash,
+      : _$assignItemsStateHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$NamedItemsNotifier = AutoDisposeNotifier<List<Named>>;
+typedef _$AssignItemsState = AutoDisposeNotifier<AssignStateType>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member

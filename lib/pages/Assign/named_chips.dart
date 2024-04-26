@@ -25,7 +25,6 @@ class NamedChips extends ConsumerWidget {
         .where((Named named) => named.parentType == selectedItem.parentType)
         .map((Named named) => EditableChip(
               namedItem: named,
-              // todo, don't pass isSelected, past the outfitItem
               outfitItem: selectedItem,
               dayIndex: dayIndex,
               outfitOrdering: outfitOrdering,
