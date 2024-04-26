@@ -1,3 +1,4 @@
+import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 
 import './outfit.dart';
@@ -54,6 +55,20 @@ extension MutableDay on Day {
         .toList();
   }
 
+  List<Outfit> nameOutfitItemByOrdering(
+      {required int ordering,
+      required String itemType,
+      required Named newNamed}) {
+    if (outfits == null) {
+      return [];
+    }
+    return outfits!
+        .map((Outfit outfit) => outfit.ordering == ordering
+            ? outfit.nameItemForOutfit(itemType, newNamed)
+            : outfit)
+        .toList();
+  }
+
   Day copyWith({
     int? dayCode,
     double? low,
@@ -81,6 +96,17 @@ extension MutableDay on Day {
   Day updateOutfitList({required List<Outfit> newOutfits}) {
     return Day(
         dayCode, low, high, icon, precip, sunrise, sunset, summary, newOutfits);
+  }
+
+  Day nameOutfitItem(
+      {required int outfitOrdering,
+      required String itemType,
+      required Named newNamed}) {
+    return updateOutfitList(
+        newOutfits: nameOutfitItemByOrdering(
+            ordering: outfitOrdering,
+            itemType: itemType,
+            newNamed: newNamed));
   }
 
   Day selectOutfitItem(

@@ -1,4 +1,5 @@
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 import '../user/item_template.dart';
 import '../user/outfit_item.dart';
@@ -20,7 +21,8 @@ class Outfit {
   List<OutfitItem> createItems(List<ItemTemplate> items) {
     final List<OutfitItem> result = [];
     for (final item in items) {
-      result.add(OutfitItem(item.type, item.hasDropdown, item.parentType));
+      result.add(OutfitItem(
+          item.type, item.hasDropdown, item.parentType, false, item.named));
     }
     return result;
   }
@@ -47,11 +49,29 @@ extension MutableOutfit on Outfit {
         .toList();
   }
 
+  List<OutfitItem> nameItemByType(
+    String itemType,
+    Named newNamed,
+  ) {
+    return items
+        .map((OutfitItem item) => item.type == itemType
+            ? item.nameItem(newNamedItem: newNamed)
+            : item)
+        .toList();
+  }
+
   Outfit selectItemForOutfit(
     String itemType,
     bool newSelected,
   ) {
     return copyWith(items: selectItemByType(itemType, newSelected));
+  }
+
+  Outfit nameItemForOutfit(
+    String itemType,
+    Named newNamed,
+  ) {
+    return copyWith(items: nameItemByType(itemType, newNamed));
   }
 
   Outfit changeType(OutfitTemplate newType) {

@@ -60,7 +60,7 @@ class _AssignOutfitItemsState extends ConsumerState<AssignOutfitItems> {
                   thickness: 2,
                   color: Colors.grey,
                 ),
-                NamedChips(selectedItem: _selectedItem!)
+                NamedChips(selectedItem: _selectedItem!, dayIndex: widget.dayIndex, outfitOrdering: widget.outfit.ordering)
               ],
             ),
           ),

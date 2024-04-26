@@ -8,7 +8,14 @@ import 'package:tote_f/providers/named_items_provider.dart';
 
 class NamedChips extends ConsumerWidget {
   final OutfitItem selectedItem;
-  const NamedChips({super.key, required this.selectedItem});
+  final int dayIndex;
+  final int outfitOrdering;
+  const NamedChips({
+    super.key,
+    required this.selectedItem,
+    required this.dayIndex,
+    required this.outfitOrdering,
+  });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -16,7 +23,13 @@ class NamedChips extends ConsumerWidget {
     final updateNamedNotifier = ref.read(updateNamedProvider.notifier);
     final namedItemsList = namedItemsRef
         .where((Named named) => named.parentType == selectedItem.parentType)
-        .map((Named named) => EditableChip(namedItem: named))
+        .map((Named named) => EditableChip(
+              namedItem: named,
+              // todo, don't pass isSelected, past the outfitItem
+              outfitItem: selectedItem,
+              dayIndex: dayIndex,
+              outfitOrdering: outfitOrdering,
+            ))
         .toList();
     return Expanded(
       child: Wrap(
