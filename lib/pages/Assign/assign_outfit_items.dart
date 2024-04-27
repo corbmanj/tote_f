@@ -3,6 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/models/tote/outfit.dart';
 import 'package:tote_f/models/user/outfit_item.dart';
 import 'package:tote_f/pages/Assign/named_chips.dart';
+import 'package:tote_f/pages/Assign/named_items_for_outfit.dart';
 import 'package:tote_f/providers/assign_items_state.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 
@@ -65,7 +66,7 @@ class AssignOutfitItems extends ConsumerWidget {
             ),
           ),
         ),
-        const Text("here goes the list of assigned items as chips")
+        NamedItemsForOutfit(outfit: outfit),
       ],
     );
   }

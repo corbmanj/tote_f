@@ -1,24 +1,27 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/pages/Select/select_outfits.dart';
-import 'package:tote_f/pages/packing_list/packing_list.dart';
-import 'package:tote_f/providers/trip_provider.dart';
+import 'package:tote_f/pages/Assign/assign_items.dart';
+import 'package:tote_f/pages/load/load_trip.dart';
+import 'package:tote_f/pages/packing_list/named_items_to_pack.dart';
+import 'package:tote_f/pages/packing_list/unnamed_items_to_pack.dart';
+import 'package:tote_f/providers/packing_list_provider.dart';
 
-import 'assign_day.dart';
-
-class AssignItems extends ConsumerWidget {
-  const AssignItems({super.key});
+class PackingList extends ConsumerWidget {
+  const PackingList({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tripRef = ref.watch(tripNotifierProvider);
+    final packingListRef = ref.watch(packingListNotifierProvider);
     return Scaffold(
-      appBar: AppBar(title: const Text('Assign Items')),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(8.0),
-        itemCount: tripRef.days.length,
-        itemBuilder: (BuildContext context, int index) =>
-            AssignDay(index: index),
+      appBar: AppBar(title: const Text('Packing List')),
+      body: Padding(
+        padding: const EdgeInsets.symmetric(vertical: 4.0, horizontal: 48.0),
+        child: Column(
+          children: [
+            NamedItemsToPack(namedItems: packingListRef.namedItems),
+            UnnamedItemsToPack(unnamedItems: packingListRef.unnamedItems),
+          ],
+        ),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: const IconThemeData(color: Colors.blueGrey),
@@ -39,7 +42,7 @@ class AssignItems extends ConsumerWidget {
         ],
         onTap: (value) {
           final Widget page =
-              value == 0 ? const SelectOutfits() : const PackingList();
+              value == 0 ? const AssignItems() : const LoadTrip();
           Navigator.push(
               context, MaterialPageRoute(builder: (context) => page));
         },
