@@ -34,7 +34,6 @@ class HomeTwo extends ConsumerWidget {
                       },
                       child: Text(button.name),
                     ))
-                .toList()
           ],
         ),
       ),

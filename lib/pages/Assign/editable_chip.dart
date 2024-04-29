@@ -79,7 +79,6 @@ class _EditableChipState extends ConsumerState<EditableChip> {
         selected: isSelected,
         label: Text(widget.namedItem.name),
         onSelected: (bool val) {
-          print(widget.namedItem.name);
           namedController.selectNamedItem(
             widget.dayIndex,
             widget.outfitOrdering,
