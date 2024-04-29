@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:tote_f/pages/create/create_trip.dart';
 import '../load/load_trip.dart';
 
 class Home extends StatelessWidget {
@@ -22,7 +23,10 @@ class Home extends StatelessWidget {
                 minimumSize: const Size(200, 50),
               ),
               onPressed: () {
-                print("you can't do that yet");
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: ((context) => const CreateTrip())),
+                );
               },
               child: const Text("Plan a New Trip"),
             ),
