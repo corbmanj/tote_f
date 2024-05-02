@@ -42,7 +42,7 @@ class TripTile extends ConsumerWidget {
       },
       leading: CircleAvatar(child: Text(state)),
       title: Text(currentTrip.city),
-      subtitle: Text(currentTrip.startDate.toString()),
+      subtitle: Text(currentTrip.dateRange.start.toString()),
     );
   }
 }

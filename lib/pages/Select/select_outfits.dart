@@ -44,6 +44,8 @@ class SelectOutfits extends ConsumerWidget {
               Navigator.push(context,
                   MaterialPageRoute(builder: (context) => const AssignItems()))
             }
+          else
+            {Navigator.pop(context)}
         },
       ),
     );

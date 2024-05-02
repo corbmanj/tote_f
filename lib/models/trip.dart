@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import './tote/day.dart';
 import './tote/tote.dart';
@@ -9,14 +10,12 @@ class Trip {
   String city;
   List<Day> days;
   Tote? tote;
-  DateTime startDate;
-  DateTime endDate;
+  DateTimeRange dateRange;
 
   Trip({
     required this.city,
     required this.days,
-    required this.startDate,
-    required this.endDate,
+    required this.dateRange,
     this.tote,
   }) : _id = _uuid.v4();
 }
@@ -32,8 +31,7 @@ extension MutableTrip on Trip {
     return Trip(
       city: city,
       days: replaceDayByDayCode(dayCode, newDay),
-      startDate: startDate,
-      endDate: endDate,
+      dateRange: dateRange,
     );
   }
 
@@ -48,8 +46,7 @@ extension MutableTrip on Trip {
               outfitOrdering: outfitOrdering,
               itemType: itemType,
               newSelected: newSelected)),
-      startDate: startDate,
-      endDate: endDate,
+      dateRange: dateRange
     );
   }
 
@@ -58,8 +55,7 @@ extension MutableTrip on Trip {
     return Trip(
       city: city,
       days: replaceDayByDayCode(dayCode, dayToUpdate.changeOutfitType(outfitOrdering, newType)),
-      startDate: startDate,
-      endDate: endDate,
+      dateRange: dateRange
     );
   }
 
@@ -67,9 +63,8 @@ extension MutableTrip on Trip {
     String? city,
     List<Day>? days,
     Tote? tote,
-    DateTime? startDate,
-    DateTime? endDate,
+    DateTimeRange? dateRange,
   }) {
-    return Trip(city: city ?? this.city, days: days ?? this.days, tote: tote ?? this.tote, startDate: startDate ?? this.startDate, endDate: endDate ?? this.endDate);
+    return Trip(city: city ?? this.city, days: days ?? this.days, tote: tote ?? this.tote, dateRange: dateRange ?? this.dateRange);
   }
 }

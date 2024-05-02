@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import '../models/tote/named.dart';
 import '../models/tote/tote.dart';
 import '../models/tote/unnamed.dart';
@@ -307,6 +309,7 @@ Outfit work0 = Outfit.fromTemplate(workOutfit, 0);
 Outfit sleep0 = Outfit.fromTemplate(sleepOutfit, 1);
 Day day0 = Day(
   84,
+  DateTime.fromMillisecondsSinceEpoch(1666052400),
   36.37,
   61.04,
   "clear-day",
@@ -321,20 +324,21 @@ Outfit workout1 = Outfit.fromTemplate(workout, 0);
 
 Outfit work1 = Outfit.fromTemplate(workOutfit, 1);
 
-Day day1 = Day(85, 38.83, 64.83, "clear-day", 0, 1666138680, 1666098960,
+Day day1 = Day(85, DateTime.fromMillisecondsSinceEpoch(1666138680), 38.83, 64.83, "clear-day", 0, 1666138680, 1666098960,
     "Clear throughout the day.", [workout1, work1]);
 
 Outfit workout2 = Outfit.fromTemplate(workout, 0);
 
 Outfit work2 = Outfit.fromTemplate(workOutfit, 1);
 
-Day day2 = Day(86, 45.05, 70.54, "clear-day", 0, 1666225020, 1666185420,
+Day day2 = Day(86, DateTime.fromMillisecondsSinceEpoch(1666225020), 45.05, 70.54, "clear-day", 0, 1666225020, 1666185420,
     "Clear throughout the day.", [workout2, work2]);
 
 Outfit work3 = Outfit.fromTemplate(workOutfit, 0);
 
 Day day3 = Day(
   87,
+  DateTime.fromMillisecondsSinceEpoch(1666311360),
   44.13,
   76.05,
   "clear-day",
@@ -420,34 +424,30 @@ List<Named> namedList = [
   n31
 ];
 
-Tote tote = Tote(named: namedList, unnamed: [
-  u1,
-  u2,
-  u3,
-  u4
-], additionalItems: [
-  electronics,
-  bags,
-  snacks,
-  toiletries,
-  misc
-]);
+Tote tote = Tote(
+    named: namedList,
+    unnamed: [u1, u2, u3, u4],
+    additionalItems: [electronics, bags, snacks, toiletries, misc]);
 
 // Build Trip
 Trip trip = Trip(
   city: "Boulder, CO",
   days: [day0, day1, day2],
   tote: tote,
-  startDate: DateTime(2022, 10, 18),
-  endDate: DateTime(2022, 10, 20),
+  dateRange: DateTimeRange(
+    start: DateTime(2022, 10, 18),
+    end: DateTime(2022, 10, 20),
+  ),
 );
 
 Trip trip2 = Trip(
   city: "Austin, TX",
   days: [day0, day1, day2, day3],
   tote: tote,
-  startDate: DateTime(2022, 10, 22),
-  endDate: DateTime(2022, 11, 1),
+  dateRange: DateTimeRange(
+    start: DateTime(2022, 10, 2),
+    end: DateTime(2022, 11, 1),
+  ),
 );
 
 List<Trip> trips = [trip, trip2];

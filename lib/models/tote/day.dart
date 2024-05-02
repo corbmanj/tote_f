@@ -5,6 +5,7 @@ import './outfit.dart';
 
 class Day {
   int dayCode;
+  DateTime day;
   double low;
   double high;
   String icon;
@@ -16,6 +17,7 @@ class Day {
 
   Day(
     this.dayCode,
+    this.day,
     this.low,
     this.high,
     this.icon,
@@ -71,6 +73,7 @@ extension MutableDay on Day {
 
   Day copyWith({
     int? dayCode,
+    DateTime? day,
     double? low,
     double? high,
     String? icon,
@@ -82,6 +85,7 @@ extension MutableDay on Day {
   }) {
     return Day(
       dayCode ?? this.dayCode,
+      day ?? this.day,
       low ?? this.low,
       high ?? this.high,
       icon ?? this.icon,
@@ -95,7 +99,7 @@ extension MutableDay on Day {
 
   Day updateOutfitList({required List<Outfit> newOutfits}) {
     return Day(
-        dayCode, low, high, icon, precip, sunrise, sunset, summary, newOutfits);
+        dayCode, day, low, high, icon, precip, sunrise, sunset, summary, newOutfits);
   }
 
   Day nameOutfitItem(

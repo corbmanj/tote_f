@@ -1,3 +1,4 @@
+import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/day.dart';
 import 'package:tote_f/models/trip.dart';
@@ -9,10 +10,9 @@ class TripNotifier extends _$TripNotifier {
   @override
   Trip build() {
     return Trip(
-      city: 'Austin',
+      city: "",
       days: [],
-      startDate: DateTime.now(),
-      endDate: DateTime.now(),
+      dateRange: DateTimeRange(start: DateTime.now(), end: DateTime.now()),
     );
   }
 

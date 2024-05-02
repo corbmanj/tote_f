@@ -9,7 +9,7 @@ class DayHeader extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final date = DateTime.fromMillisecondsSinceEpoch(day.sunrise * 1000);
+    final date = day.day;
     final dateString = DateFormat('E, MMM d').format(date);
     return Padding(
       padding: const EdgeInsets.fromLTRB(0, 16.0, 0, 8.0),

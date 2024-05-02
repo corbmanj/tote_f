@@ -1,44 +1,44 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/consumers/create_trip.dart';
+import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/pages/Select/select_outfits.dart';
-import 'package:tote_f/pages/home/home.dart';
+import 'package:tote_f/providers/trip_provider.dart';
+import 'package:tote_f/shared/editable_text.dart';
 import 'package:tote_f/utils/date_formatter.dart';
 
-class CreateTrip extends StatefulWidget {
+class CreateTrip extends ConsumerWidget {
   const CreateTrip({super.key});
-
-  @override
-  State createState() => _CreateTripState();
-}
-
-class _CreateTripState extends State<CreateTrip> {
-  DateTimeRange _dateTimeRange =
-      DateTimeRange(start: DateTime.now(), end: DateTime.now());
+  // cinaDateTimeRange _dateTimeRange =
+  //     DateTimeRange(start: DateTime.now(), end: DateTime.now());
 
   setDateRange(DateTimeRange newRange) {
-    setState(() {
-      _dateTimeRange = newRange;
-    });
-  }
-
-  Future openDatePicker() async {
-    final result = await showDateRangePicker(
-      context: context,
-      initialDateRange: _dateTimeRange,
-      firstDate: DateTime(2000), // tanggal awal yang diperbolehkan di pilih
-      lastDate: DateTime(2100), // tanggal akhir yang diperbolehkan di pilih
-    );
-
-    if (result != null) {
-      setState(() {
-        _dateTimeRange = result;
-      });
-    }
+    // setState(() {
+    //   _dateTimeRange = newRange;
+    // });
   }
 
   @override
-  Widget build(BuildContext context) {
-    final formattedStartDate = formatter.format(_dateTimeRange.start);
-    final formattedEndDate = formatter.format(_dateTimeRange.end);
+  Widget build(BuildContext context, WidgetRef ref) {
+    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final tripProvider = ref.read(createTripProvider.notifier);
+
+    Future openDatePicker() async {
+      final result = await showDateRangePicker(
+        context: context,
+        initialDateRange:
+            DateTimeRange(start: tripRef.dateRange.start, end: tripRef.dateRange.end),
+        firstDate: DateTime.now(), // tanggal awal yang diperbolehkan di pilih
+        lastDate: DateTime(2030), // tanggal akhir yang diperbolehkan di pilih
+      );
+
+      if (result != null) {
+        tripProvider.updateDates(result);
+      }
+    }
+
+    final formattedStartDate = formatter.format(tripRef.dateRange.start);
+    final formattedEndDate = formatter.format(tripRef.dateRange.end);
     return Scaffold(
       appBar: AppBar(title: const Text("Create a Trip")),
       body: Center(
@@ -49,7 +49,7 @@ class _CreateTripState extends State<CreateTrip> {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               ElevatedButton(
-                onPressed: openDatePicker,
+                onPressed: () => openDatePicker(),
                 child: Text(formattedStartDate),
               ),
               const SizedBox(width: 50.0),
@@ -60,19 +60,16 @@ class _CreateTripState extends State<CreateTrip> {
             ],
           ),
           const SizedBox(height: 100.0),
-          const Row(
+          Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               SizedBox(
-                width: 150.0,
-                height: 40.0,
-                child: TextField(
-                  decoration: InputDecoration(
-                    border: OutlineInputBorder(),
-                    labelText: 'City, ST',
-                  ),
-                ),
-              )
+                  width: 150.0,
+                  height: 40.0,
+                  child: EditText(
+                      textValue: tripRef.city,
+                      textLabel: "City, ST",
+                      updateText: tripProvider.updateCity))
             ],
           )
         ],
@@ -95,10 +92,14 @@ class _CreateTripState extends State<CreateTrip> {
           ),
         ],
         onTap: (value) {
-          final Widget page = value == 1 ? const SelectOutfits() : const Home();
-
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => page));
+          // final Widget page = value == 1 ? const SelectOutfits() : const Home();
+          if (value == 1) {
+            tripProvider.createTripFromSchedule();
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const SelectOutfits()));
+          } else {
+            Navigator.pop(context);
+          }
         },
       ),
     );
