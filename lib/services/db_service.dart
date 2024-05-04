@@ -62,4 +62,9 @@ class DatabaseService {
     final tripJson = tripJsonList.first;
     return Trip.fromMap(jsonDecode(tripJson['trip']!.toString()));
   }
+
+  Future<void> createTrip(Trip trip) async {
+    final db = await _databaseService.database;
+    await db.insert('trips', {'city': trip.city, 'startDate': trip.dateRange.start.millisecondsSinceEpoch, 'endDate': trip.dateRange.end.millisecondsSinceEpoch, 'trip': jsonEncode(trip)});
+  }
 }

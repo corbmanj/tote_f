@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/day.dart';
 import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/providers/trip_provider.dart';
+import 'package:tote_f/services/db_service.dart';
 
 part 'create_trip.g.dart';
 
@@ -29,6 +30,7 @@ class CreateTrip extends _$CreateTrip {
   }
 
   void createTripFromSchedule() {
+    final DatabaseService dbService = DatabaseService();
     final currentTrip = ref.watch(tripNotifierProvider);
     List<Day> dayList = [];
     for (var day = currentTrip.dateRange.start;
@@ -38,6 +40,7 @@ class CreateTrip extends _$CreateTrip {
           day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, ""));
     }
     final newTrip = currentTrip.copyWith(days: dayList);
+    dbService.createTrip(newTrip);
     loadTrip(newTrip);
   }
 }
