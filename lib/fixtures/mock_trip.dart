@@ -309,7 +309,7 @@ Outfit work0 = Outfit.fromTemplate(workOutfit, 0);
 Outfit sleep0 = Outfit.fromTemplate(sleepOutfit, 1);
 Day day0 = Day(
   84,
-  DateTime.fromMillisecondsSinceEpoch(1666052400),
+  DateTime(2022, 10, 18),
   36.37,
   61.04,
   "clear-day",
@@ -324,21 +324,21 @@ Outfit workout1 = Outfit.fromTemplate(workout, 0);
 
 Outfit work1 = Outfit.fromTemplate(workOutfit, 1);
 
-Day day1 = Day(85, DateTime.fromMillisecondsSinceEpoch(1666138680), 38.83, 64.83, "clear-day", 0, 1666138680, 1666098960,
+Day day1 = Day(85, DateTime(2022, 10, 19), 38.83, 64.83, "clear-day", 0, 1666138680, 1666098960,
     "Clear throughout the day.", [workout1, work1]);
 
 Outfit workout2 = Outfit.fromTemplate(workout, 0);
 
 Outfit work2 = Outfit.fromTemplate(workOutfit, 1);
 
-Day day2 = Day(86, DateTime.fromMillisecondsSinceEpoch(1666225020), 45.05, 70.54, "clear-day", 0, 1666225020, 1666185420,
+Day day2 = Day(86, DateTime(2022, 10, 20), 45.05, 70.54, "clear-day", 0, 1666225020, 1666185420,
     "Clear throughout the day.", [workout2, work2]);
 
 Outfit work3 = Outfit.fromTemplate(workOutfit, 0);
 
 Day day3 = Day(
   87,
-  DateTime.fromMillisecondsSinceEpoch(1666311360),
+  DateTime(2022, 10, 21),
   44.13,
   76.05,
   "clear-day",

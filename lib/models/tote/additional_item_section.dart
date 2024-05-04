@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import './additional_item.dart';
 
 class AdditionalItemSection {
@@ -5,6 +7,11 @@ class AdditionalItemSection {
   List<AdditionalItem> items;
 
   AdditionalItemSection(this.name, this.items);
+
+  Map toJson() => {
+    'name': name,
+    'items': jsonEncode(items),
+  };
 
   void addItem(AdditionalItem item) {
     items.add(item);

@@ -1,4 +1,6 @@
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:convert';
+
 import 'package:tote_f/models/tote/named.dart';
 
 class OutfitItem {
@@ -15,6 +17,24 @@ class OutfitItem {
     this.selected = false,
     this.namedItem,
   ]);
+
+  Map toJson() => {
+    'type': type,
+    'hasDropdown': hasDropdown,
+    'parentType': parentType,
+    'selected': selected,
+    'namedItem': jsonEncode(namedItem),
+  };
+
+  factory OutfitItem.fromMap(Map<String, dynamic> map) {
+    return OutfitItem(
+      map['type'],
+      map['hasDropdown'] ?? false,
+      map['parentType'],
+      map['selected'] ?? false,
+      map['named'] != null ? Named.fromMap(jsonDecode(map['namedItem'])) : null,
+    );
+  }
 }
 
 extension MutableOutfitItem on OutfitItem {

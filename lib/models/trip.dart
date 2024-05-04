@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:uuid/uuid.dart';
 import './tote/day.dart';
@@ -6,7 +8,7 @@ import './tote/tote.dart';
 const _uuid = Uuid();
 
 class Trip {
-  final String _id;
+  int? id;
   String city;
   List<Day> days;
   Tote? tote;
@@ -17,7 +19,26 @@ class Trip {
     required this.days,
     required this.dateRange,
     this.tote,
-  }) : _id = _uuid.v4();
+    this.id,
+  });
+
+  Map toJson() => {
+    'id': id,
+    'city': city,
+    'days': jsonEncode(days),
+    'tote': jsonEncode(tote),
+    'startDate': dateRange.start.millisecondsSinceEpoch,
+    'endDate': dateRange.end.millisecondsSinceEpoch,
+  };
+
+  factory Trip.fromMap(Map<String, dynamic> map) {
+    return Trip(
+      id: map['id'],
+      city: map['city'],
+      days: jsonDecode(map['days']).map<Day>((day) => Day.fromMap(day)).toList(),
+      dateRange: DateTimeRange(start: DateTime.fromMillisecondsSinceEpoch(map['startDate']) , end: DateTime.fromMillisecondsSinceEpoch(map['endDate'])),
+    );
+  }
 }
 
 extension MutableTrip on Trip {

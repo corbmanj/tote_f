@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 
@@ -28,6 +30,34 @@ class Day {
     this.outfits,
   ]) {
     outfits = outfits ?? [];
+  }
+
+  Map toJson() => {
+    'dayCode': dayCode,
+    'day': day.millisecondsSinceEpoch,
+    'low': low,
+    'high': high,
+    'icon': icon,
+    'precip': precip,
+    'sunset': sunset,
+    'sunrise': sunrise,
+    'summary': summary,
+    'outfits': jsonEncode(outfits)
+  };
+
+  factory Day.fromMap(Map<String, dynamic> map) {
+    return Day(
+      map['daycode'] ?? 0,
+      DateTime.fromMillisecondsSinceEpoch(map['day']),
+      map['low'],
+      map['high'],
+      map['icon'],
+      map['precip'],
+      map['sunset'],
+      map['sunrise'],
+      map['summary'],
+      jsonDecode(map['outfits'] ?? '[]').map<Outfit>((outfit) => Outfit.fromMap(outfit)).toList(),
+    );
   }
 }
 

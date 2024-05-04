@@ -1,4 +1,6 @@
 // import 'package:hooks_riverpod/hooks_riverpod.dart';
+import 'dart:convert';
+
 import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 import '../user/item_template.dart';
@@ -25,6 +27,22 @@ class Outfit {
           item.type, item.hasDropdown, item.parentType, false, item.named));
     }
     return result;
+  }
+
+  Map toJson() => {
+        'type': type,
+        'name': name,
+        'items': jsonEncode(items),
+        'ordering': ordering,
+      };
+
+  factory Outfit.fromMap(Map<String, dynamic> map) {
+    return Outfit(
+      map['type'],
+      map['name'],
+      jsonDecode(map['items'] ?? '[]').map<OutfitItem>((item) => OutfitItem.fromMap(item)).toList(),
+      map['ordering'],
+    );
   }
 }
 
