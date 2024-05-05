@@ -48,7 +48,7 @@ class TripTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final state = trip.city.split(',')[1].trim();
+    final state = trip.city.split(',').last.trim();
     return ListTile(
       onTap: () {
         ref.read(loadTripProvider.notifier).loadTrip(trip.id);

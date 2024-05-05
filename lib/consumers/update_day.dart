@@ -17,7 +17,6 @@ class UpdateDay extends _$UpdateDay {
   ) {
     final Trip tripRef = ref.watch(tripNotifierProvider);
     Day newDay = tripRef.days[dayIndex].addOutfit(newType);
-    Trip updatedTrip = tripRef.replaceDayInTrip(newDay.dayCode, newDay);
-    ref.read(tripNotifierProvider.notifier).loadTrip(updatedTrip);
+    ref.read(tripNotifierProvider.notifier).replaceDayAndUpdateTrip(tripRef, newDay);
   }
 }

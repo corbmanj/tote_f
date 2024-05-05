@@ -29,7 +29,7 @@ class CreateTrip extends _$CreateTrip {
     loadTrip(newTrip);
   }
 
-  void createTripFromSchedule() {
+  void createTripFromSchedule() async {
     final DatabaseService dbService = DatabaseService();
     final currentTrip = ref.watch(tripNotifierProvider);
     List<Day> dayList = [];
@@ -40,7 +40,8 @@ class CreateTrip extends _$CreateTrip {
           day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, ""));
     }
     final newTrip = currentTrip.copyWith(days: dayList);
-    dbService.createTrip(newTrip);
-    loadTrip(newTrip);
+    final int newId = await dbService.createTrip(newTrip);
+    print('newId $newId');
+    loadTrip(newTrip.copyWith(id: newId));
   }
 }

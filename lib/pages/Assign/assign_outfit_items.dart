@@ -10,14 +10,19 @@ import 'package:tote_f/providers/trip_provider.dart';
 class AssignOutfitItems extends ConsumerWidget {
   final Outfit outfit;
   final int dayIndex;
+  final bool isExpanded;
   const AssignOutfitItems({
     super.key,
     required this.outfit,
     required this.dayIndex,
+    required this.isExpanded,
   });
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    if (!isExpanded) {
+      return Container();
+    }
     final selectedItemRef = ref.watch(assignItemsStateProvider).selected;
     final assignItemStateNotifier = ref.read(assignItemsStateProvider.notifier);
     final outfitItems = outfit.items

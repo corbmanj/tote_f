@@ -23,9 +23,11 @@ class AssignOutfitList extends ConsumerWidget {
   Widget _buildPanel(WidgetRef ref) {
     final assignItemNotifier = ref.read(assignItemsStateProvider.notifier);
     final isExpandedRef = ref.watch(assignItemsStateProvider).expanded;
+
     return ExpansionPanelList(
       expansionCallback: (int index, bool isExpanded) {
         assignItemNotifier.setExpanded(dayIndex, index);
+        assignItemNotifier.clearSelected();
       },
       children: outfits.asMap().entries.map<ExpansionPanel>((entry) {
         final int idx = entry.key;
@@ -36,6 +38,7 @@ class AssignOutfitList extends ConsumerWidget {
           body: AssignOutfitItems(
             outfit: outfit.expandedValue,
             dayIndex: dayIndex,
+            isExpanded: isExpandedRef[0] == dayIndex && isExpandedRef[1] == idx,
           ),
           isExpanded: isExpandedRef[0] == dayIndex && isExpandedRef[1] == idx,
         );

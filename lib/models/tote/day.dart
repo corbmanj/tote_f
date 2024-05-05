@@ -169,7 +169,7 @@ extension MutableDay on Day {
     return copyWith(
         outfits: outfits!
             .map((Outfit outfit) => outfit.ordering == outfitOrdering
-                ? outfit.changeType(newType)
+                ? outfit.changeType(newType, outfit.name)
                 : outfit)
             .toList());
   }

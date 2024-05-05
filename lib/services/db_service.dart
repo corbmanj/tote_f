@@ -63,8 +63,16 @@ class DatabaseService {
     return Trip.fromMap(jsonDecode(tripJson['trip']!.toString()));
   }
 
-  Future<void> createTrip(Trip trip) async {
+  Future<int> createTrip(Trip trip) async {
     final db = await _databaseService.database;
-    await db.insert('trips', {'city': trip.city, 'startDate': trip.dateRange.start.millisecondsSinceEpoch, 'endDate': trip.dateRange.end.millisecondsSinceEpoch, 'trip': jsonEncode(trip)});
+    return await db.insert('trips', {'city': trip.city, 'startDate': trip.dateRange.start.millisecondsSinceEpoch, 'endDate': trip.dateRange.end.millisecondsSinceEpoch, 'trip': jsonEncode(trip)});
+  }
+
+  Future<void> saveTripById(Trip trip, int tripId) async {
+    if (tripId == -1) {
+      print('cannot update trip with id = -1');
+    }
+    final db = await _databaseService.database;
+    await db.update('trips', {'trip': jsonEncode(trip)}, where: 'id = ?', whereArgs: [tripId]);
   }
 }

@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/pages/Select/select_outfits.dart';
 import 'package:tote_f/pages/packing_list/packing_list.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 
@@ -38,10 +37,12 @@ class AssignItems extends ConsumerWidget {
           ),
         ],
         onTap: (value) {
-          final Widget page =
-              value == 0 ? const SelectOutfits() : const PackingList();
-          Navigator.push(
-              context, MaterialPageRoute(builder: (context) => page));
+          if (value == 1) {
+            Navigator.push(
+              context, MaterialPageRoute(builder: (context) => const PackingList()));
+          } else {
+            Navigator.pop(context);
+          }
         },
       ),
     );

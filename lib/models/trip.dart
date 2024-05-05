@@ -49,7 +49,7 @@ extension MutableTrip on Trip {
   }
 
   Trip replaceDayInTrip(int dayCode, Day newDay) {
-    return Trip(
+    return copyWith(
       city: city,
       days: replaceDayByDayCode(dayCode, newDay),
       dateRange: dateRange,
@@ -59,7 +59,7 @@ extension MutableTrip on Trip {
   Trip selectOutfitItem(
       int dayCode, int outfitOrdering, String itemType, bool newSelected) {
     final dayToUpdate = days.firstWhere((Day day) => day.dayCode == dayCode);
-    return Trip(
+    return copyWith(
       city: city,
       days: replaceDayByDayCode(
           dayCode,
@@ -73,7 +73,7 @@ extension MutableTrip on Trip {
 
   Trip changeOutfitType(dayCode, outfitOrdering, newType) {
     final dayToUpdate = days.firstWhere((Day day) => day.dayCode == dayCode);
-    return Trip(
+    return copyWith(
       city: city,
       days: replaceDayByDayCode(dayCode, dayToUpdate.changeOutfitType(outfitOrdering, newType)),
       dateRange: dateRange
@@ -81,11 +81,12 @@ extension MutableTrip on Trip {
   }
 
   Trip copyWith({
+    int? id,
     String? city,
     List<Day>? days,
     Tote? tote,
     DateTimeRange? dateRange,
   }) {
-    return Trip(city: city ?? this.city, days: days ?? this.days, tote: tote ?? this.tote, dateRange: dateRange ?? this.dateRange);
+    return Trip(id: id ?? this.id, city: city ?? this.city, days: days ?? this.days, tote: tote ?? this.tote, dateRange: dateRange ?? this.dateRange);
   }
 }

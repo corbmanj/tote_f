@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/day.dart';
 import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/services/db_service.dart';
 
 part 'trip_provider.g.dart';
 
@@ -21,7 +22,9 @@ class TripNotifier extends _$TripNotifier {
   }
 
   void replaceDayAndUpdateTrip(Trip trip, Day newDay) {
+    final DatabaseService dbService = DatabaseService();
     Trip updatedTrip = trip.replaceDayInTrip(newDay.dayCode, newDay);
+    dbService.saveTripById(updatedTrip, updatedTrip.id ?? -1);
     loadTrip(updatedTrip);
   }
 }

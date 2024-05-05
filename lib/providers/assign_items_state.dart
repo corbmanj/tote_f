@@ -26,4 +26,8 @@ class AssignItemsState extends _$AssignItemsState {
   void setSelectedItem(OutfitItem newSelectedItem) {
     state = AssignStateType(state.expanded, newSelectedItem);
   }
+
+  void clearSelected() {
+    state = AssignStateType(state.expanded, null);
+  }
 }

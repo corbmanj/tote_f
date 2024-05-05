@@ -13,11 +13,12 @@ class Outfit {
   late int ordering;
 
   Outfit(this.type, this.name, this.items, this.ordering);
-  Outfit.fromTemplate(OutfitTemplate template, newOrdering) {
+
+  Outfit.fromTemplate(OutfitTemplate template, int newOrdering, [String? newName]) {
     type = template.type;
-    name = 'new name';
+    name = newName ?? 'new name';
     items = createItems(template.outfitItems);
-    ordering = newOrdering ?? 0;
+    ordering = newOrdering;
   }
 
   List<OutfitItem> createItems(List<ItemTemplate> items) {
@@ -92,8 +93,8 @@ extension MutableOutfit on Outfit {
     return copyWith(items: nameItemByType(itemType, newNamed));
   }
 
-  Outfit changeType(OutfitTemplate newType) {
-    return Outfit.fromTemplate(newType, ordering);
+  Outfit changeType(OutfitTemplate newType, String name) {
+    return Outfit.fromTemplate(newType, ordering, name);
   }
 
   Outfit copyWith(
