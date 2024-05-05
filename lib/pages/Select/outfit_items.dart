@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_outfit.dart';
 import 'package:tote_f/models/tote/outfit.dart';
@@ -13,7 +14,7 @@ class OutfitItems extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final outfitRef = ref.watch(tripNotifierProvider.select((trip) => trip
         .days[dayIndex].outfits
-        ?.firstWhere((element) => element.ordering == outfit.ordering)));
+        ?.firstWhereOrNull((element) => element.ordering == outfit.ordering)));
     if (outfitRef == null) {
       return const Placeholder();
     }

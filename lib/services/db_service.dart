@@ -60,7 +60,7 @@ class DatabaseService {
     final db = await _databaseService.database;
     final tripJsonList = await db.query('Trips', columns: ['id', 'trip'], where: 'id = ?', whereArgs: [tripId]);
     final tripJson = tripJsonList.first;
-    return Trip.fromMap(jsonDecode(tripJson['trip']!.toString()));
+    return Trip.fromMap(jsonDecode(tripJson['trip']!.toString()), tripId);
   }
 
   Future<int> createTrip(Trip trip) async {

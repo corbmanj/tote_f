@@ -31,9 +31,9 @@ class Trip {
     'endDate': dateRange.end.millisecondsSinceEpoch,
   };
 
-  factory Trip.fromMap(Map<String, dynamic> map) {
+  factory Trip.fromMap(Map<String, dynamic> map, int tripId) {
     return Trip(
-      id: map['id'],
+      id: tripId,
       city: map['city'],
       days: jsonDecode(map['days']).map<Day>((day) => Day.fromMap(day)).toList(),
       dateRange: DateTimeRange(start: DateTime.fromMillisecondsSinceEpoch(map['startDate']) , end: DateTime.fromMillisecondsSinceEpoch(map['endDate'])),

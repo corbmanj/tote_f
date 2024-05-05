@@ -47,7 +47,7 @@ class Day {
 
   factory Day.fromMap(Map<String, dynamic> map) {
     return Day(
-      map['daycode'] ?? 0,
+      map['dayCode'] ?? 0,
       DateTime.fromMillisecondsSinceEpoch(map['day']),
       map['low'],
       map['high'],
