@@ -1,5 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tote_f/fixtures/mock_trip.dart';
 import 'package:tote_f/models/tote/named.dart';
 
 part 'named_items_provider.g.dart';
@@ -8,7 +7,7 @@ part 'named_items_provider.g.dart';
 class NamedItemsNotifier extends _$NamedItemsNotifier {
   @override
   List<Named> build() {
-    return namedList;
+    return [];
   }
 
   void updateName(String newName, int ordering) {

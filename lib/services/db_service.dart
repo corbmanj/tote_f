@@ -22,8 +22,8 @@ class DatabaseService {
 
   Future<Database> _initDatabase() async {
     final path = join(await getDatabasesPath(), 'tote_database.db');
-    // Delete the database
-    await deleteDatabase(path);
+    // uncomment to delete the database with each app startup
+    // await deleteDatabase(path);
     return await openDatabase(
       path,
       onCreate: _onCreate,
