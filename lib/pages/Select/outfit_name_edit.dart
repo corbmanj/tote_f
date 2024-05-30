@@ -26,6 +26,8 @@ class _OutfitNameEditorState extends ConsumerState<OutfitNameEditor> {
     super.initState();
     _controller = TextEditingController();
     _controller.text = widget.currentName;
+    _controller.selection =
+        TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
   }
 
   @override
@@ -38,6 +40,7 @@ class _OutfitNameEditorState extends ConsumerState<OutfitNameEditor> {
   Widget build(BuildContext context) {
     final updateOutfitConsumer = ref.read(updateOutfitProvider.notifier);
     return TextField(
+      autofocus: true,
       controller: _controller,
       decoration: const InputDecoration(
         border: OutlineInputBorder(),
@@ -45,11 +48,16 @@ class _OutfitNameEditorState extends ConsumerState<OutfitNameEditor> {
       ),
       onSubmitted: (String? value) {
         if (value != null) {
-          updateOutfitConsumer.updateOutfitName(widget.dayIndex, widget.ordering, value);
+          updateOutfitConsumer.updateOutfitName(
+              widget.dayIndex, widget.ordering, value);
         }
         widget.setEditing(false);
       },
       onTapOutside: (PointerDownEvent ev) {
+        if (_controller.text != '') {
+          updateOutfitConsumer.updateOutfitName(
+              widget.dayIndex, widget.ordering, _controller.text);
+        }
         widget.setEditing(false);
       },
     );
