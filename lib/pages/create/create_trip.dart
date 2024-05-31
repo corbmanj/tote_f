@@ -9,32 +9,68 @@ import 'package:tote_f/utils/date_formatter.dart';
 
 class CreateTrip extends ConsumerWidget {
   const CreateTrip({super.key});
-  // cinaDateTimeRange _dateTimeRange =
-  //     DateTimeRange(start: DateTime.now(), end: DateTime.now());
-
-  setDateRange(DateTimeRange newRange) {
-    // setState(() {
-    //   _dateTimeRange = newRange;
-    // });
-  }
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Trip tripRef = ref.watch(tripNotifierProvider);
     final tripProvider = ref.read(createTripProvider.notifier);
+    final bool hasOutfits = tripRef.days
+        .any((day) => day.outfits != null && day.outfits!.isNotEmpty);
 
     Future openDatePicker() async {
       final result = await showDateRangePicker(
         context: context,
-        initialDateRange:
-            DateTimeRange(start: tripRef.dateRange.start, end: tripRef.dateRange.end),
-        firstDate: DateTime.now(), // tanggal awal yang diperbolehkan di pilih
-        lastDate: DateTime(2030), // tanggal akhir yang diperbolehkan di pilih
+        initialDateRange: DateTimeRange(
+            start: tripRef.dateRange.start, end: tripRef.dateRange.end),
+        firstDate: DateTime.now(),
+        lastDate: DateTime(2050),
       );
 
       if (result != null) {
         tripProvider.updateDates(result);
       }
+    }
+
+    Future<void> openWarningDialog() async {
+      return showDialog<void>(
+          context: context,
+          builder: (BuildContext context) {
+            return AlertDialog(
+              title: const Text("Resest Current Trip?"),
+              content: const SingleChildScrollView(
+                child: ListBody(
+                  children: <Widget>[
+                    Text(
+                        'Warning, you have already added outfits to your trip.'),
+                    Text('Would you like to RESET the trip with new dates or leave the trip unchanged'),
+                  ],
+                ),
+              ),
+              actions: <Widget>[
+                TextButton(
+                  child: const Text('RESET'),
+                  onPressed: () {
+                    tripProvider.createTripFromSchedule();
+                    Navigator.pop(context, 'reset');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SelectOutfits()));
+                  },
+                ),
+                TextButton(
+                  child: const Text('Continue unchanged'),
+                  onPressed: () {
+                    Navigator.pop(context, 'contnue');
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(
+                            builder: (context) => const SelectOutfits()));
+                  },
+                ),
+              ],
+            );
+          });
     }
 
     final formattedStartDate = formatter.format(tripRef.dateRange.start);
@@ -92,11 +128,16 @@ class CreateTrip extends ConsumerWidget {
           ),
         ],
         onTap: (value) {
-          // final Widget page = value == 1 ? const SelectOutfits() : const Home();
           if (value == 1) {
-            tripProvider.createTripFromSchedule();
-            Navigator.push(context,
-                MaterialPageRoute(builder: (context) => const SelectOutfits()));
+            if (hasOutfits) {
+              openWarningDialog();
+            } else {
+              tripProvider.createTripFromSchedule();
+              Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const SelectOutfits()));
+            }
           } else {
             Navigator.pop(context);
           }
