@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/pages/Assign/assign_additional_items.dart';
 import 'package:tote_f/pages/packing_list/packing_list.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 
@@ -13,11 +14,18 @@ class AssignItems extends ConsumerWidget {
     final tripRef = ref.watch(tripNotifierProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Assign Items')),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(8.0),
-        itemCount: tripRef.days.length,
-        itemBuilder: (BuildContext context, int index) =>
-            AssignDay(index: index),
+      body: Column(
+        children: [
+          const AssignAdditionalItems(),
+          Expanded(
+            child: ListView.builder(
+              padding: const EdgeInsets.all(8.0),
+              itemCount: tripRef.days.length,
+              itemBuilder: (BuildContext context, int index) =>
+                  AssignDay(index: index),
+            ),
+          ),
+        ],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: const IconThemeData(color: Colors.blueGrey),
@@ -38,8 +46,8 @@ class AssignItems extends ConsumerWidget {
         ],
         onTap: (value) {
           if (value == 1) {
-            Navigator.push(
-              context, MaterialPageRoute(builder: (context) => const PackingList()));
+            Navigator.push(context,
+                MaterialPageRoute(builder: (context) => const PackingList()));
           } else {
             Navigator.pop(context);
           }
