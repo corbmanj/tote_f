@@ -8,8 +8,18 @@ class NamedItemsToPack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: namedItems.keys.map((String type) => NamedItemsOfType(type: type, items: namedItems[type]!)).toList(),
+    return Row(
+      children: [
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
+            children: namedItems.keys
+                .map((String type) =>
+                    NamedItemsOfType(type: type, items: namedItems[type]!))
+                .toList(),
+          ),
+        ),
+      ],
     );
   }
 }
@@ -21,11 +31,16 @@ class NamedItemsOfType extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Row(
+    return Wrap(
+      crossAxisAlignment: WrapCrossAlignment.center,
+      alignment: WrapAlignment.start,
       children: [
-        Text('$type: ', style: const TextStyle(fontWeight: FontWeight.bold),),
-        Wrap(children: items.map((e) => CheckboxItem(text: e.name)).toList())
-      ],
-    );
+      Text(
+          '$type: ',
+          style: const TextStyle(fontWeight: FontWeight.bold),
+        ),
+        ...items.map((e) => CheckboxItem(text: e.name)).toList(),
+    ],);
+    
   }
 }

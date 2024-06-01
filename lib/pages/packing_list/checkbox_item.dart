@@ -20,6 +20,7 @@ class _CheckboxItemState extends State<CheckboxItem> {
   @override
   Widget build(BuildContext context) {
     return Row(
+      mainAxisSize: MainAxisSize.min,
       children: [
         Checkbox(value: _isChecked, onChanged: toggle),
         GestureDetector(
