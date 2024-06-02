@@ -6,7 +6,7 @@ import 'package:tote_f/models/user/outfit_item.dart';
 import 'package:tote_f/pages/Assign/editable_chip.dart';
 import 'package:tote_f/providers/named_items_provider.dart';
 
-class NamedChips extends ConsumerWidget {
+class NamedChips extends ConsumerStatefulWidget {
   final OutfitItem selectedItem;
   final int dayIndex;
   final int outfitOrdering;
@@ -18,16 +18,31 @@ class NamedChips extends ConsumerWidget {
   });
 
   @override
-  Widget build(BuildContext context, WidgetRef ref) {
+  ConsumerState createState() => _NamedChipState();
+}
+
+class _NamedChipState extends ConsumerState<NamedChips> {
+  dynamic _isEditing = false;
+
+  void setEditing(bool newValue) {
+    setState(() {
+      _isEditing = newValue;
+    });
+  }
+
+  @override
+  Widget build(BuildContext context) {
     final List<Named> namedItemsRef = ref.watch(namedItemsNotifierProvider);
-    final updateNamedNotifier = ref.read(updateNamedProvider.notifier);
+    final namedController = ref.read(updateNamedProvider.notifier);
     final namedItemsList = namedItemsRef
-        .where((Named named) => named.parentType == selectedItem.parentType)
+        .where(
+            (Named named) => named.parentType == widget.selectedItem.parentType)
         .map((Named named) => EditableChip(
               namedItem: named,
-              outfitItem: selectedItem,
-              dayIndex: dayIndex,
-              outfitOrdering: outfitOrdering,
+              outfitItem: widget.selectedItem,
+              dayIndex: widget.dayIndex,
+              outfitOrdering: widget.outfitOrdering,
+              setParentEditing: setEditing,
             ))
         .toList();
     return Expanded(
@@ -36,10 +51,11 @@ class NamedChips extends ConsumerWidget {
         runSpacing: 8.0,
         children: [
           ...namedItemsList,
-          ElevatedButton(
+          _isEditing ? Container() : ElevatedButton(
               onPressed: () {
-                if (selectedItem.parentType != null) {
-                  updateNamedNotifier.addNamed(selectedItem.parentType!);
+                if (widget.selectedItem.parentType != null) {
+                  namedController.addNamed(widget.selectedItem.parentType!);
+                  setEditing(true);
                 }
               },
               child: const Text('add item'))

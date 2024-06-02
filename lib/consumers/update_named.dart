@@ -17,8 +17,8 @@ class UpdateNamed extends _$UpdateNamed {
     ref.read(namedItemsNotifierProvider.notifier).addNamed(newItem);
   }
 
-  void updateName(String newName, int ordering) {
-    ref.read(namedItemsNotifierProvider.notifier).updateName(newName, ordering);
+  Future<Named> updateName(String newName, int ordering) async {
+    return ref.read(namedItemsNotifierProvider.notifier).updateName(newName, ordering);
   }
 
   void selectNamedItem(
@@ -28,7 +28,12 @@ class UpdateNamed extends _$UpdateNamed {
     Named namedItem,
   ) {
     final Trip tripRef = ref.watch(tripNotifierProvider);
-    Day newDay = tripRef.days[dayIndex].nameOutfitItem(outfitOrdering: outfitOrdering, itemType: itemType, newNamed: namedItem);
-    ref.read(tripNotifierProvider.notifier).replaceDayAndUpdateTrip(tripRef, newDay);
+    Day newDay = tripRef.days[dayIndex].nameOutfitItem(
+        outfitOrdering: outfitOrdering,
+        itemType: itemType,
+        newNamed: namedItem);
+    ref
+        .read(tripNotifierProvider.notifier)
+        .replaceDayAndUpdateTrip(tripRef, newDay);
   }
 }

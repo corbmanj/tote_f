@@ -10,12 +10,14 @@ class EditableChip extends ConsumerStatefulWidget {
   final OutfitItem outfitItem;
   final int dayIndex;
   final int outfitOrdering;
+  final void Function(bool) setParentEditing;
   const EditableChip({
     super.key,
     required this.namedItem,
     required this.outfitItem,
     required this.dayIndex,
     required this.outfitOrdering,
+    required this.setParentEditing,
   });
 
   @override
@@ -42,6 +44,7 @@ class _EditableChipState extends ConsumerState<EditableChip> {
     setState(() {
       _isEditing = newValue;
     });
+    widget.setParentEditing(newValue);
   }
 
   @override
@@ -62,9 +65,15 @@ class _EditableChipState extends ConsumerState<EditableChip> {
                 border: OutlineInputBorder(),
                 labelText: 'Item name',
               ),
-              onSubmitted: (String? value) {
+              onSubmitted: (String? value) async {
                 if (value != null) {
-                  namedController.updateName(value, widget.namedItem.ordering);
+                  Named newNamed = await namedController.updateName(value, widget.namedItem.ordering);
+                  namedController.selectNamedItem(
+                    widget.dayIndex,
+                    widget.outfitOrdering,
+                    widget.outfitItem.type,
+                    newNamed
+                  );
                 }
                 setEditing(false);
               },

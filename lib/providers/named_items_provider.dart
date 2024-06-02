@@ -10,10 +10,18 @@ class NamedItemsNotifier extends _$NamedItemsNotifier {
     return [];
   }
 
-  void updateName(String newName, int ordering) {
-    List<Named> newList = state.map((Named item) =>
-        item.ordering == ordering ? item.copyWith(name: newName, ordering: ordering == -1 ? state.length : ordering) : item).toList();
+  Named updateName(String newName, int ordering) {
+    late Named updatedItem;
+    copyItem(Named item) {
+      if (item.ordering == ordering) {
+        updatedItem = item.copyWith(
+            name: newName, ordering: ordering == -1 ? state.length : ordering);
+      }
+      return item.ordering == ordering ? updatedItem : item;
+    }
+    List<Named> newList = state.map(copyItem).toList();
     state = newList;
+    return updatedItem;
   }
 
   void addNamed(Named newItem) {
