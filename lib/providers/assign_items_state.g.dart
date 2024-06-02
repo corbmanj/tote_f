@@ -6,7 +6,7 @@ part of 'assign_items_state.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$assignItemsStateHash() => r'd0cf5335810de352fe83e50fc59d0578dce88454';
+String _$assignItemsStateHash() => r'd46f53221b1dd0f66adad506ec86bcdbede7d8a9';
 
 /// See also [AssignItemsState].
 @ProviderFor(AssignItemsState)
