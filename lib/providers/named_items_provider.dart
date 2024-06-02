@@ -3,7 +3,7 @@ import 'package:tote_f/models/tote/named.dart';
 
 part 'named_items_provider.g.dart';
 
-@riverpod
+@Riverpod(keepAlive: true)
 class NamedItemsNotifier extends _$NamedItemsNotifier {
   @override
   List<Named> build() {
