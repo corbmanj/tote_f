@@ -24,17 +24,22 @@ class AssignOutfitList extends ConsumerWidget {
     final assignItemNotifier = ref.read(assignItemsStateProvider.notifier);
     final isExpandedRef = ref.watch(assignItemsStateProvider).expanded;
 
+    handleExpansion(int index, bool isExpanded) {
+      assignItemNotifier.setExpanded(dayIndex, index);
+      assignItemNotifier.clearSelected();
+    }
+
     return ExpansionPanelList(
-      expansionCallback: (int index, bool isExpanded) {
-        assignItemNotifier.setExpanded(dayIndex, index);
-        assignItemNotifier.clearSelected();
-      },
+      expansionCallback: handleExpansion,
       children: outfits.asMap().entries.map<ExpansionPanel>((entry) {
         final int idx = entry.key;
         final ExpansionOutfit outfit = entry.value;
         return ExpansionPanel(
           headerBuilder: (BuildContext context, bool isExpanded) =>
-              Text(outfit.headerValue),
+              GestureDetector(
+            child: Text(outfit.headerValue),
+            onTap: () => handleExpansion(idx, true),
+          ),
           body: AssignOutfitItems(
             outfit: outfit.expandedValue,
             dayIndex: dayIndex,
