@@ -9,6 +9,13 @@ class Unnamed {
     'count': count,
   };
 
+  factory Unnamed.fromMap(Map<String, dynamic> map) {
+    return Unnamed(
+      map['name'],
+      map['count'],
+    );
+  }
+
   void incrementCount() {
     count++;
   }

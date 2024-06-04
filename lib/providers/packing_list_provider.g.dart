@@ -7,7 +7,7 @@ part of 'packing_list_provider.dart';
 // **************************************************************************
 
 String _$packingListNotifierHash() =>
-    r'7558d643398ea55259136db586c0d070645d0488';
+    r'0d776d4d99c73e6eabf9d689ac26bd8598901460';
 
 /// See also [PackingListNotifier].
 @ProviderFor(PackingListNotifier)

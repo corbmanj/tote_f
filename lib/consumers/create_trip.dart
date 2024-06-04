@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/day.dart';
+import 'package:tote_f/models/tote/tote.dart';
 import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 import 'package:tote_f/services/db_service.dart';
@@ -39,9 +40,8 @@ class CreateTrip extends _$CreateTrip {
       dayList.add(Day(
           day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, ""));
     }
-    final newTrip = currentTrip.copyWith(days: dayList);
+    final newTrip = currentTrip.copyWith(days: dayList, tote: Tote(named: [], unnamed: [], additionalItems: []));
     final int newId = await dbService.createTrip(newTrip);
-    print('newId $newId');
     loadTrip(newTrip.copyWith(id: newId));
   }
 }

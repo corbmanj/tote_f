@@ -13,6 +13,13 @@ class AdditionalItemSection {
     'items': jsonEncode(items),
   };
 
+  factory AdditionalItemSection.fromMap(Map<String, dynamic> map) {
+    return AdditionalItemSection(
+      map['name'],
+      jsonDecode(map['items'] ?? '[]').map<AdditionalItem>((item) => AdditionalItem.fromMap(item)).toList(),
+    );
+  }
+
   void addItem(AdditionalItem item) {
     items.add(item);
   }

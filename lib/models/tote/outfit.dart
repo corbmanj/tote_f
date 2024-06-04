@@ -1,7 +1,5 @@
-// import 'package:hooks_riverpod/hooks_riverpod.dart';
 import 'dart:convert';
 
-import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 import '../user/item_template.dart';
 import '../user/outfit_item.dart';
@@ -25,7 +23,7 @@ class Outfit {
     final List<OutfitItem> result = [];
     for (final item in items) {
       result.add(OutfitItem(
-          item.type, item.hasDropdown, item.parentType, false, item.named));
+          item.type, item.hasDropdown, item.parentType, false, item.namedItemId));
     }
     return result;
   }
@@ -70,11 +68,11 @@ extension MutableOutfit on Outfit {
 
   List<OutfitItem> nameItemByType(
     String itemType,
-    Named newNamed,
+    int newNamedId,
   ) {
     return items
         .map((OutfitItem item) => item.type == itemType
-            ? item.nameItem(newNamedItem: newNamed)
+            ? item.nameItem(newNamedItemId: newNamedId)
             : item)
         .toList();
   }
@@ -88,9 +86,9 @@ extension MutableOutfit on Outfit {
 
   Outfit nameItemForOutfit(
     String itemType,
-    Named newNamed,
+    int newNamedId,
   ) {
-    return copyWith(items: nameItemByType(itemType, newNamed));
+    return copyWith(items: nameItemByType(itemType, newNamedId));
   }
 
   Outfit changeType(OutfitTemplate newType, String name) {

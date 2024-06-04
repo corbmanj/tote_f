@@ -1,15 +1,13 @@
-import 'package:tote_f/models/tote/named.dart';
-
 class ItemTemplate {
   String type;
   bool hasDropdown;
   String? parentType;
-  Named? named;
+  int? namedItemId;
 
   ItemTemplate(
     this.type,
     this.hasDropdown, [
     this.parentType,
-    this.named,
+    this.namedItemId,
   ]);
 }

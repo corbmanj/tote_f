@@ -1,6 +1,4 @@
 import 'dart:convert';
-
-import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 
 import './outfit.dart';
@@ -90,13 +88,13 @@ extension MutableDay on Day {
   List<Outfit> nameOutfitItemByOrdering(
       {required int ordering,
       required String itemType,
-      required Named newNamed}) {
+      required int newNamedId}) {
     if (outfits == null) {
       return [];
     }
     return outfits!
         .map((Outfit outfit) => outfit.ordering == ordering
-            ? outfit.nameItemForOutfit(itemType, newNamed)
+            ? outfit.nameItemForOutfit(itemType, newNamedId)
             : outfit)
         .toList();
   }
@@ -135,12 +133,12 @@ extension MutableDay on Day {
   Day nameOutfitItem(
       {required int outfitOrdering,
       required String itemType,
-      required Named newNamed}) {
+      required int newNamedId}) {
     return updateOutfitList(
         newOutfits: nameOutfitItemByOrdering(
             ordering: outfitOrdering,
             itemType: itemType,
-            newNamed: newNamed));
+            newNamedId: newNamedId));
   }
 
   Day selectOutfitItem(

@@ -49,7 +49,7 @@ class _EditableChipState extends ConsumerState<EditableChip> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSelected = widget.outfitItem.namedItem == widget.namedItem;
+    final bool isSelected = widget.outfitItem.namedItemId == widget.namedItem.ordering;
     final namedController = ref.read(updateNamedProvider.notifier);
     if (_isEditing || widget.namedItem.ordering == -1) {
       _controller.text = widget.namedItem.name;
@@ -72,7 +72,7 @@ class _EditableChipState extends ConsumerState<EditableChip> {
                     widget.dayIndex,
                     widget.outfitOrdering,
                     widget.outfitItem.type,
-                    newNamed
+                    newNamed.ordering
                   );
                 }
                 setEditing(false);
@@ -92,7 +92,7 @@ class _EditableChipState extends ConsumerState<EditableChip> {
             widget.dayIndex,
             widget.outfitOrdering,
             widget.outfitItem.type,
-            widget.namedItem,
+            widget.namedItem.ordering,
           );
         },
       ),

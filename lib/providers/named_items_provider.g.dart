@@ -7,7 +7,7 @@ part of 'named_items_provider.dart';
 // **************************************************************************
 
 String _$namedItemsNotifierHash() =>
-    r'cbbc92971516f3d6003df32fcb7748d54bcfaa5c';
+    r'78b6507d18351029725fc0ee9340c2a8835521b9';
 
 /// See also [NamedItemsNotifier].
 @ProviderFor(NamedItemsNotifier)

@@ -6,7 +6,7 @@ part of 'load_trip.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$loadTripHash() => r'e489f8904d914b0741b95d38d0b5030e409d848c';
+String _$loadTripHash() => r'4c937958926eecc600cd4544789f0471d1ea2530';
 
 /// See also [LoadTrip].
 @ProviderFor(LoadTrip)

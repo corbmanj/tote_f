@@ -1,17 +1,20 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/tote/outfit.dart';
 import 'package:tote_f/models/user/outfit_item.dart';
+import 'package:tote_f/providers/named_items_provider.dart';
 
-class NamedItemsForOutfit extends StatelessWidget {
+class NamedItemsForOutfit extends ConsumerWidget {
   final Outfit outfit;
   const NamedItemsForOutfit({super.key, required this.outfit});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
+    final List<Named> namedItemsRef = ref.watch(namedItemsNotifierProvider);
     final List<Named> namedList = outfit.items
-        .where((item) => item.namedItem != null)
-        .map((OutfitItem item) => item.namedItem!)
+        .where((item) => item.namedItemId != null)
+        .map((OutfitItem item) => namedItemsRef.firstWhere((named) => named.ordering == item.namedItemId))
         .toList();
     return (Wrap(
         spacing: 4.0,

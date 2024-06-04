@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/providers/named_items_provider.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 import 'package:tote_f/services/db_service.dart';
 
@@ -14,5 +15,6 @@ class LoadTrip extends _$LoadTrip {
     final DatabaseService dbService = DatabaseService();
     final Trip trip = await dbService.getTripById(tripId);
     ref.read(tripNotifierProvider.notifier).loadTrip(trip);
+    ref.read(namedItemsNotifierProvider.notifier).loadList(trip.tote != null ? trip.tote!.named : []);
   }
 }

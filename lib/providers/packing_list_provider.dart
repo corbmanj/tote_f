@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/named.dart';
+import 'package:tote_f/providers/named_items_provider.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 
 part 'packing_list_provider.g.dart';
@@ -17,6 +18,7 @@ class PackingListNotifier extends _$PackingListNotifier {
     Map<String, Set<Named>> named = {};
     Map<String, int> unnamed = {};
     final days = ref.watch(tripNotifierProvider).days;
+    final namedItems = ref.watch(namedItemsNotifierProvider);
     for (var day in days) {
       final outfits = day.outfits;
       if (outfits != null && outfits.isNotEmpty) {
@@ -28,11 +30,16 @@ class PackingListNotifier extends _$PackingListNotifier {
                 unnamed.addAll({item.type: 0});
               }
               unnamed.update(item.type, (value) => value + 1);
-            } else if (item.namedItem != null) {
+            } else if (item.namedItemId != null) {
               if (!named.containsKey(item.parentType)) {
-                named.addAll({item.parentType!:{}});
+                named.addAll({item.parentType!: {}});
               }
-              named.update(item.parentType!, (value) => value.union({item.namedItem!}));
+              named.update(
+                  item.parentType!,
+                  (value) => value.union({
+                        namedItems.firstWhere(
+                            (named) => named.ordering == item.namedItemId)
+                      }));
             }
           }
         }
@@ -40,6 +47,4 @@ class PackingListNotifier extends _$PackingListNotifier {
     }
     return PackingListType(named, unnamed);
   }
-
-  
 }

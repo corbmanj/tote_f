@@ -1,21 +1,16 @@
-// import 'package:hooks_riverpod/hooks_riverpod.dart';
-import 'dart:convert';
-
-import 'package:tote_f/models/tote/named.dart';
-
 class OutfitItem {
   String type;
   bool hasDropdown;
   String? parentType;
   bool? selected;
-  Named? namedItem;
+  int? namedItemId;
 
   OutfitItem(
     this.type,
     this.hasDropdown, [
     this.parentType,
     this.selected = false,
-    this.namedItem,
+    this.namedItemId,
   ]);
 
   Map toJson() => {
@@ -23,7 +18,7 @@ class OutfitItem {
     'hasDropdown': hasDropdown,
     'parentType': parentType,
     'selected': selected,
-    'namedItem': jsonEncode(namedItem),
+    'namedItemId': namedItemId,
   };
 
   factory OutfitItem.fromMap(Map<String, dynamic> map) {
@@ -32,18 +27,18 @@ class OutfitItem {
       map['hasDropdown'] ?? false,
       map['parentType'],
       map['selected'] ?? false,
-      map['named'] != null ? Named.fromMap(jsonDecode(map['namedItem'])) : null,
+      map['namedItemId'],
     );
   }
 }
 
 extension MutableOutfitItem on OutfitItem {
-  OutfitItem copyWith({String? type, bool? hasDropdown, String? parentType, bool? selected, Named? namedItem}) {
-    return OutfitItem(type ?? this.type, hasDropdown ?? this.hasDropdown, parentType ?? this.parentType, selected ?? this.selected, namedItem ?? this.namedItem);
+  OutfitItem copyWith({String? type, bool? hasDropdown, String? parentType, bool? selected, int? namedItemId}) {
+    return OutfitItem(type ?? this.type, hasDropdown ?? this.hasDropdown, parentType ?? this.parentType, selected ?? this.selected, namedItemId ?? this.namedItemId);
   }
 
-  OutfitItem nameItem({required Named newNamedItem}) {
-    return copyWith(namedItem: newNamedItem);
+  OutfitItem nameItem({required int newNamedItemId}) {
+    return copyWith(namedItemId: newNamedItemId);
   }
 
   OutfitItem selectItem({required bool newSelected}) {

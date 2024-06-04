@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tote_f/models/tote/named.dart';
 import 'package:uuid/uuid.dart';
 import './tote/day.dart';
 import './tote/tote.dart';
@@ -23,21 +24,27 @@ class Trip {
   });
 
   Map toJson() => {
-    'id': id,
-    'city': city,
-    'days': jsonEncode(days),
-    'tote': jsonEncode(tote),
-    'startDate': dateRange.start.millisecondsSinceEpoch,
-    'endDate': dateRange.end.millisecondsSinceEpoch,
-  };
+        'id': id,
+        'city': city,
+        'days': jsonEncode(days),
+        'tote': jsonEncode(tote),
+        'startDate': dateRange.start.millisecondsSinceEpoch,
+        'endDate': dateRange.end.millisecondsSinceEpoch,
+      };
 
   factory Trip.fromMap(Map<String, dynamic> map, int tripId) {
     return Trip(
-      id: tripId,
-      city: map['city'],
-      days: jsonDecode(map['days']).map<Day>((day) => Day.fromMap(day)).toList(),
-      dateRange: DateTimeRange(start: DateTime.fromMillisecondsSinceEpoch(map['startDate']) , end: DateTime.fromMillisecondsSinceEpoch(map['endDate'])),
-    );
+        id: tripId,
+        city: map['city'],
+        days: jsonDecode(map['days'])
+            .map<Day>((day) => Day.fromMap(day))
+            .toList(),
+        dateRange: DateTimeRange(
+            start: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
+            end: DateTime.fromMillisecondsSinceEpoch(map['endDate'])),
+        tote: map['tote'] == 'null'
+            ? Tote(named: [], unnamed: [], additionalItems: [])
+            : Tote.fromMap(jsonDecode(map['tote'])));
   }
 }
 
@@ -60,24 +67,31 @@ extension MutableTrip on Trip {
       int dayCode, int outfitOrdering, String itemType, bool newSelected) {
     final dayToUpdate = days.firstWhere((Day day) => day.dayCode == dayCode);
     return copyWith(
-      city: city,
-      days: replaceDayByDayCode(
-          dayCode,
-          dayToUpdate.selectOutfitItem(
-              outfitOrdering: outfitOrdering,
-              itemType: itemType,
-              newSelected: newSelected)),
-      dateRange: dateRange
-    );
+        city: city,
+        days: replaceDayByDayCode(
+            dayCode,
+            dayToUpdate.selectOutfitItem(
+                outfitOrdering: outfitOrdering,
+                itemType: itemType,
+                newSelected: newSelected)),
+        dateRange: dateRange);
   }
 
   Trip changeOutfitType(dayCode, outfitOrdering, newType) {
     final dayToUpdate = days.firstWhere((Day day) => day.dayCode == dayCode);
     return copyWith(
-      city: city,
-      days: replaceDayByDayCode(dayCode, dayToUpdate.changeOutfitType(outfitOrdering, newType)),
-      dateRange: dateRange
-    );
+        city: city,
+        days: replaceDayByDayCode(
+            dayCode, dayToUpdate.changeOutfitType(outfitOrdering, newType)),
+        dateRange: dateRange);
+  }
+
+  Trip updateNamedList(List<Named> newNamed) {
+    if (tote != null) {
+      final Tote newTote = tote!.copyWith(named: newNamed);
+      return copyWith(tote: newTote);
+    }
+    return this;
   }
 
   Trip copyWith({
@@ -87,6 +101,11 @@ extension MutableTrip on Trip {
     Tote? tote,
     DateTimeRange? dateRange,
   }) {
-    return Trip(id: id ?? this.id, city: city ?? this.city, days: days ?? this.days, tote: tote ?? this.tote, dateRange: dateRange ?? this.dateRange);
+    return Trip(
+        id: id ?? this.id,
+        city: city ?? this.city,
+        days: days ?? this.days,
+        tote: tote ?? this.tote,
+        dateRange: dateRange ?? this.dateRange);
   }
 }

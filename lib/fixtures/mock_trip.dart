@@ -14,7 +14,7 @@ import '../models/user/item_template.dart';
 
 // Build Outfit Items
 ItemTemplate runningShoes() {
-  return ItemTemplate("Running Shoes", true, "shoes", n1);
+  return ItemTemplate("Running Shoes", true, "shoes");
 }
 
 ItemTemplate runningSocks() {
@@ -22,7 +22,7 @@ ItemTemplate runningSocks() {
 }
 
 ItemTemplate runningBottoms() {
-  return ItemTemplate("Running Bottoms", true, "bottoms", n15);
+  return ItemTemplate("Running Bottoms", true, "bottoms");
 }
 
 ItemTemplate rundies() {
@@ -30,15 +30,15 @@ ItemTemplate rundies() {
 }
 
 ItemTemplate sportsBra() {
-  return ItemTemplate("Sports Bra", true, "bras", n16);
+  return ItemTemplate("Sports Bra", true, "bras");
 }
 
 ItemTemplate workoutTop() {
-  return ItemTemplate("Workout Top", true, "tops", n27);
+  return ItemTemplate("Workout Top", true, "tops");
 }
 
 ItemTemplate runCoat() {
-  return ItemTemplate("Running Coat", true, "coats", n28);
+  return ItemTemplate("Running Coat", true, "coats");
 }
 
 ItemTemplate runHat() {
@@ -58,7 +58,7 @@ ItemTemplate socks() {
 }
 
 ItemTemplate workPants() {
-  return ItemTemplate("Work Pants", true, "bottoms", n2);
+  return ItemTemplate("Work Pants", true, "bottoms");
 }
 
 ItemTemplate undies() {
@@ -66,23 +66,23 @@ ItemTemplate undies() {
 }
 
 ItemTemplate bra() {
-  return ItemTemplate("Bra", true, "bras", n3);
+  return ItemTemplate("Bra", true, "bras");
 }
 
 ItemTemplate belt() {
-  return ItemTemplate("Belt", true, "belts", n22);
+  return ItemTemplate("Belt", true, "belts");
 }
 
 ItemTemplate workTop() {
-  return ItemTemplate("Work Top", true, "tops", n4);
+  return ItemTemplate("Work Top", true, "tops");
 }
 
 ItemTemplate sweater() {
-  return ItemTemplate("Sweater", true, "sweaters&sweatshirts", n14);
+  return ItemTemplate("Sweater", true, "sweaters&sweatshirts");
 }
 
 ItemTemplate coat() {
-  return ItemTemplate("Coat", true, "coats", n28);
+  return ItemTemplate("Coat", true, "coats");
 }
 
 ItemTemplate hat() {
@@ -98,19 +98,19 @@ ItemTemplate jewelry() {
 }
 
 ItemTemplate scarf() {
-  return ItemTemplate("Scarf", true, "scarves", n10);
+  return ItemTemplate("Scarf", true, "scarves");
 }
 
 ItemTemplate shoes() {
-  return ItemTemplate("Shoes", true, "shoes", n1);
+  return ItemTemplate("Shoes", true, "shoes");
 }
 
 ItemTemplate casualPants() {
-  return ItemTemplate("Casual Pants", true, "bottoms", n25);
+  return ItemTemplate("Casual Pants", true, "bottoms");
 }
 
 ItemTemplate top() {
-  return ItemTemplate("Top", true, "tops", n30);
+  return ItemTemplate("Top", true, "tops");
 }
 
 ItemTemplate sleepSocks() {
@@ -118,15 +118,15 @@ ItemTemplate sleepSocks() {
 }
 
 ItemTemplate sleepPants() {
-  return ItemTemplate("Sleep Pants", true, "bottoms", n11);
+  return ItemTemplate("Sleep Pants", true, "bottoms");
 }
 
 ItemTemplate sleepBra() {
-  return ItemTemplate("Sleep Bra", true, "bras", n12);
+  return ItemTemplate("Sleep Bra", true, "bras");
 }
 
 ItemTemplate sleepShirt() {
-  return ItemTemplate("Sleep Top", true, "tops", n13);
+  return ItemTemplate("Sleep Top", true, "tops");
 }
 
 ItemTemplate sweatshirt() {

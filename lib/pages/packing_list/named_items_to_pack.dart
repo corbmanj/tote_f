@@ -39,7 +39,7 @@ class NamedItemsOfType extends StatelessWidget {
           '$type: ',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        ...items.map((e) => CheckboxItem(text: e.name)).toList(),
+        ...items.map((e) => CheckboxItem(text: e.name)),
     ],);
     
   }

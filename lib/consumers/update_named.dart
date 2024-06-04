@@ -25,13 +25,13 @@ class UpdateNamed extends _$UpdateNamed {
     int dayIndex,
     int outfitOrdering,
     String itemType,
-    Named namedItem,
+    int namedItemId,
   ) {
     final Trip tripRef = ref.watch(tripNotifierProvider);
     Day newDay = tripRef.days[dayIndex].nameOutfitItem(
         outfitOrdering: outfitOrdering,
         itemType: itemType,
-        newNamed: namedItem);
+        newNamedId: namedItemId);
     ref
         .read(tripNotifierProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
