@@ -30,18 +30,24 @@ class CreateTrip extends _$CreateTrip {
     loadTrip(newTrip);
   }
 
-  void createTripFromSchedule() async {
+  void createTripFromSchedule({bool? reset = false}) async {
     final DatabaseService dbService = DatabaseService();
     final currentTrip = ref.watch(tripNotifierProvider);
     List<Day> dayList = [];
     for (var day = currentTrip.dateRange.start;
         day.compareTo(currentTrip.dateRange.end) <= 0;
         day = day.add(const Duration(days: 1))) {
-      dayList.add(Day(
-          day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, ""));
+      dayList
+          .add(Day(day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, ""));
     }
-    final newTrip = currentTrip.copyWith(days: dayList, tote: Tote(named: [], unnamed: [], additionalItems: []));
-    final int newId = await dbService.createTrip(newTrip);
+    final newTrip = currentTrip.copyWith(
+        days: dayList, tote: Tote(named: [], unnamed: [], additionalItems: []));
+    int? newId = newTrip.id;
+    if (reset == true) {
+      await dbService.saveTripById(newTrip, newTrip.id!);
+    } else {
+      newId = await dbService.createTrip(newTrip);
+    }
     loadTrip(newTrip.copyWith(id: newId));
   }
 }

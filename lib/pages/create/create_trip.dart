@@ -50,7 +50,7 @@ class CreateTrip extends ConsumerWidget {
                 TextButton(
                   child: const Text('RESET'),
                   onPressed: () {
-                    tripProvider.createTripFromSchedule();
+                    tripProvider.createTripFromSchedule(reset: true);
                     Navigator.pop(context, 'reset');
                     Navigator.push(
                         context,
