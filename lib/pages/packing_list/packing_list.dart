@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/pages/load/load_trip.dart';
+import 'package:tote_f/pages/home/home.dart';
 import 'package:tote_f/pages/packing_list/named_items_to_pack.dart';
 import 'package:tote_f/pages/packing_list/unnamed_items_to_pack.dart';
 import 'package:tote_f/providers/packing_list_provider.dart';
@@ -53,7 +53,7 @@ class PackingList extends ConsumerWidget {
           if (value == 1)
             {
               Navigator.push(context,
-                  MaterialPageRoute(builder: (context) => const LoadTrip()));
+                  MaterialPageRoute(builder: (context) => const Home()));
             }
           else
             {Navigator.pop(context);}

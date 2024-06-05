@@ -17,8 +17,9 @@ class UpdateNamed extends _$UpdateNamed {
     ref.read(namedItemsNotifierProvider.notifier).addNamed(newItem);
   }
 
-  Future<Named> updateName(String newName, int ordering) async {
-    return ref.read(namedItemsNotifierProvider.notifier).updateName(newName, ordering);
+  void updateNameAndSelect(String newName, int ordering, int dayIndex, int outfitOrdering, String itemType) async {
+    Named newItem = ref.read(namedItemsNotifierProvider.notifier).updateName(newName, ordering);
+    selectNamedItem(dayIndex, outfitOrdering, itemType, newItem.ordering);
   }
 
   void selectNamedItem(
