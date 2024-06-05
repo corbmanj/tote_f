@@ -49,7 +49,8 @@ class _EditableChipState extends ConsumerState<EditableChip> {
 
   @override
   Widget build(BuildContext context) {
-    final bool isSelected = widget.outfitItem.namedItemId == widget.namedItem.ordering;
+    final bool isSelected =
+        widget.outfitItem.namedItemId == widget.namedItem.ordering;
     final namedController = ref.read(updateNamedProvider.notifier);
     if (_isEditing || widget.namedItem.ordering == -1) {
       _controller.text = widget.namedItem.name;
@@ -67,12 +68,12 @@ class _EditableChipState extends ConsumerState<EditableChip> {
               ),
               onSubmitted: (String? value) async {
                 if (value != null) {
-                  Named newNamed = await namedController.updateName(value, widget.namedItem.ordering);
-                  namedController.selectNamedItem(
+                  namedController.updateNameAndSelect(
+                    value,
+                    widget.namedItem.ordering,
                     widget.dayIndex,
                     widget.outfitOrdering,
                     widget.outfitItem.type,
-                    newNamed.ordering
                   );
                 }
                 setEditing(false);

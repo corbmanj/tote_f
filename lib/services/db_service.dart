@@ -75,4 +75,9 @@ class DatabaseService {
     final db = await _databaseService.database;
     await db.update('trips', {'trip': jsonEncode(trip)}, where: 'id = ?', whereArgs: [tripId]);
   }
+
+  Future<void> deleteTripById(int tripId) async {
+    final db = await _databaseService.database;
+    await db.delete('trips', where: 'id = ?', whereArgs: [tripId]);
+  }
 }

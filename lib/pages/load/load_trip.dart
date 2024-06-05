@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:flutter_slidable/flutter_slidable.dart';
 import 'package:tote_f/consumers/load_trip.dart';
 import 'package:tote_f/models/trip_meta.dart';
 import 'package:tote_f/providers/trip_list_provider.dart';
@@ -48,16 +49,34 @@ class TripTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final loadTripConsumer = ref.read(loadTripProvider.notifier);
     final state = trip.city.split(',').last.trim();
-    return ListTile(
-      onTap: () {
-        ref.read(loadTripProvider.notifier).loadTrip(trip.id);
-        Navigator.push(context,
-            MaterialPageRoute(builder: (context) => const SelectOutfits()));
-      },
-      leading: CircleAvatar(child: Text(state)),
-      title: Text(trip.city),
-      subtitle: Text(trip.dateRange.start.toString()),
+    return Slidable(
+      key: ValueKey(trip.id),
+      startActionPane: ActionPane(
+        motion: const ScrollMotion(),
+        dismissible: DismissiblePane(onDismissed: () {}),
+        children: [
+          SlidableAction(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            onPressed: (BuildContext context) {
+              loadTripConsumer.deleteTrip(trip.id);
+            },
+          ),
+        ],
+      ),
+      child: ListTile(
+        onTap: () {
+          loadTripConsumer.loadTrip(trip.id);
+          Navigator.push(context,
+              MaterialPageRoute(builder: (context) => const SelectOutfits()));
+        },
+        leading: CircleAvatar(child: Text(state)),
+        title: Text(trip.city),
+        subtitle: Text(trip.dateRange.start.toString()),
+      ),
     );
   }
 }
