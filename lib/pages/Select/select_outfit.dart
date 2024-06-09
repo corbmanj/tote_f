@@ -29,14 +29,19 @@ class SelectOutfit extends ConsumerWidget {
     return Column(
       children: [
         OutfitList(outfits: outfits, dayIndex: dayIndex),
-        ElevatedButton(
-          onPressed: () {
-            ref
-                .read(updateDayProvider.notifier)
-                .addOutfitToDay(dayIndex, newOutfitType);
-          },
-          child: const Text("Add Outfit"),
-        )
+        Row(
+          mainAxisSize: MainAxisSize.max,
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            IconButton(
+                onPressed: () {
+                  ref
+                      .read(updateDayProvider.notifier)
+                      .addOutfitToDay(dayIndex, newOutfitType);
+                },
+                icon: const Icon(Icons.add))
+          ],
+        ),
       ],
     );
   }
