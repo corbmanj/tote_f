@@ -55,7 +55,19 @@ class TripTile extends ConsumerWidget {
       key: ValueKey(trip.id),
       startActionPane: ActionPane(
         motion: const ScrollMotion(),
-        dismissible: DismissiblePane(onDismissed: () {}),
+        children: [
+          SlidableAction(
+            backgroundColor: Colors.red,
+            foregroundColor: Colors.white,
+            icon: Icons.delete,
+            onPressed: (BuildContext context) {
+              loadTripConsumer.deleteTrip(trip.id);
+            },
+          ),
+        ],
+      ),
+      endActionPane: ActionPane(
+        motion: const ScrollMotion(),
         children: [
           SlidableAction(
             backgroundColor: Colors.red,
