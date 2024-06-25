@@ -265,16 +265,16 @@ List<OutfitTemplate> outfitTypeList = [
   otherOutfit,
 ];
 // Build Additional Item Sections
-AdditionalItem computer = AdditionalItem("computer");
-AdditionalItem computerCharger = AdditionalItem("computer charger");
-AdditionalItem phone = AdditionalItem("phone");
-AdditionalItem phoneCharger = AdditionalItem("phone charger");
-AdditionalItem gpsWatch = AdditionalItem("gps watch");
-AdditionalItem watchCharger = AdditionalItem("watch charger");
-AdditionalItem ipad = AdditionalItem("ipad");
-AdditionalItem ipadCharger = AdditionalItem("ipad charger");
-AdditionalItem headphones = AdditionalItem("headphones");
-AdditionalItem headphoneSplitter = AdditionalItem("headphone splitter");
+AdditionalItem computer = AdditionalItem("computer", true);
+AdditionalItem computerCharger = AdditionalItem("computer charger", true);
+AdditionalItem phone = AdditionalItem("phone", true);
+AdditionalItem phoneCharger = AdditionalItem("phone charger", true);
+AdditionalItem gpsWatch = AdditionalItem("gps watch", true);
+AdditionalItem watchCharger = AdditionalItem("watch charger", true);
+AdditionalItem ipad = AdditionalItem("ipad", true);
+AdditionalItem ipadCharger = AdditionalItem("ipad charger", true);
+AdditionalItem headphones = AdditionalItem("headphones", true);
+AdditionalItem headphoneSplitter = AdditionalItem("headphone splitter", true);
 AdditionalItemSection electronics = AdditionalItemSection("electronics", [
   computer,
   computerCharger,
@@ -288,20 +288,20 @@ AdditionalItemSection electronics = AdditionalItemSection("electronics", [
   headphoneSplitter
 ]);
 
-AdditionalItem brownPurse = AdditionalItem("brown purse");
-AdditionalItem blackTote = AdditionalItem("black tote");
-AdditionalItem blueBackpack = AdditionalItem("blue travel backpack");
+AdditionalItem brownPurse = AdditionalItem("brown purse", true);
+AdditionalItem blackTote = AdditionalItem("black tote", true);
+AdditionalItem blueBackpack = AdditionalItem("blue travel backpack", true);
 AdditionalItemSection bags =
     AdditionalItemSection("bags", [brownPurse, blackTote, blueBackpack]);
 
-AdditionalItem toiletKit = AdditionalItem("toilet kit");
+AdditionalItem toiletKit = AdditionalItem("toilet kit", true);
 AdditionalItemSection toiletries =
     AdditionalItemSection("toiletries", [toiletKit]);
 
-AdditionalItem waterBottle = AdditionalItem("water bottle");
+AdditionalItem waterBottle = AdditionalItem("water bottle", true);
 AdditionalItemSection snacks = AdditionalItemSection("snacks", [waterBottle]);
 
-AdditionalItem umbrella = AdditionalItem("umbrella");
+AdditionalItem umbrella = AdditionalItem("umbrella", true);
 AdditionalItemSection misc = AdditionalItemSection("misc", [umbrella]);
 
 // Build Days
@@ -424,10 +424,13 @@ List<Named> namedList = [
   n31
 ];
 
+final List<AdditionalItemSection> defaultAdditionalItems = [electronics, bags, snacks, toiletries, misc];
+
 Tote tote = Tote(
     named: namedList,
     unnamed: [u1, u2, u3, u4],
-    additionalItems: [electronics, bags, snacks, toiletries, misc]);
+    additionalItems: defaultAdditionalItems,
+  );
 
 // Build Trip
 Trip trip = Trip(

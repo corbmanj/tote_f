@@ -1,12 +1,14 @@
 class AdditionalItem {
   String name;
-  AdditionalItem(this.name);
+  bool included;
+  AdditionalItem(this.name, this.included);
 
-  Map toJson() => {'name': name};
+  Map toJson() => {'name': name, 'included': included};
 
   factory AdditionalItem.fromMap(Map<String, dynamic> map) {
     return AdditionalItem(
       map['name'],
+      map['included']
     );
   }
 }
