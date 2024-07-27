@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tote_f/models/tote/additional_item_section.dart';
 import 'package:tote_f/models/tote/day.dart';
 import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/trip.dart';
@@ -36,6 +37,12 @@ class TripNotifier extends _$TripNotifier {
   void replaceNamedAndUpdateTrip(List<Named> namedList) {
     Trip updatedTrip = state;
     updatedTrip = updatedTrip.updateNamedList(namedList);
+    saveTrip(updatedTrip);
+  }
+
+  void replaceAdditionalItemsAndUpdateTrip(List<AdditionalItemSection> newAdditionalItems) {
+    Trip updatedTrip = state;
+    updatedTrip = updatedTrip.updateAdditionalItems(newAdditionalItems);
     saveTrip(updatedTrip);
   }
 }

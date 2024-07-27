@@ -11,4 +11,12 @@ class AdditionalItem {
       map['included']
     );
   }
+
+  void updateSelected(bool isSelected) {
+    included = isSelected;
+  }
+
+  void updateName(String newName) {
+    name = newName;
+  }
 }

@@ -7,7 +7,7 @@ part of 'additional_items_provider.dart';
 // **************************************************************************
 
 String _$additionalItemsNotifierHash() =>
-    r'5935900682617f19dc6ef0c7395510c2ebd77f71';
+    r'22551c5918dec29feaca5e637871380e62ab8e4e';
 
 /// See also [AdditionalItemsNotifier].
 @ProviderFor(AdditionalItemsNotifier)

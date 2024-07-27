@@ -13,4 +13,11 @@ class AdditionalItemsNotifier extends _$AdditionalItemsNotifier {
   void loadList(List<AdditionalItemSection> newList) {
     state = newList;
   }
+
+  void updateSectionInList(AdditionalItemSection itemSection) {
+    state = state
+        .map((AdditionalItemSection section) =>
+            section.name == itemSection.name ? itemSection : section)
+        .toList();
+  }
 }

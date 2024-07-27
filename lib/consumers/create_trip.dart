@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tote_f/consumers/load_trip.dart';
 import 'package:tote_f/fixtures/mock_trip.dart';
 import 'package:tote_f/models/tote/day.dart';
 import 'package:tote_f/models/tote/tote.dart';
@@ -42,13 +43,17 @@ class CreateTrip extends _$CreateTrip {
           .add(Day(day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, ""));
     }
     final newTrip = currentTrip.copyWith(
-        days: dayList, tote: Tote(named: [], unnamed: [], additionalItems: defaultAdditionalItems));
+        days: dayList,
+        tote: Tote(
+            named: [], unnamed: [], additionalItems: defaultAdditionalItems));
     int? newId = newTrip.id;
     if (reset == true) {
       await dbService.saveTripById(newTrip, newTrip.id!);
     } else {
       newId = await dbService.createTrip(newTrip);
     }
-    loadTrip(newTrip.copyWith(id: newId));
+    if (newId != null) {
+      ref.read(loadTripProvider.notifier).loadTrip(newId);
+    }
   }
 }
