@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:flutter/material.dart';
+import 'package:tote_f/models/tote/additional_item_section.dart';
 import 'package:tote_f/models/tote/named.dart';
 import 'package:uuid/uuid.dart';
 import './tote/day.dart';
@@ -54,7 +55,7 @@ extension MutableTrip on Trip {
         .map((Day day) => day.dayCode == dayCode ? newDay : day)
         .toList();
   }
-
+  
   Trip replaceDayInTrip(int dayCode, Day newDay) {
     return copyWith(
       city: city,
@@ -89,6 +90,14 @@ extension MutableTrip on Trip {
   Trip updateNamedList(List<Named> newNamed) {
     if (tote != null) {
       final Tote newTote = tote!.copyWith(named: newNamed);
+      return copyWith(tote: newTote);
+    }
+    return this;
+  }
+
+  Trip updateAdditionalItems(List<AdditionalItemSection> newAdditionalItems) {
+    if (tote != null) {
+      final Tote newTote = tote!.copyWith(additionalItems: newAdditionalItems);
       return copyWith(tote: newTote);
     }
     return this;

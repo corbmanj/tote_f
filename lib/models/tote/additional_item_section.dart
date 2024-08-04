@@ -9,14 +9,16 @@ class AdditionalItemSection {
   AdditionalItemSection(this.name, this.items);
 
   Map toJson() => {
-    'name': name,
-    'items': jsonEncode(items),
-  };
+        'name': name,
+        'items': jsonEncode(items),
+      };
 
   factory AdditionalItemSection.fromMap(Map<String, dynamic> map) {
     return AdditionalItemSection(
       map['name'],
-      jsonDecode(map['items'] ?? '[]').map<AdditionalItem>((item) => AdditionalItem.fromMap(item)).toList(),
+      jsonDecode(map['items'] ?? '[]')
+          .map<AdditionalItem>((item) => AdditionalItem.fromMap(item))
+          .toList(),
     );
   }
 
@@ -26,5 +28,12 @@ class AdditionalItemSection {
 
   void removeItem(AdditionalItem item) {
     items.remove(item);
+  }
+
+  void updateItem(AdditionalItem item, String oldName) {
+    items = items
+        .map((AdditionalItem oldItem) =>
+            oldItem.name == oldName ? item : oldItem)
+        .toList();
   }
 }
