@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/additional_item_section.dart';
+import 'package:tote_f/providers/trip_provider.dart';
 
 part 'additional_items_provider.g.dart';
 
@@ -19,5 +20,6 @@ class AdditionalItemsNotifier extends _$AdditionalItemsNotifier {
         .map((AdditionalItemSection section) =>
             section.name == itemSection.name ? itemSection : section)
         .toList();
+    ref.read(tripNotifierProvider.notifier).replaceAdditionalItemsAndUpdateTrip(state);
   }
 }

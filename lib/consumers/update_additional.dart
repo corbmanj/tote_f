@@ -1,10 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/additional_item.dart';
 import 'package:tote_f/models/tote/additional_item_section.dart';
-import 'package:tote_f/models/tote/day.dart';
-import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/providers/additional_items_provider.dart';
-import 'package:tote_f/providers/trip_provider.dart';
 
 part 'update_additional.g.dart';
 
@@ -30,21 +27,5 @@ class UpdateAdditional extends _$UpdateAdditional {
     item.updateName(newName);
     section.updateItem(item, oldName);
     ref.read(additionalItemsNotifierProvider.notifier).updateSectionInList(section);
-  }
-
-  void selectNamedItem(
-    int dayIndex,
-    int outfitOrdering,
-    String itemType,
-    int namedItemId,
-  ) {
-    final Trip tripRef = ref.watch(tripNotifierProvider);
-    Day newDay = tripRef.days[dayIndex].nameOutfitItem(
-        outfitOrdering: outfitOrdering,
-        itemType: itemType,
-        newNamedId: namedItemId);
-    ref
-        .read(tripNotifierProvider.notifier)
-        .replaceDayAndUpdateTrip(tripRef, newDay);
   }
 }

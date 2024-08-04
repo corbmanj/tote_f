@@ -55,7 +55,7 @@ extension MutableTrip on Trip {
         .map((Day day) => day.dayCode == dayCode ? newDay : day)
         .toList();
   }
-
+  
   Trip replaceDayInTrip(int dayCode, Day newDay) {
     return copyWith(
       city: city,
