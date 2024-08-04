@@ -35,7 +35,7 @@ class SelectOutfitType extends ConsumerWidget {
         height: 0,
       ),
       onChanged: (OutfitTemplate? value) {
-        if (value != null) {
+        if (value != null && value != outfitType) {
           ref
               .read(updateOutfitProvider.notifier)
               .updateOutfitType(dayIndex, ordering, value);
