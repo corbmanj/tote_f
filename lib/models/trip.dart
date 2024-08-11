@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tote_f/models/tote/additional_item_section.dart';
 import 'package:tote_f/models/tote/named.dart';
+import 'package:tote_f/models/tote/unnamed.dart';
 import 'package:uuid/uuid.dart';
 import './tote/day.dart';
 import './tote/tote.dart';
@@ -90,6 +91,14 @@ extension MutableTrip on Trip {
   Trip updateNamedList(List<Named> newNamed) {
     if (tote != null) {
       final Tote newTote = tote!.copyWith(named: newNamed);
+      return copyWith(tote: newTote);
+    }
+    return this;
+  }
+
+  Trip updateUnnamedList(List<Unnamed> newList) {
+    if (tote != null) {
+      final Tote newTote = tote!.copyWith(unnamed: newList);
       return copyWith(tote: newTote);
     }
     return this;

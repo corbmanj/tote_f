@@ -37,4 +37,8 @@ class UpdateNamed extends _$UpdateNamed {
         .read(tripNotifierProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
   }
+
+  void packNamedItem(Named namedItem, bool isPacked) {
+    ref.read(namedItemsNotifierProvider.notifier).packNamed(namedItem, isPacked);
+  }
 }

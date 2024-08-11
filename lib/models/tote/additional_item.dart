@@ -1,14 +1,18 @@
 class AdditionalItem {
   String name;
   bool included;
-  AdditionalItem(this.name, this.included);
+  bool? isPacked;
+  AdditionalItem(this.name, this.included, [this.isPacked]) {
+    isPacked = isPacked ?? false;
+  }
 
-  Map toJson() => {'name': name, 'included': included};
+  Map toJson() => {'name': name, 'included': included, 'isPacked': isPacked};
 
   factory AdditionalItem.fromMap(Map<String, dynamic> map) {
     return AdditionalItem(
       map['name'],
-      map['included']
+      map['included'],
+      map['isPacked'] ?? false,
     );
   }
 
@@ -18,5 +22,9 @@ class AdditionalItem {
 
   void updateName(String newName) {
     name = newName;
+  }
+
+  void updatePacked(bool newIsPacked) {
+    isPacked = newIsPacked;
   }
 }
