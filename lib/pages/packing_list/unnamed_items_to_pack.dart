@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tote_f/pages/packing_list/checkbox_item.dart';
+import 'package:tote_f/pages/packing_list/unnamed_checkbox_item.dart';
 
 class UnnamedItemsToPack extends StatelessWidget {
   final Map<String, int> unnamedItems;
@@ -12,7 +12,7 @@ class UnnamedItemsToPack extends StatelessWidget {
           .map((key) => Row(
                 children: [
                   Text('$key: ', style: const TextStyle(fontWeight: FontWeight.bold),),
-                  CheckboxItem(text: '${unnamedItems[key]}'),
+                  UnnamedCheckboxItem(itemName: key, itemCount: unnamedItems[key] ?? 0),
                 ],
               ))
           .toList(),

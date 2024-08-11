@@ -1,8 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/pages/home/home.dart';
+import 'package:tote_f/pages/packing_list/additional_items_to_pack.dart';
 import 'package:tote_f/pages/packing_list/named_items_to_pack.dart';
 import 'package:tote_f/pages/packing_list/unnamed_items_to_pack.dart';
+import 'package:tote_f/providers/additional_items_provider.dart';
 import 'package:tote_f/providers/packing_list_provider.dart';
 
 class PackingList extends ConsumerWidget {
@@ -10,6 +12,7 @@ class PackingList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final additionalItemsRef = ref.watch(additionalItemsNotifierProvider);
     final packingListRef = ref.watch(packingListNotifierProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Packing List')),
@@ -23,6 +26,7 @@ class PackingList extends ConsumerWidget {
                   child: Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
+                      AdditionalItemsToPack(additionalItems: additionalItemsRef),
                       NamedItemsToPack(namedItems: packingListRef.namedItems),
                       UnnamedItemsToPack(unnamedItems: packingListRef.unnamedItems),
                     ],

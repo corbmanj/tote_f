@@ -78,7 +78,18 @@ class _EditableChipState extends ConsumerState<EditableChip> {
                 }
                 setEditing(false);
               },
-              onTapOutside: (ev) => setEditing(false),
+              onTapOutside: (ev) {
+                if (_controller.text != "") {
+                  namedController.updateNameAndSelect(
+                    _controller.text,
+                    widget.namedItem.ordering,
+                    widget.dayIndex,
+                    widget.outfitOrdering,
+                    widget.outfitItem.type,
+                  );
+                }
+                setEditing(false);
+              },
             ),
           )
         ],

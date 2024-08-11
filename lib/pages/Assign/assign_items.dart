@@ -48,10 +48,3 @@ class AssignItems extends ConsumerWidget {
     );
   }
 }
-
-// body: ListView.builder(
-      //   padding: const EdgeInsets.all(8.0),
-      //   itemCount: tripRef.days.length,
-      //   itemBuilder: (BuildContext context, int index) =>
-      //       AssignDay(index: index),
-      // ),

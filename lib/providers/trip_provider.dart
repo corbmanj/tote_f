@@ -3,6 +3,7 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/additional_item_section.dart';
 import 'package:tote_f/models/tote/day.dart';
 import 'package:tote_f/models/tote/named.dart';
+import 'package:tote_f/models/tote/unnamed.dart';
 import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/services/db_service.dart';
 
@@ -23,13 +24,13 @@ class TripNotifier extends _$TripNotifier {
     state = trip;
   }
 
-  void saveTrip(Trip updatedTrip) {
+  Future<void> saveTrip(Trip updatedTrip) async {
     final DatabaseService dbService = DatabaseService();
     dbService.saveTripById(updatedTrip, updatedTrip.id ?? -1);
     loadTrip(updatedTrip);
   }
 
-  void replaceDayAndUpdateTrip(Trip trip, Day newDay) {
+  Future<void> replaceDayAndUpdateTrip(Trip trip, Day newDay) async {
     Trip updatedTrip = trip.replaceDayInTrip(newDay.dayCode, newDay);
     saveTrip(updatedTrip);
   }
@@ -37,6 +38,12 @@ class TripNotifier extends _$TripNotifier {
   void replaceNamedAndUpdateTrip(List<Named> namedList) {
     Trip updatedTrip = state;
     updatedTrip = updatedTrip.updateNamedList(namedList);
+    saveTrip(updatedTrip);
+  }
+
+  void replaceUnnamedAndUpdateTrip(List<Unnamed> newList) {
+    Trip updatedTrip = state;
+    updatedTrip = updatedTrip.updateUnnamedList(newList);
     saveTrip(updatedTrip);
   }
 

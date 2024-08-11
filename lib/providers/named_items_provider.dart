@@ -24,6 +24,7 @@ class NamedItemsNotifier extends _$NamedItemsNotifier {
       }
       return item.ordering == ordering ? updatedItem : item;
     }
+
     List<Named> newList = state.map(copyItem).toList();
     state = newList;
     ref.read(tripNotifierProvider.notifier).replaceNamedAndUpdateTrip(newList);
@@ -35,5 +36,16 @@ class NamedItemsNotifier extends _$NamedItemsNotifier {
     newList.add(newItem);
     ref.read(tripNotifierProvider.notifier).replaceNamedAndUpdateTrip(newList);
     state = newList;
+  }
+
+  void packNamed(Named item, bool isPacked) {
+    List<Named> newList = state
+        .map((Named oldItem) =>
+            oldItem.parentType == item.parentType && oldItem.name == item.name
+                ? oldItem.copyWith(isPacked: isPacked)
+                : oldItem)
+        .toList();
+    state = newList;
+    ref.read(tripNotifierProvider.notifier).replaceNamedAndUpdateTrip(newList);
   }
 }

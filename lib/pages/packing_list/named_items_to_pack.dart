@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:tote_f/models/tote/named.dart';
-import 'package:tote_f/pages/packing_list/checkbox_item.dart';
+import 'package:tote_f/pages/packing_list/named_checkbox_item.dart';
 
 class NamedItemsToPack extends StatelessWidget {
   final Map<String, Set<Named>> namedItems;
@@ -35,12 +35,12 @@ class NamedItemsOfType extends StatelessWidget {
       crossAxisAlignment: WrapCrossAlignment.center,
       alignment: WrapAlignment.start,
       children: [
-      Text(
+        Text(
           '$type: ',
           style: const TextStyle(fontWeight: FontWeight.bold),
         ),
-        ...items.map((e) => CheckboxItem(text: e.name)),
-    ],);
-    
+        ...items.map((e) => NamedCheckboxItem(item: e)),
+      ],
+    );
   }
 }

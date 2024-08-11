@@ -72,7 +72,16 @@ class _EditableAdditionalChipState
                 }
                 setEditing(false);
               },
-              onTapOutside: (ev) => setEditing(false),
+              onTapOutside: (ev) {
+                if (_controller.text != "") {
+                  additionalItemsController.renameAdditionalItem(
+                    widget.item,
+                    widget.section,
+                    _controller.text,
+                  );
+                }
+                setEditing(false);
+              },
             ),
           )
         ],
