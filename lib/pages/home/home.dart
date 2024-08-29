@@ -1,12 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:tote_f/consumers/create_trip_consumer.dart';
 import 'package:tote_f/pages/create/create_trip.dart';
 import '../load/load_trip.dart';
 
-class Home extends StatelessWidget {
+class Home extends ConsumerWidget {
   const Home({super.key});
 
   @override
-  Widget build(BuildContext context) {
+  Widget build(BuildContext context, WidgetRef ref) {
     return Scaffold(
       appBar: AppBar(
         // Here we take the value from the MyHomePage object that was created by
@@ -23,6 +25,7 @@ class Home extends StatelessWidget {
                 minimumSize: const Size(200, 50),
               ),
               onPressed: () {
+                ref.read(createTripConsumerProvider.notifier).initializeNewTrip();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: ((context) => const CreateTrip())),

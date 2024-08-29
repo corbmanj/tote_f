@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_outfit.dart';
 import 'package:tote_f/models/tote/outfit.dart';
@@ -7,20 +6,17 @@ import 'package:tote_f/models/user/outfit_item.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 
 class OutfitItems extends ConsumerWidget {
-  final Outfit outfit;
+  final Outfit? outfit;
   final int dayIndex;
   const OutfitItems({super.key, required this.outfit, required this.dayIndex});
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final outfitRef = ref.watch(tripNotifierProvider.select((trip) => trip
-        .days[dayIndex].outfits
-        ?.firstWhereOrNull((element) => element.ordering == outfit.ordering)));
-    if (outfitRef == null) {
+    if (outfit == null) {
       return const Placeholder();
     }
     return Wrap(
-      children: outfitRef.items
-          .map((item) => _buildItem(item, dayIndex, outfit.ordering, ref))
+      children: outfit!.items
+          .map((item) => _buildItem(item, dayIndex, outfit!.ordering, ref))
           .toList(),
     );
   }

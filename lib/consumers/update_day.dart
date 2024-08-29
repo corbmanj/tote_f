@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/day.dart';
+import 'package:tote_f/models/tote/outfit.dart';
 import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 import 'package:tote_f/providers/outfit_list_expanded.dart';
@@ -23,6 +24,18 @@ class UpdateDay extends _$UpdateDay {
     ref
         .read(tripNotifierProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
+  }
+
+  void deleteOutfitFromDay(
+    Outfit outfit,
+    Day day,
+  ) {
+    final Trip tripRef = ref.watch(tripNotifierProvider);
+    day.deleteOutfit(outfit);
+    ref
+        .read(tripNotifierProvider.notifier)
+        .replaceDayAndUpdateTrip(tripRef, day);
+
   }
 
   void expandOutfit(

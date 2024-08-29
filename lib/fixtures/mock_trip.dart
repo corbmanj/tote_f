@@ -265,16 +265,17 @@ List<OutfitTemplate> outfitTypeList = [
   otherOutfit,
 ];
 // Build Additional Item Sections
+AdditionalItem runningLight = AdditionalItem("runningLight", true);
 AdditionalItem computer = AdditionalItem("computer", true);
 AdditionalItem computerCharger = AdditionalItem("computer charger", true);
 AdditionalItem phone = AdditionalItem("phone", true);
 AdditionalItem phoneCharger = AdditionalItem("phone charger", true);
 AdditionalItem gpsWatch = AdditionalItem("gps watch", true);
 AdditionalItem watchCharger = AdditionalItem("watch charger", true);
-AdditionalItem ipad = AdditionalItem("ipad", true);
-AdditionalItem ipadCharger = AdditionalItem("ipad charger", true);
+AdditionalItem ipad = AdditionalItem("ipad", false);
+AdditionalItem ipadCharger = AdditionalItem("ipad charger", false);
 AdditionalItem headphones = AdditionalItem("headphones", true);
-AdditionalItem headphoneSplitter = AdditionalItem("headphone splitter", true);
+AdditionalItem battery = AdditionalItem("battery", true);
 AdditionalItemSection electronics = AdditionalItemSection("electronics", [
   computer,
   computerCharger,
@@ -285,24 +286,41 @@ AdditionalItemSection electronics = AdditionalItemSection("electronics", [
   ipad,
   ipadCharger,
   headphones,
-  headphoneSplitter
+  battery,
+  runningLight
 ]);
 
-AdditionalItem brownPurse = AdditionalItem("brown purse", true);
-AdditionalItem blackTote = AdditionalItem("black tote", true);
-AdditionalItem blueBackpack = AdditionalItem("blue travel backpack", true);
+AdditionalItem blackBackpack = AdditionalItem("black backpack", true);
+AdditionalItem blackPurse = AdditionalItem("black purse", true);
+AdditionalItem greySuitcase = AdditionalItem("grey suitcase", true);
+AdditionalItem greenBackpack = AdditionalItem("small green backpack", true);
 AdditionalItemSection bags =
-    AdditionalItemSection("bags", [brownPurse, blackTote, blueBackpack]);
+    AdditionalItemSection("bags", [blackBackpack, blackPurse, greySuitcase, greenBackpack]);
 
 AdditionalItem toiletKit = AdditionalItem("toilet kit", true);
+AdditionalItem toothbrush = AdditionalItem("toothbrush", true);
+AdditionalItem sunscreen = AdditionalItem("sunscreen", false);
+AdditionalItem migshield = AdditionalItem("migshield", true);
+AdditionalItem ubrelvy = AdditionalItem("ubrelvy", true);
+AdditionalItem tampins = AdditionalItem("tampins", false);
+AdditionalItem laundrySheets = AdditionalItem("laundry sheets", true);
 AdditionalItemSection toiletries =
-    AdditionalItemSection("toiletries", [toiletKit]);
+    AdditionalItemSection("toiletries", [toiletKit, toothbrush, sunscreen, migshield, ubrelvy, laundrySheets, tampins]);
 
 AdditionalItem waterBottle = AdditionalItem("water bottle", true);
-AdditionalItemSection snacks = AdditionalItemSection("snacks", [waterBottle]);
+AdditionalItem runWaterBottle = AdditionalItem("run water bottle", true);
+AdditionalItem gels = AdditionalItem("gels", true);
+AdditionalItem coffeeMug = AdditionalItem("coffee mug", true);
+AdditionalItem calcium = AdditionalItem("calcium vitamins", true);
+AdditionalItem cocoa = AdditionalItem("sleepy cocoa", true);
+AdditionalItem ag1 = AdditionalItem("ag1", true);
+AdditionalItem dripDrop = AdditionalItem("drip drop", true);
+AdditionalItemSection snacks = AdditionalItemSection("snacks", [waterBottle, coffeeMug, runWaterBottle, gels, calcium, cocoa, ag1, dripDrop]);
 
-AdditionalItem umbrella = AdditionalItem("umbrella", true);
-AdditionalItemSection misc = AdditionalItemSection("misc", [umbrella]);
+AdditionalItem umbrella = AdditionalItem("umbrella", false);
+AdditionalItem sunglasses = AdditionalItem("sunglasses", true);
+AdditionalItem swimsuit = AdditionalItem("swim suit", false);
+AdditionalItemSection misc = AdditionalItemSection("misc", [umbrella, sunglasses, swimsuit]);
 
 // Build Days
 Outfit work0 = Outfit.fromTemplate(workOutfit, 0);

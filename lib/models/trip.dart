@@ -3,6 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tote_f/models/tote/additional_item_section.dart';
 import 'package:tote_f/models/tote/named.dart';
+import 'package:tote_f/models/tote/outfit.dart';
 import 'package:tote_f/models/tote/unnamed.dart';
 import 'package:uuid/uuid.dart';
 import './tote/day.dart';
@@ -110,6 +111,15 @@ extension MutableTrip on Trip {
       return copyWith(tote: newTote);
     }
     return this;
+  }
+
+  Trip copyOutfitToDays(List<int> daysToCopyTo, Outfit outfit) {
+    for (final day in days) {
+      if (daysToCopyTo.contains(day.dayCode)) {
+        day.addOutfitCopy(outfit);
+      }
+    }
+    return copyWith(days: days);
   }
 
   Trip copyWith({

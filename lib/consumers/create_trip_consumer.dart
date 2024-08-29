@@ -8,10 +8,10 @@ import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 import 'package:tote_f/services/db_service.dart';
 
-part 'create_trip.g.dart';
+part 'create_trip_consumer.g.dart';
 
 @riverpod
-class CreateTrip extends _$CreateTrip {
+class CreateTripConsumer extends _$CreateTripConsumer {
   @override
   void build() {}
 
@@ -30,6 +30,12 @@ class CreateTrip extends _$CreateTrip {
     final currentTrip = ref.watch(tripNotifierProvider);
     final newTrip = currentTrip.copyWith(city: city);
     loadTrip(newTrip);
+  }
+
+  Future<void> initializeNewTrip() async {
+    final DatabaseService dbService = DatabaseService();
+    final newId = await dbService.createTrip(defaultTrip);
+    ref.read(loadTripProvider.notifier).loadTrip(newId);
   }
 
   void createTripFromSchedule({bool? reset = false}) async {

@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:flutter_slidable/flutter_slidable.dart';
+import 'package:intl/intl.dart';
 import 'package:tote_f/consumers/load_trip.dart';
 import 'package:tote_f/models/trip_meta.dart';
 import 'package:tote_f/providers/trip_list_provider.dart';
@@ -49,6 +50,8 @@ class TripTile extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
+    final startDateString = DateFormat('E, MMM d').format(trip.dateRange.start);
+    final endDateString = DateFormat('E, MMM d').format(trip.dateRange.end);
     final loadTripConsumer = ref.read(loadTripProvider.notifier);
     final state = trip.city.split(',').last.trim();
     return Slidable(
@@ -87,7 +90,7 @@ class TripTile extends ConsumerWidget {
         },
         leading: CircleAvatar(child: Text(state)),
         title: Text(trip.city),
-        subtitle: Text(trip.dateRange.start.toString()),
+        subtitle: Text('$startDateString - $endDateString'),
       ),
     );
   }

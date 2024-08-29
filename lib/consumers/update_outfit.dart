@@ -1,5 +1,6 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/day.dart';
+import 'package:tote_f/models/tote/outfit.dart';
 import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/models/user/outfit_item.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
@@ -36,5 +37,11 @@ class UpdateOutfit extends _$UpdateOutfit {
     final Trip tripRef = ref.watch(tripNotifierProvider);
     Day newDay = tripRef.days[dayIndex].selectOutfitItem(outfitOrdering: outfitOrdering, itemType: item.type, newSelected: value);
     ref.read(tripNotifierProvider.notifier).replaceDayAndUpdateTrip(tripRef, newDay);
+  }
+
+  void copyOutfitToDays(List<int> daysToCopyTo, Outfit outfit) {
+    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final updatedTrip = tripRef.copyOutfitToDays(daysToCopyTo, outfit);
+    ref.read(tripNotifierProvider.notifier).saveTrip(updatedTrip);
   }
 }

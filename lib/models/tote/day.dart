@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:collection/collection.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 
 import './outfit.dart';
@@ -56,6 +57,21 @@ class Day {
       map['summary'],
       jsonDecode(map['outfits'] ?? '[]').map<Outfit>((outfit) => Outfit.fromMap(outfit)).toList(),
     );
+  }
+
+  void addOutfitCopy(Outfit outfit) {
+    if (outfits == null) {
+      outfits = [outfit];
+    } else {
+      outfits = [...outfits!, outfit];
+    }
+  }
+
+  void deleteOutfit(Outfit outfit) {
+    if (outfits != null && outfits!.isNotEmpty) {
+    outfits = outfits!.whereNot((Outfit oldOutfit) => oldOutfit.ordering == outfit.ordering).toList();
+
+    }
   }
 }
 

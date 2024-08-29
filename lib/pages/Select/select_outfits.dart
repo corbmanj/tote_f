@@ -13,13 +13,16 @@ class SelectOutfits extends ConsumerWidget {
     Trip tripRef = ref.watch(tripNotifierProvider);
     int dayCount = tripRef.days.length;
     String cityName = tripRef.city;
+    if (dayCount == 0) {
+      return Container();
+    }
     return Scaffold(
       appBar: AppBar(title: Text(cityName)),
       body: ListView.builder(
         padding: const EdgeInsets.all(8.0),
         itemCount: dayCount,
         itemBuilder: (BuildContext context, int index) =>
-            SelectDay(index: index),
+            SelectDay(day: tripRef.days[index], dayIndex: index,),
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: const IconThemeData(color: Colors.blueGrey),

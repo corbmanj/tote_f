@@ -1,33 +1,30 @@
 import 'package:flutter/material.dart';
-import 'package:collection/collection.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_outfit.dart';
 import 'package:tote_f/models/tote/outfit.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
-import 'package:tote_f/providers/trip_provider.dart';
 
 class SelectOutfitType extends ConsumerWidget {
-  const SelectOutfitType(
-      {super.key,
-      required this.options,
-      required this.dayIndex,
-      required this.ordering});
+  const SelectOutfitType({
+    super.key,
+    required this.options,
+    required this.dayIndex,
+    required this.ordering,
+    required this.outfit,
+  });
   final List<OutfitTemplate> options;
   final int dayIndex;
   final int ordering;
+  final Outfit? outfit;
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Outfit? outfitRef = ref.watch(tripNotifierProvider.select((trip) =>
-        trip.days[dayIndex].outfits!
-            .firstWhereOrNull((outfit) => outfit.ordering == ordering)));
-
-    if (outfitRef == null) {
+    if (outfit == null) {
       return Container();
     }
 
     final OutfitTemplate outfitType =
-        options.firstWhere((template) => template.type == outfitRef.type);
+        options.firstWhere((template) => template.type == outfit!.type);
 
     return DropdownButton<OutfitTemplate>(
       value: outfitType,

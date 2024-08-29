@@ -1,26 +1,27 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'update_additional.dart';
+part of 'create_trip_consumer.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateAdditionalHash() => r'cd7e7c0b03fa0ae8f9decc8b1479de83c7aab91b';
+String _$createTripConsumerHash() =>
+    r'86457e0eeb5bcc9c3804a18ae6718f5652d49dcb';
 
-/// See also [UpdateAdditional].
-@ProviderFor(UpdateAdditional)
-final updateAdditionalProvider =
-    AutoDisposeNotifierProvider<UpdateAdditional, void>.internal(
-  UpdateAdditional.new,
-  name: r'updateAdditionalProvider',
+/// See also [CreateTripConsumer].
+@ProviderFor(CreateTripConsumer)
+final createTripConsumerProvider =
+    AutoDisposeNotifierProvider<CreateTripConsumer, void>.internal(
+  CreateTripConsumer.new,
+  name: r'createTripConsumerProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$updateAdditionalHash,
+      : _$createTripConsumerHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$UpdateAdditional = AutoDisposeNotifier<void>;
+typedef _$CreateTripConsumer = AutoDisposeNotifier<void>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member
