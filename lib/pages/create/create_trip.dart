@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/consumers/create_trip.dart';
+import 'package:tote_f/consumers/create_trip_consumer.dart';
 import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/pages/Select/select_outfits.dart';
 import 'package:tote_f/providers/trip_provider.dart';
@@ -13,7 +13,7 @@ class CreateTrip extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final Trip tripRef = ref.watch(tripNotifierProvider);
-    final tripProvider = ref.read(createTripProvider.notifier);
+    final tripProvider = ref.read(createTripConsumerProvider.notifier);
     final bool hasOutfits = tripRef.days
         .any((day) => day.outfits != null && day.outfits!.isNotEmpty);
 
@@ -36,7 +36,7 @@ class CreateTrip extends ConsumerWidget {
           context: context,
           builder: (BuildContext context) {
             return AlertDialog(
-              title: const Text("Resest Current Trip?"),
+              title: const Text("Reset Current Trip?"),
               content: const SingleChildScrollView(
                 child: ListBody(
                   children: <Widget>[
@@ -61,7 +61,7 @@ class CreateTrip extends ConsumerWidget {
                 TextButton(
                   child: const Text('Continue unchanged'),
                   onPressed: () {
-                    Navigator.pop(context, 'contnue');
+                    Navigator.pop(context, 'continue');
                     Navigator.push(
                         context,
                         MaterialPageRoute(

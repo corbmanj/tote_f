@@ -12,12 +12,15 @@ class AssignItems extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final tripRef = ref.watch(tripNotifierProvider);
+    if (tripRef.days.isEmpty) {
+      return Container();
+    }
     return Scaffold(
       appBar: AppBar(title: const Text('Assign Items')),
       body: ListView(
         padding: const EdgeInsets.all(8.0),
-        children: [const AssignAdditionalItems(), 
-        ...tripRef.days.asMap().entries.map((entry) => AssignDay(index: entry.key))],
+        children: [const AssignAdditionalItems(),
+        ...tripRef.days.asMap().entries.map((entry) => AssignDay(index: entry.key, day: entry.value))],
       ),
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: const IconThemeData(color: Colors.blueGrey),

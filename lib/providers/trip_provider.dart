@@ -9,15 +9,17 @@ import 'package:tote_f/services/db_service.dart';
 
 part 'trip_provider.g.dart';
 
+final Trip defaultTrip = Trip(
+  city: "",
+  days: [],
+  dateRange: DateTimeRange(start: DateTime.now(), end: DateTime.now()),
+);
+
 @riverpod
 class TripNotifier extends _$TripNotifier {
   @override
   Trip build() {
-    return Trip(
-      city: "",
-      days: [],
-      dateRange: DateTimeRange(start: DateTime.now(), end: DateTime.now()),
-    );
+    return defaultTrip;
   }
 
   void loadTrip(Trip trip) {
@@ -47,7 +49,9 @@ class TripNotifier extends _$TripNotifier {
     saveTrip(updatedTrip);
   }
 
-  void replaceAdditionalItemsAndUpdateTrip(List<AdditionalItemSection> newAdditionalItems) {
+  void replaceAdditionalItemsAndUpdateTrip(
+    List<AdditionalItemSection> newAdditionalItems,
+  ) {
     Trip updatedTrip = state;
     updatedTrip = updatedTrip.updateAdditionalItems(newAdditionalItems);
     saveTrip(updatedTrip);
