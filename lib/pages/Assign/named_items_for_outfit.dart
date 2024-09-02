@@ -24,7 +24,7 @@ class NamedItemsForOutfit extends ConsumerWidget {
                   label: Text(namedItem.name),
                   padding: const EdgeInsets.all(1.0),
                   visualDensity: const VisualDensity(horizontal: -4.0, vertical: -4.0),
-                  color: const MaterialStatePropertyAll(Colors.blue)
+                  color: const WidgetStatePropertyAll(Colors.blue)
                 ))
             .toList()));
   }
