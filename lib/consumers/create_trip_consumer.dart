@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
+import 'package:tote_f/apis/fetch_weather.dart';
 import 'package:tote_f/consumers/load_trip.dart';
 import 'package:tote_f/fixtures/mock_trip.dart';
 import 'package:tote_f/models/tote/day.dart';
 import 'package:tote_f/models/tote/tote.dart';
+import 'package:tote_f/models/tote/weather.dart';
 import 'package:tote_f/models/trip.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 import 'package:tote_f/services/db_service.dart';
@@ -38,16 +40,40 @@ class CreateTripConsumer extends _$CreateTripConsumer {
     ref.read(loadTripProvider.notifier).loadTrip(newId);
   }
 
+  List<Day> createDayListFromWeather(
+      WeatherResponse weather, DateTimeRange dateRange) {
+    if (weather.success == true &&
+        weather.days != null &&
+        weather.days!.isNotEmpty) {
+      return weather.days!
+          .map((Weather day) => Day(
+                day.dateTime.millisecondsSinceEpoch,
+                day.dateTime,
+                day.low,
+                day.high,
+                day.icon,
+                day.precip,
+                day.sunset,
+                day.sunrise,
+                day.summary,
+              ))
+          .toList();
+    }
+    List<Day> dayList = [];
+    for (var day = dateRange.start;
+        day.compareTo(dateRange.end) <= 0;
+        day = day.add(const Duration(days: 1))) {
+      dayList.add(Day.defaultDay(day));
+    }
+    return dayList;
+  }
+
   void createTripFromSchedule({bool? reset = false}) async {
     final DatabaseService dbService = DatabaseService();
     final currentTrip = ref.watch(tripNotifierProvider);
-    List<Day> dayList = [];
-    for (var day = currentTrip.dateRange.start;
-        day.compareTo(currentTrip.dateRange.end) <= 0;
-        day = day.add(const Duration(days: 1))) {
-      dayList
-          .add(Day(day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, ""));
-    }
+    final weatherResponse =
+        await fetchWeather(currentTrip.city, currentTrip.dateRange);
+    final List<Day> dayList = createDayListFromWeather(weatherResponse, currentTrip.dateRange);
     final newTrip = currentTrip.copyWith(
         days: dayList,
         tote: Tote(

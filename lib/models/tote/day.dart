@@ -32,17 +32,21 @@ class Day {
   }
 
   Map toJson() => {
-    'dayCode': dayCode,
-    'day': day.millisecondsSinceEpoch,
-    'low': low,
-    'high': high,
-    'icon': icon,
-    'precip': precip,
-    'sunset': sunset,
-    'sunrise': sunrise,
-    'summary': summary,
-    'outfits': jsonEncode(outfits)
-  };
+        'dayCode': dayCode,
+        'day': day.millisecondsSinceEpoch,
+        'low': low,
+        'high': high,
+        'icon': icon,
+        'precip': precip,
+        'sunset': sunset,
+        'sunrise': sunrise,
+        'summary': summary,
+        'outfits': jsonEncode(outfits)
+      };
+
+  factory Day.defaultDay(DateTime day) {
+    return Day(day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, "");
+  }
 
   factory Day.fromMap(Map<String, dynamic> map) {
     return Day(
@@ -55,7 +59,9 @@ class Day {
       map['sunset'],
       map['sunrise'],
       map['summary'],
-      jsonDecode(map['outfits'] ?? '[]').map<Outfit>((outfit) => Outfit.fromMap(outfit)).toList(),
+      jsonDecode(map['outfits'] ?? '[]')
+          .map<Outfit>((outfit) => Outfit.fromMap(outfit))
+          .toList(),
     );
   }
 
@@ -69,8 +75,9 @@ class Day {
 
   void deleteOutfit(Outfit outfit) {
     if (outfits != null && outfits!.isNotEmpty) {
-    outfits = outfits!.whereNot((Outfit oldOutfit) => oldOutfit.ordering == outfit.ordering).toList();
-
+      outfits = outfits!
+          .whereNot((Outfit oldOutfit) => oldOutfit.ordering == outfit.ordering)
+          .toList();
     }
   }
 }
@@ -142,8 +149,8 @@ extension MutableDay on Day {
   }
 
   Day updateOutfitList({required List<Outfit> newOutfits}) {
-    return Day(
-        dayCode, day, low, high, icon, precip, sunrise, sunset, summary, newOutfits);
+    return Day(dayCode, day, low, high, icon, precip, sunrise, sunset, summary,
+        newOutfits);
   }
 
   Day nameOutfitItem(
