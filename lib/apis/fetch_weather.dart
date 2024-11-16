@@ -9,11 +9,11 @@ Future<WeatherResponse> fetchWeather(String city, DateTimeRange dates) async {
   if (weatherKey.isEmpty) {
     throw AssertionError('WTHR_KEY is not set');
   }
-  final startSeconds = dates.start.millisecondsSinceEpoch ~/ 1000;
-  final endSeconds = dates.end.millisecondsSinceEpoch ~/ 1000;
+  final String startDate = '${dates.start.year}-${dates.start.month}-${dates.start.day}';
+  final String endDate = '${dates.end.year}-${dates.end.month}-${dates.end.day}';
   var url = Uri.https(
     'weather.visualcrossing.com',
-    'VisualCrossingWebServices/rest/services/timeline/$city/$startSeconds/$endSeconds',
+    'VisualCrossingWebServices/rest/services/timeline/$city/$startDate/$endDate',
     {'key': weatherKey, 'include': 'days'},
   );
   var response = await http.get(url);
