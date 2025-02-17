@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tote_f/models/tote/day.dart';
+import 'package:tote_f/models/trip/day.dart';
 import 'package:tote_f/pages/Select/select_outfit.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import '../../shared/day_header.dart';

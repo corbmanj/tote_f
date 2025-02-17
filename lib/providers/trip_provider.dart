@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/models/tote/additional_item_section.dart';
-import 'package:tote_f/models/tote/day.dart';
+import 'package:tote_f/models/trip/day.dart';
 import 'package:tote_f/models/tote/named.dart';
 import 'package:tote_f/models/tote/unnamed.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/services/db_service.dart';
 
 part 'trip_provider.g.dart';

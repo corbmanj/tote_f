@@ -1,5 +1,5 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/providers/additional_items_provider.dart';
 import 'package:tote_f/providers/named_items_provider.dart';
 import 'package:tote_f/providers/trip_list_provider.dart';

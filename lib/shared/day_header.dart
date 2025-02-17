@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:tote_f/utils/get_day_icon.dart';
-import '../models/tote/day.dart';
+import '../models/trip/day.dart';
 
 class DayHeader extends StatelessWidget {
   final Day day;

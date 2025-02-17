@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_day.dart';
 import 'package:tote_f/fixtures/mock_trip.dart';
-import 'package:tote_f/models/tote/outfit.dart';
+import 'package:tote_f/models/trip/outfit.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 import 'package:tote_f/pages/Select/outfit_name_edit.dart';
 import 'package:tote_f/pages/Select/select_outfit_type.dart';

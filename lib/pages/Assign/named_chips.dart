@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_named.dart';
 import 'package:tote_f/models/tote/named.dart';
-import 'package:tote_f/models/user/outfit_item.dart';
+import 'package:tote_f/models/trip/outfit_item.dart';
 import 'package:tote_f/pages/Assign/editable_chip.dart';
 import 'package:tote_f/providers/named_items_provider.dart';
 

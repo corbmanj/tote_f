@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_outfit.dart';
-import 'package:tote_f/models/tote/outfit.dart';
-import 'package:tote_f/models/user/outfit_item.dart';
+import 'package:tote_f/models/trip/outfit.dart';
+import 'package:tote_f/models/trip/outfit_item.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 
 class OutfitItems extends ConsumerWidget {

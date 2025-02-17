@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/create_trip_consumer.dart';
 import 'package:tote_f/pages/create/create_trip.dart';
+import 'package:tote_f/pages/settings/settings_page.dart';
 import '../load/load_trip.dart';
 
 class Home extends ConsumerWidget {
@@ -34,7 +35,7 @@ class Home extends ConsumerWidget {
               child: const Text("Plan a New Trip"),
             ),
             const SizedBox(
-              height: 50,
+              height: 40,
             ),
             ElevatedButton(
               style: ElevatedButton.styleFrom(
@@ -48,6 +49,22 @@ class Home extends ConsumerWidget {
                 );
               },
               child: const Text("Load a Trip"),
+            ),
+            const SizedBox(
+              height: 40,
+            ),
+            ElevatedButton(
+              style: ElevatedButton.styleFrom(
+                maximumSize: const Size(200, 50),
+                minimumSize: const Size(200, 50),
+              ),
+              onPressed: () {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: ((context) => const SettingsPage())),
+                );
+              },
+              child: const Text("Setup Outfits"),
             )
           ],
         ),

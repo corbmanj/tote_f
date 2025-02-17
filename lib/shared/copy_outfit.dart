@@ -3,8 +3,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:tote_f/consumers/update_outfit.dart';
-import 'package:tote_f/models/tote/day.dart';
-import 'package:tote_f/models/tote/outfit.dart';
+import 'package:tote_f/models/trip/day.dart';
+import 'package:tote_f/models/trip/outfit.dart';
 
 class CopyOutfit extends ConsumerStatefulWidget {
   final Outfit outfit;

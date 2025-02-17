@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/pages/Assign/assign_items.dart';
 import 'package:tote_f/pages/Select/select_day.dart';
 import 'package:tote_f/providers/trip_provider.dart';

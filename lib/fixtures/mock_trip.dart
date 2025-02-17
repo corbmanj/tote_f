@@ -1,269 +1,262 @@
 import 'package:flutter/material.dart';
+import 'package:tote_f/fixtures/mock_settings.dart';
 
 import '../models/tote/named.dart';
 import '../models/tote/tote.dart';
 import '../models/tote/unnamed.dart';
-import '../models/trip.dart';
+import '../models/trip/trip.dart';
 
 import '../models/tote/additional_item_section.dart';
 import '../models/tote/additional_item.dart';
-import '../models/tote/day.dart';
-import '../models/tote/outfit.dart';
+import '../models/trip/day.dart';
+import '../models/trip/outfit.dart';
 import '../models/user/outfit_template.dart';
-import '../models/user/item_template.dart';
 
 // Build Outfit Items
-ItemTemplate runningShoes() {
-  return ItemTemplate("Running Shoes", true, "shoes");
-}
+// ItemTemplate runningShoes() {
 
-ItemTemplate runningSocks() {
-  return ItemTemplate("Running Socks", false);
-}
+// }
 
-ItemTemplate runningBottoms() {
-  return ItemTemplate("Running Bottoms", true, "bottoms");
-}
+// ItemTemplate runningSocks() {
+//   return ItemTemplate("Running Socks", );
+// }
 
-ItemTemplate rundies() {
-  return ItemTemplate("rundies", false);
-}
+// ItemTemplate runningBottoms() {
+//   return ItemTemplate("Running Bottoms", true,  "bottoms");
+// }
 
-ItemTemplate sportsBra() {
-  return ItemTemplate("Sports Bra", true, "bras");
-}
+// ItemTemplate rundies() {
+//   return ItemTemplate("rundies", );
+// }
 
-ItemTemplate workoutTop() {
-  return ItemTemplate("Workout Top", true, "tops");
-}
+// ItemTemplate sportsBra() {
+//   return ItemTemplate("Sports Bra", true,  "bras");
+// }
 
-ItemTemplate runCoat() {
-  return ItemTemplate("Running Coat", true, "coats");
-}
+// ItemTemplate workoutTop() {
+//   return ItemTemplate("Workout Top", true,  "tops");
+// }
 
-ItemTemplate runHat() {
-  return ItemTemplate("Running Hat", true, "hats");
-}
+// ItemTemplate runCoat() {
+//   return ItemTemplate("Running Coat", true,  "coats");
+// }
 
-ItemTemplate runGloves() {
-  return ItemTemplate("Running Gloves", true, "gloves");
-}
+// ItemTemplate runHat() {
+//   return ItemTemplate("Running Hat", true,  "hats");
+// }
 
-ItemTemplate workShoes() {
-  return ItemTemplate("Work Shoes", true, "shoes");
-}
+// ItemTemplate runGloves() {
+//   return ItemTemplate("Running Gloves", true,  "gloves");
+// }
 
-ItemTemplate socks() {
-  return ItemTemplate("Socks", false);
-}
+// ItemTemplate workShoes() {
+//   return ItemTemplate("Work Shoes", true,  "shoes");
+// }
 
-ItemTemplate workPants() {
-  return ItemTemplate("Work Pants", true, "bottoms");
-}
+// ItemTemplate socks() {
+//   return ItemTemplate("Socks", );
+// }
 
-ItemTemplate undies() {
-  return ItemTemplate("undies", false);
-}
+// ItemTemplate workPants() {
+//   return ItemTemplate("Work Pants", true,  "bottoms");
+// }
 
-ItemTemplate bra() {
-  return ItemTemplate("Bra", true, "bras");
-}
+// ItemTemplate undies() {
+//   return ItemTemplate("undies", );
+// }
 
-ItemTemplate belt() {
-  return ItemTemplate("Belt", true, "belts");
-}
+// ItemTemplate bra() {
+//   return ItemTemplate("Bra", true,  "bras");
+// }
 
-ItemTemplate workTop() {
-  return ItemTemplate("Work Top", true, "tops");
-}
+// ItemTemplate belt() {
+//   return ItemTemplate("Belt", true,  "belts");
+// }
 
-ItemTemplate sweater() {
-  return ItemTemplate("Sweater", true, "sweaters&sweatshirts");
-}
+// ItemTemplate workTop() {
+//   return ItemTemplate("Work Top", true,  "tops");
+// }
 
-ItemTemplate coat() {
-  return ItemTemplate("Coat", true, "coats");
-}
+// ItemTemplate sweater() {
+//   return ItemTemplate("Sweater", true,  "sweaters&sweatshirts");
+// }
 
-ItemTemplate hat() {
-  return ItemTemplate("Hat", true, "hats");
-}
+// ItemTemplate coat() {
+//   return ItemTemplate("Coat", true,  "coats");
+// }
 
-ItemTemplate gloves() {
-  return ItemTemplate("Gloves", true, "gloves");
-}
+// ItemTemplate hat() {
+//   return ItemTemplate("Hat", true,  "hats");
+// }
 
-ItemTemplate jewelry() {
-  return ItemTemplate("Jewelry", true, "jewelry");
-}
+// ItemTemplate gloves() {
+//   return ItemTemplate("Gloves", true,  "gloves");
+// }
 
-ItemTemplate scarf() {
-  return ItemTemplate("Scarf", true, "scarves");
-}
+// ItemTemplate jewelry() {
+//   return ItemTemplate("Jewelry", true, "jewelry");
+// }
 
-ItemTemplate shoes() {
-  return ItemTemplate("Shoes", true, "shoes");
-}
+// ItemTemplate scarf() {
+//   return ItemTemplate("Scarf", true,  "scarves");
+// }
 
-ItemTemplate casualPants() {
-  return ItemTemplate("Casual Pants", true, "bottoms");
-}
+// ItemTemplate shoes() {
+//   return ItemTemplate("Shoes", true,  "shoes");
+// }
 
-ItemTemplate top() {
-  return ItemTemplate("Top", true, "tops");
-}
+// ItemTemplate casualPants() {
+//   return ItemTemplate("Casual Pants", true,  "bottoms");
+// }
 
-ItemTemplate sleepSocks() {
-  return ItemTemplate("Sleep Socks", true, "sleepSocks");
-}
+// ItemTemplate top() {
+//   return ItemTemplate("Top", true,  "tops");
+// }
 
-ItemTemplate sleepPants() {
-  return ItemTemplate("Sleep Pants", true, "bottoms");
-}
+// ItemTemplate sleepSocks() {
+//   return ItemTemplate("Sleep Socks", true,  "sleepSocks");
+// }
 
-ItemTemplate sleepBra() {
-  return ItemTemplate("Sleep Bra", true, "bras");
-}
+// ItemTemplate sleepPants() {
+//   return ItemTemplate("Sleep Pants", true,  "bottoms");
+// }
 
-ItemTemplate sleepShirt() {
-  return ItemTemplate("Sleep Top", true, "tops");
-}
+// ItemTemplate sleepBra() {
+//   return ItemTemplate("Sleep Bra", true, "bras");
+// }
 
-ItemTemplate sweatshirt() {
-  return ItemTemplate("Work Top", true, "sweaters&sweatshirts");
-}
+// ItemTemplate sleepShirt() {
+//   return ItemTemplate("Sleep Top", true,  "tops");
+// }
 
-ItemTemplate formalShoes() {
-  return ItemTemplate("Formal Shoes", true, "shoes");
-}
+// ItemTemplate sweatshirt() {
+//   return ItemTemplate("Work Top", true, "sweaters&sweatshirts");
+// }
 
-ItemTemplate formalPants() {
-  return ItemTemplate("Formal Pants", true, "bottoms");
-}
+// ItemTemplate formalShoes() {
+//   return ItemTemplate("Formal Shoes", true, "shoes");
+// }
 
-ItemTemplate formalTop() {
-  return ItemTemplate("Formal Top", true, "tops");
-}
+// ItemTemplate formalPants() {
+//   return ItemTemplate("Formal Pants", true, "bottoms");
+// }
 
-ItemTemplate dress() {
-  return ItemTemplate("Dress", true, "tops");
-}
+// ItemTemplate formalTop() {
+//   return ItemTemplate("Formal Top", true, "tops");
+// }
 
-ItemTemplate otherShoes() {
-  return ItemTemplate("Other Shoes", true, "shoes");
-}
+// ItemTemplate dress() {
+//   return ItemTemplate("Dress", true, "tops");
+// }
 
-ItemTemplate otherPants() {
-  return ItemTemplate("Other Pants", true, "bottoms");
-}
+// ItemTemplate otherShoes() {
+//   return ItemTemplate("Other Shoes", true, "shoes");
+// }
 
-ItemTemplate otherBelt() {
-  return ItemTemplate("Other Belt", true, "belts");
-}
+// ItemTemplate otherPants() {
+//   return ItemTemplate("Other Pants", true, "bottoms");
+// }
 
-ItemTemplate otherTop() {
-  return ItemTemplate("Other Top", true, "tops");
-}
+// ItemTemplate otherBelt() {
+//   return ItemTemplate("Other Belt", true, "belts");
+// }
 
-ItemTemplate otherCoat() {
-  return ItemTemplate("Other Coat", true, "coats");
-}
+// ItemTemplate otherTop() {
+//   return ItemTemplate("Other Top", true, "tops");
+// }
+
+// ItemTemplate otherCoat() {
+//   return ItemTemplate("Other Coat", true, "coats");
+// }
 
 // Build Outfit Types
-OutfitTemplate workout = OutfitTemplate("Workout", [
-  runningShoes(),
-  runningSocks(),
-  runningBottoms(),
-  rundies(),
-  sportsBra(),
-  workoutTop(),
-  runCoat(),
-  runHat(),
-  runGloves()
-]);
+// OutfitTemplate workout = OutfitTemplate(6, "Workout", [
+//   runningShoes(),
+//   runningSocks(),
+//   runningBottoms(),
+//   rundies(),
+//   sportsBra(),
+//   workoutTop(),
+//   runCoat(),
+//   runHat(),
+//   runGloves()
+// ]);
 
-OutfitTemplate workOutfit = OutfitTemplate("Work", [
-  workShoes(),
-  socks(),
-  workPants(),
-  undies(),
-  belt(),
-  bra(),
-  workTop(),
-  sweater(),
-  coat(),
-  hat(),
-  gloves(),
-  jewelry(),
-  scarf(),
-]);
+// OutfitTemplate workOutfit = OutfitTemplate(1, "Work", [
+//   workShoes(),
+//   socks(),
+//   workPants(),
+//   undies(),
+//   belt(),
+//   bra(),
+//   workTop(),
+//   sweater(),
+//   coat(),
+//   hat(),
+//   gloves(),
+//   jewelry(),
+//   scarf(),
+// ]);
 
-OutfitTemplate casualOutfit = OutfitTemplate("Casual", [
-  shoes(),
-  socks(),
-  casualPants(),
-  undies(),
-  belt(),
-  bra(),
-  top(),
-  sweater(),
-  coat(),
-  hat(),
-  gloves(),
-  jewelry(),
-  scarf(),
-]);
+// OutfitTemplate casualOutfit = OutfitTemplate(2, "Casual", [
+//   shoes(),
+//   socks(),
+//   casualPants(),
+//   undies(),
+//   belt(),
+//   bra(),
+//   top(),
+//   sweater(),
+//   coat(),
+//   hat(),
+//   gloves(),
+//   jewelry(),
+//   scarf(),
+// ]);
 
-OutfitTemplate sleepOutfit = OutfitTemplate("Sleep", [
-  sleepSocks(),
-  sleepPants(),
-  rundies(),
-  sleepBra(),
-  sleepShirt(),
-  sweatshirt(),
-]);
+// OutfitTemplate sleepOutfit = OutfitTemplate(3, "Sleep", [
+//   sleepSocks(),
+//   sleepPants(),
+//   rundies(),
+//   sleepBra(),
+//   sleepShirt(),
+//   sweatshirt(),
+// ]);
 
-OutfitTemplate formalOutfit = OutfitTemplate("Formal Outfit", [
-  formalShoes(),
-  socks(),
-  formalPants(),
-  undies(),
-  belt(),
-  bra(),
-  formalTop(),
-  sweater(),
-  coat(),
-  hat(),
-  gloves(),
-  jewelry(),
-  scarf(),
-  dress(),
-]);
+// OutfitTemplate formalOutfit = OutfitTemplate(4, "Formal Outfit", [
+//   formalShoes(),
+//   socks(),
+//   formalPants(),
+//   undies(),
+//   belt(),
+//   bra(),
+//   formalTop(),
+//   sweater(),
+//   coat(),
+//   hat(),
+//   gloves(),
+//   jewelry(),
+//   scarf(),
+//   dress(),
+// ]);
 
-OutfitTemplate otherOutfit = OutfitTemplate("Other", [
-  otherShoes(),
-  socks(),
-  otherPants(),
-  undies(),
-  otherBelt(),
-  bra(),
-  otherTop(),
-  sweater(),
-  otherCoat(),
-  hat(),
-  gloves(),
-  jewelry(),
-  scarf(),
-]);
+// OutfitTemplate otherOutfit = OutfitTemplate(5, "Other", [
+//   otherShoes(),
+//   socks(),
+//   otherPants(),
+//   undies(),
+//   otherBelt(),
+//   bra(),
+//   otherTop(),
+//   sweater(),
+//   otherCoat(),
+//   hat(),
+//   gloves(),
+//   jewelry(),
+//   scarf(),
+// ]);
 
-List<OutfitTemplate> outfitTypeList = [
-  workout,
-  workOutfit,
-  casualOutfit,
-  sleepOutfit,
-  formalOutfit,
-  otherOutfit,
-];
+List<OutfitTemplate> outfitTypeList = [outfit1, outfit2];
 // Build Additional Item Sections
 AdditionalItem runningLight = AdditionalItem("runningLight", true);
 AdditionalItem computer = AdditionalItem("computer", true);
@@ -294,8 +287,8 @@ AdditionalItem blackBackpack = AdditionalItem("black backpack", true);
 AdditionalItem blackPurse = AdditionalItem("black purse", true);
 AdditionalItem greySuitcase = AdditionalItem("grey suitcase", true);
 AdditionalItem greenBackpack = AdditionalItem("small green backpack", true);
-AdditionalItemSection bags =
-    AdditionalItemSection("bags", [blackBackpack, blackPurse, greySuitcase, greenBackpack]);
+AdditionalItemSection bags = AdditionalItemSection(
+    "bags", [blackBackpack, blackPurse, greySuitcase, greenBackpack]);
 
 AdditionalItem toiletKit = AdditionalItem("toilet kit", true);
 AdditionalItem toothbrush = AdditionalItem("toothbrush", true);
@@ -304,8 +297,15 @@ AdditionalItem migshield = AdditionalItem("migshield", true);
 AdditionalItem ubrelvy = AdditionalItem("ubrelvy", true);
 AdditionalItem tampins = AdditionalItem("tampins", false);
 AdditionalItem laundrySheets = AdditionalItem("laundry sheets", true);
-AdditionalItemSection toiletries =
-    AdditionalItemSection("toiletries", [toiletKit, toothbrush, sunscreen, migshield, ubrelvy, laundrySheets, tampins]);
+AdditionalItemSection toiletries = AdditionalItemSection("toiletries", [
+  toiletKit,
+  toothbrush,
+  sunscreen,
+  migshield,
+  ubrelvy,
+  laundrySheets,
+  tampins
+]);
 
 AdditionalItem waterBottle = AdditionalItem("water bottle", true);
 AdditionalItem runWaterBottle = AdditionalItem("run water bottle", true);
@@ -315,56 +315,86 @@ AdditionalItem calcium = AdditionalItem("calcium vitamins", true);
 AdditionalItem cocoa = AdditionalItem("sleepy cocoa", true);
 AdditionalItem ag1 = AdditionalItem("ag1", true);
 AdditionalItem dripDrop = AdditionalItem("drip drop", true);
-AdditionalItemSection snacks = AdditionalItemSection("snacks", [waterBottle, coffeeMug, runWaterBottle, gels, calcium, cocoa, ag1, dripDrop]);
+AdditionalItemSection snacks = AdditionalItemSection("snacks", [
+  waterBottle,
+  coffeeMug,
+  runWaterBottle,
+  gels,
+  calcium,
+  cocoa,
+  ag1,
+  dripDrop
+]);
 
 AdditionalItem umbrella = AdditionalItem("umbrella", false);
 AdditionalItem sunglasses = AdditionalItem("sunglasses", true);
 AdditionalItem swimsuit = AdditionalItem("swim suit", false);
-AdditionalItemSection misc = AdditionalItemSection("misc", [umbrella, sunglasses, swimsuit]);
+AdditionalItemSection misc =
+    AdditionalItemSection("misc", [umbrella, sunglasses, swimsuit]);
 
 // Build Days
-Outfit work0 = Outfit.fromTemplate(workOutfit, 0);
-Outfit sleep0 = Outfit.fromTemplate(sleepOutfit, 1);
+Outfit work0 = Outfit.fromTemplate(outfit1, 0);
+Outfit sleep0 = Outfit.fromTemplate(outfit2, 1);
 Day day0 = Day(
-  84,
-  DateTime(2022, 10, 18),
-  36.37,
-  61.04,
-  "clear-day",
-  0,
-  1666052400,
-  1666012500,
-  "Clear throughout the day.",
-  [work0, sleep0],
+  dayCode: 84,
+  day: DateTime(2022, 10, 18),
+  low: 36.37,
+  high: 61.04,
+  icon: "clear-day",
+  precip: 0,
+  sunrise: 1666052400,
+  sunset: 1666012500,
+  summary: "Clear throughout the day.",
+  outfits: [work0, sleep0],
 );
 
-Outfit workout1 = Outfit.fromTemplate(workout, 0);
+Outfit workout1 = Outfit.fromTemplate(outfit1, 0);
 
-Outfit work1 = Outfit.fromTemplate(workOutfit, 1);
+Outfit work1 = Outfit.fromTemplate(outfit2, 1);
 
-Day day1 = Day(85, DateTime(2022, 10, 19), 38.83, 64.83, "clear-day", 0, 1666138680, 1666098960,
-    "Clear throughout the day.", [workout1, work1]);
+Day day1 = Day(
+  dayCode: 85,
+  day: DateTime(2022, 10, 19),
+  low: 38.83,
+  high: 64.83,
+  icon: "clear-day",
+  precip: 0,
+  sunrise: 1666138680,
+  sunset: 1666098960,
+  summary: "Clear throughout the day.",
+  outfits: [workout1, work1],
+);
 
-Outfit workout2 = Outfit.fromTemplate(workout, 0);
+Outfit workout2 = Outfit.fromTemplate(outfit1, 0);
 
-Outfit work2 = Outfit.fromTemplate(workOutfit, 1);
+Outfit work2 = Outfit.fromTemplate(outfit1, 1);
 
-Day day2 = Day(86, DateTime(2022, 10, 20), 45.05, 70.54, "clear-day", 0, 1666225020, 1666185420,
-    "Clear throughout the day.", [workout2, work2]);
+Day day2 = Day(
+  dayCode: 86,
+  day: DateTime(2022, 10, 20),
+  low: 45.05,
+  high: 70.54,
+  icon: "clear-day",
+  precip: 0,
+  sunrise: 1666225020,
+  sunset: 1666185420,
+  summary: "Clear throughout the day.",
+  outfits: [workout2, work2],
+);
 
-Outfit work3 = Outfit.fromTemplate(workOutfit, 0);
+Outfit work3 = Outfit.fromTemplate(outfit1, 0);
 
 Day day3 = Day(
-  87,
-  DateTime(2022, 10, 21),
-  44.13,
-  76.05,
-  "clear-day",
-  0,
-  1666311360,
-  1666271880,
-  "Clear throughout the day.",
-  [work3],
+  dayCode: 87,
+  day: DateTime(2022, 10, 21),
+  low: 44.13,
+  high: 76.05,
+  icon: "clear-day",
+  precip: 0,
+  sunrise: 1666311360,
+  sunset: 1666271880,
+  summary: "Clear throughout the day.",
+  outfits: [work3],
 );
 
 // Build Tote
@@ -442,13 +472,19 @@ List<Named> namedList = [
   n31
 ];
 
-final List<AdditionalItemSection> defaultAdditionalItems = [electronics, bags, snacks, toiletries, misc];
+final List<AdditionalItemSection> defaultAdditionalItems = [
+  electronics,
+  bags,
+  snacks,
+  toiletries,
+  misc
+];
 
 Tote tote = Tote(
-    named: namedList,
-    unnamed: [u1, u2, u3, u4],
-    additionalItems: defaultAdditionalItems,
-  );
+  named: namedList,
+  unnamed: [u1, u2, u3, u4],
+  additionalItems: defaultAdditionalItems,
+);
 
 // Build Trip
 Trip trip = Trip(

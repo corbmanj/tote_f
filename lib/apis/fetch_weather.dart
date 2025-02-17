@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert' as convert;
 
-import 'package:tote_f/models/tote/weather.dart';
+import 'package:tote_f/models/trip/weather.dart';
 
 Future<WeatherResponse> fetchWeather(String city, DateTimeRange dates) async {
   const weatherKey = String.fromEnvironment('WTHR_KEY');

@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:intl/intl.dart';
 import 'package:tote_f/consumers/update_day.dart';
-import 'package:tote_f/models/tote/day.dart';
-import 'package:tote_f/models/tote/outfit.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/models/trip/day.dart';
+import 'package:tote_f/models/trip/outfit.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 import 'package:tote_f/shared/copy_outfit.dart';
 

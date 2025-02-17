@@ -1,6 +1,6 @@
 import 'package:collection/collection.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tote_f/models/user/outfit_item.dart';
+import 'package:tote_f/models/trip/outfit_item.dart';
 
 part 'assign_items_state.g.dart';
 

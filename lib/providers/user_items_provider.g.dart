@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'trip_list_provider.dart';
+part of 'user_items_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$tripListHash() => r'3232b8e89ec05977a52a2281af1e8a80a25d9ba5';
+String _$userItemsHash() => r'5fe57fc293e30d59e667fec7a9230960c6bdbb18';
 
-/// See also [TripList].
-@ProviderFor(TripList)
-final tripListProvider =
-    AutoDisposeAsyncNotifierProvider<TripList, List<TripMeta>>.internal(
-  TripList.new,
-  name: r'tripListProvider',
+/// See also [UserItems].
+@ProviderFor(UserItems)
+final userItemsProvider =
+    AutoDisposeAsyncNotifierProvider<UserItems, List<ItemTemplate>>.internal(
+  UserItems.new,
+  name: r'userItemsProvider',
   debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$tripListHash,
+      const bool.fromEnvironment('dart.vm.product') ? null : _$userItemsHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$TripList = AutoDisposeAsyncNotifier<List<TripMeta>>;
+typedef _$UserItems = AutoDisposeAsyncNotifier<List<ItemTemplate>>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
