@@ -26,7 +26,7 @@ class DatabaseService {
   Future<Database> _initDatabase() async {
     final path = join(await getDatabasesPath(), 'tote_database.db');
     // uncomment to delete the database with each app startup
-    await deleteDatabase(path);
+    // await deleteDatabase(path);
     return await openDatabase(
       path,
       onCreate: _onCreate,
@@ -37,7 +37,7 @@ class DatabaseService {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     await db.execute(
-      "CREATE TABLE UserItems (id INTEGER PRIMARY KEY, name TEXT, type TEXT)",
+      "CREATE TABLE UserItems (id INTEGER PRIMARY KEY, name TEXT, type TEXT, deleted INTEGER)",
     );
     await db.execute(
       "CREATE TABLE UserOutfits (id INTEGER PRIMARY KEY, type TEXT)",
@@ -51,6 +51,7 @@ class DatabaseService {
         'id': i.id,
         'name': i.name,
         'type': i.type,
+        'deleted': 0,
       });
       itemIds.add(itemId);
     }
@@ -136,8 +137,8 @@ class DatabaseService {
     final db = await _databaseService.database;
 
     // Query the table for all the Items.
-    final List<Map<String, dynamic>> maps =
-        await db.query('UserItems', columns: ['id', 'name', 'type']);
+    final List<Map<String, dynamic>> maps = await db.query('UserItems',
+        columns: ['id', 'name', 'type'], where: 'deleted = ?', whereArgs: [0]);
 
     // Convert the List<Map<String, dynamic> into a List<UserItems>.
     return maps.map((item) => ItemTemplate.fromMap(item)).toList();
@@ -145,23 +146,32 @@ class DatabaseService {
 
   Future<ItemTemplate> addUserItem(String itemName) async {
     final db = await _databaseService.database;
+    final items = await db.query('UserItems');
+    print(items);
     final itemId = await db.insert('UserItems', {
       'name': itemName,
       'type': itemName,
+      'deleted': 0,
     });
     return ItemTemplate(id: itemId, name: itemName, type: itemName);
   }
 
   Future<void> renameItem(int id, String newName) async {
     final db = await _databaseService.database;
-    await db.update('UserItems', {
-      'name': newName,
-    }, where: 'id = ?', whereArgs: [id]);
+    await db.update(
+        'UserItems',
+        {
+          'name': newName,
+          'type': newName,
+        },
+        where: 'id = ?',
+        whereArgs: [id]);
   }
 
   Future<void> deleteItem(int id) async {
     final db = await _databaseService.database;
-    await db.delete('UserItems', where: 'id = ?', whereArgs: [id]);
+    await db.update('UserItems', {'deleted': 1},
+        where: 'id = ?', whereArgs: [id]);
   }
 
   // Get list of all user outfit templates
@@ -208,6 +218,17 @@ class DatabaseService {
         where: 'id = ?', whereArgs: [outfit.id]);
   }
 
+  Future<void> updateOutfitItem(
+      int outfitId, int itemId, bool defaultIncluded) async {
+    final db = await _databaseService.database;
+    await db.update(
+      'UserOutfitItems',
+      {'defaultIncluded': defaultIncluded == true ? 1 : 0},
+      where: 'outfitId = ? and itemId = ?',
+      whereArgs: [outfitId, itemId],
+    );
+  }
+
   Future<int> addOutfit(String outfitType) async {
     final db = await _databaseService.database;
     return await db.insert("UserOutfits", {'type': outfitType});
@@ -215,11 +236,13 @@ class DatabaseService {
 
   Future<void> deleteItemFromOutfit(int outfitId, int itemId) async {
     final db = await _databaseService.database;
-    await db.delete("UserOutfitItems", where: "outfitId = ? and itemId = ?", whereArgs: [outfitId, itemId]);
+    await db.delete("UserOutfitItems",
+        where: "outfitId = ? and itemId = ?", whereArgs: [outfitId, itemId]);
   }
-  
+
   Future<void> deleteItemFromAllOutfits(int itemId) async {
     final db = await _databaseService.database;
-    await db.delete("UserOutfitItems", where: "itemId = ?", whereArgs: [itemId]);
+    await db
+        .delete("UserOutfitItems", where: "itemId = ?", whereArgs: [itemId]);
   }
 }

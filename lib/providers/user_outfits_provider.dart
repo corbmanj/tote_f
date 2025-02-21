@@ -46,7 +46,14 @@ class UserOutfits extends _$UserOutfits {
     final DatabaseService dbService = DatabaseService();
     final newOutfit = outfit.copyWith(newType: newName);
     await dbService.updateOutfit(newOutfit);
-    updateOutfitList(outfit);
+    updateOutfitList(newOutfit);
+  }
+
+  Future<void> updateItemDefaultIncluded(OutfitTemplate outfit, int itemId, bool defaultIncluded) async {
+    final DatabaseService dbService = DatabaseService();
+    await dbService.updateOutfitItem(outfit.id, itemId, defaultIncluded);
+    final newOutfit = outfit.updateDefaultIncluded(itemId, defaultIncluded);
+    updateOutfitList(newOutfit);
   }
 
   Future<void> deleteItemFromOutfit(OutfitTemplate outfit, ItemTemplate item) async {

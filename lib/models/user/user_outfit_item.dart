@@ -11,3 +11,12 @@ class UserOutfitItem {
     );
   }
 }
+
+extension MutableUserOutfitItem on UserOutfitItem {
+  UserOutfitItem copyWith({
+    int? itemId,
+    bool? defaultIncluded,
+  }) {
+    return UserOutfitItem(itemId: itemId ?? this.itemId, defaultIncluded: defaultIncluded ?? this.defaultIncluded);
+  }
+}

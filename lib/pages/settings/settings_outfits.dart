@@ -4,18 +4,13 @@ import 'package:tote_f/pages/settings/items_container.dart';
 import 'package:tote_f/pages/settings/outfit_container.dart';
 import 'package:tote_f/providers/user_outfits_provider.dart';
 
-// TODO: delete item from items
-// TODO: delete item from outfit
-// TODO: add outfit
-// TODO: rename outfit
-
-
 class SettingsOutfits extends ConsumerWidget {
   const SettingsOutfits({super.key});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final outfitsList = ref.watch(userOutfitsProvider);
+    final outfitsNotifier = ref.read(userOutfitsProvider.notifier);
 
     return switch (outfitsList) {
       AsyncData(value: final outfits) => Column(
@@ -36,7 +31,9 @@ class SettingsOutfits extends ConsumerWidget {
                     scrollDirection: Axis.horizontal,
                     itemBuilder: (BuildContext context, int outfitIndex) {
                       if (outfitIndex == outfits.length) {
-                        return ElevatedButton(onPressed: () {}, child: Text("Button"));
+                        return ElevatedButton(onPressed: () {
+                          outfitsNotifier.addOutfit();
+                        }, child: Text("Add Outfit"));
                       }
                         return OutfitContainer(outfit: outfits[outfitIndex]);
                     },

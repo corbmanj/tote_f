@@ -35,7 +35,7 @@ class DeleteItemsBox extends ConsumerWidget {
                 );
               },
               onAcceptWithDetails:
-                  (DragTargetDetails<ItemTemplateWithOutfit> details) {
+                  (DragTargetDetails<ItemTemplateWithExtension> details) {
                 if (details.data.outfit != null) {
                   outfitsConsumer.deleteItemFromOutfit(details.data.outfit!, details.data);
                 } else {

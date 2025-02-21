@@ -63,8 +63,8 @@ class _ItemChipState extends ConsumerState<ItemChip> {
       );
     }
     return GestureDetector(
-      child: Draggable<ItemTemplateWithOutfit>(
-        data: ItemTemplateWithOutfit.fromItem(item: widget.item),
+      child: Draggable<ItemTemplateWithExtension>(
+        data: ItemTemplateWithExtension.fromItemWithOutfit(item: widget.item),
         dragAnchorStrategy: pointerDragAnchorStrategy,
         feedback: DraggingChip(dragKey: dragKey, label: widget.item.name),
         childWhenDragging: Chip(

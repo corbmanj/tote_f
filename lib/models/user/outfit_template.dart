@@ -32,14 +32,6 @@ class OutfitTemplate {
           .map<UserOutfitItem>((item) => UserOutfitItem.fromMap(item))
           .toList(),
     );
-    // List<OutfitItemMap> currentOutfitItemMaps = outfitItemsMap
-    //     .where((item) => item.outfitId == map['id'])
-    //     .toList();
-    // List<ItemInOutfit> currentOutfitItems = currentOutfitItemMaps.map((itemMap) {
-    //   final ItemTemplate item = itemsList.firstWhere((i) => i.id == itemMap.itemId);
-    //   return ItemInOutfit(item.id, item.type, item.parentType ?? "", itemMap.defaultIncluded);
-    // }).toList();
-    // return OutfitTemplate(map['id'], map['type'], currentOutfitItems);
   }
 }
 
@@ -55,6 +47,17 @@ extension MutableOutfitItem on OutfitTemplate {
   OutfitTemplate removeItem(ItemTemplate item) {
     List<UserOutfitItem> newOutfitItems = [...outfitItems];
     newOutfitItems.removeWhere((i) => i.itemId == item.id);
+    return copyWith(newOutfitItems: newOutfitItems);
+  }
+
+  OutfitTemplate updateDefaultIncluded(int itemId, bool defaultIncluded) {
+    List<UserOutfitItem> newOutfitItems = outfitItems.map((i) {
+      if (i.itemId == itemId) {
+        return i.copyWith(defaultIncluded: defaultIncluded);
+      } else {
+        return i;
+      }
+    }).toList();
     return copyWith(newOutfitItems: newOutfitItems);
   }
 }

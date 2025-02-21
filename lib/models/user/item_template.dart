@@ -35,11 +35,16 @@ extension MutableItemTemplate on ItemTemplate {
   }
 }
 
-class ItemTemplateWithOutfit extends ItemTemplate {
+class ItemTemplateWithExtension extends ItemTemplate {
   OutfitTemplate? outfit;
-  ItemTemplateWithOutfit({required super.id, required super.name, required super.type, this.outfit});
+  bool? defaultIncluded;
+  ItemTemplateWithExtension({required super.id, required super.name, required super.type, this.outfit, this.defaultIncluded});
 
-  factory ItemTemplateWithOutfit.fromItem({required ItemTemplate item, OutfitTemplate? outfit}) {
-    return ItemTemplateWithOutfit(id: item.id, name: item.name, type: item.type, outfit: outfit);
+  factory ItemTemplateWithExtension.fromItemWithOutfit({required ItemTemplate item, OutfitTemplate? outfit}) {
+    return ItemTemplateWithExtension(id: item.id, name: item.name, type: item.type, outfit: outfit);
+  }
+
+  factory ItemTemplateWithExtension.fromItemWithDefaultIncluded({required ItemTemplate item, bool? defaultIncluded}) {
+    return ItemTemplateWithExtension(id: item.id, name: item.name, type: item.type, defaultIncluded: defaultIncluded);
   }
 }
