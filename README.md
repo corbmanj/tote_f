@@ -21,5 +21,5 @@ run `dart run build_runner watch`
 ## Build IPA
 1. bump version in pubspec.yaml
 1. run `open ios/Runner.xcworkspace` to open xcode
-1. run `flutter build ipa`
+1. run `flutter build ipa --dart-define=API_KEY=<API_KEY_VALUE>`
 1. drag output ipa file into transporter
