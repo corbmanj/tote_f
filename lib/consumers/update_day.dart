@@ -37,6 +37,7 @@ class UpdateDay extends _$UpdateDay {
     Outfit outfit,
     Day day,
   ) {
+    ref.read(outfitListExpandedProvider.notifier).resetExpanded();
     final Trip tripRef = ref.watch(tripNotifierProvider);
     day.deleteOutfit(outfit);
     ref

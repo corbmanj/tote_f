@@ -46,8 +46,8 @@ class _OutfitHeaderState extends ConsumerState<OutfitHeader> {
       }
     }
 
-    final List<OutfitTemplate> optionsList =
-        outfitTypeList; // will eventually be a list of the user's outfit types
+    // TODO: use userOutfitProvider to get the outfitTypeList;
+    final List<OutfitTemplate> optionsList = outfitTypeList;
     final editingRef = ref.watch(outfitListExpandedProvider);
     final setEditing = ref.read(updateDayProvider.notifier).editOutfitName;
     final setExpanded = ref.read(updateDayProvider.notifier).expandOutfit;

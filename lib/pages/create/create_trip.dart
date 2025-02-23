@@ -95,17 +95,18 @@ class CreateTrip extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 100.0),
+          const SizedBox(height: 50.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                  width: 150.0,
-                  height: 40.0,
-                  child: EditText(
-                      textValue: tripRef.city,
-                      textLabel: "City, ST",
-                      updateText: tripProvider.updateCity))
+              Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: EditText(
+                        textValue: tripRef.city,
+                        textLabel: "City, ST",
+                        updateText: tripProvider.updateCity),
+                  ))
             ],
           )
         ],

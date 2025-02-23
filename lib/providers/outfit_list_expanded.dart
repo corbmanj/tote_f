@@ -41,4 +41,8 @@ class OutfitListExpanded extends _$OutfitListExpanded {
       state = OutfitExpandedType([dayIndex, outfitIndex], newEditing);
     }
   }
+
+  Future<void> resetExpanded() async {
+    state = OutfitExpandedType([-1, -1], false);
+  }
 }
