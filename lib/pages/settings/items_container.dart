@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/models/user/item_template.dart';
 import 'package:tote_f/pages/settings/delete_items_box.dart';
-import 'package:tote_f/pages/settings/item_chip.dart';
+import 'package:tote_f/pages/settings/item_draggable_chip.dart';
 import 'package:tote_f/providers/user_items_provider.dart';
 
 class ItemsContainer extends ConsumerWidget {
@@ -49,7 +49,7 @@ class NewBox extends StatelessWidget {
                   spacing: 4.0,
                   runSpacing: 4.0,
                   children: [
-                    ...items.map((item) => ItemChip(item: item)),
+                    ...items.map((item) => ItemDraggableChip(item: item)),
                     AddChip()
                   ],
                 ),

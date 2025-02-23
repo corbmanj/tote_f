@@ -3,15 +3,15 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/models/user/item_template.dart';
 import 'package:tote_f/providers/user_items_provider.dart';
 
-class ItemChip extends ConsumerStatefulWidget {
+class ItemDraggableChip extends ConsumerStatefulWidget {
   final ItemTemplate item;
-  const ItemChip({super.key, required this.item});
+  const ItemDraggableChip({super.key, required this.item});
 
   @override
   ConsumerState createState() => _ItemChipState();
 }
 
-class _ItemChipState extends ConsumerState<ItemChip> {
+class _ItemChipState extends ConsumerState<ItemDraggableChip> {
   late TextEditingController _controller;
   bool _isEditing = false;
 
@@ -36,6 +36,7 @@ class _ItemChipState extends ConsumerState<ItemChip> {
   @override
   Widget build(BuildContext context) {
     final itemTemplateController = ref.read(userItemsProvider.notifier);
+    final GlobalKey dragKey = GlobalKey();
     if (_isEditing) {
       _controller.text = widget.item.name;
       _controller.selection =
@@ -61,25 +62,40 @@ class _ItemChipState extends ConsumerState<ItemChip> {
         },
       );
     }
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        GestureDetector(
-          child: Chip(
-            label: Text(widget.item.name),
-            deleteIcon: Icon(Icons.edit),
-            onDeleted: () => setEditing(true),
-          ),
-          onLongPress: () => setEditing(true),
-          onDoubleTap: () => setEditing(true),
+    return GestureDetector(
+      child: Draggable<ItemTemplateWithExtension>(
+        data: ItemTemplateWithExtension.fromItemWithOutfit(item: widget.item),
+        dragAnchorStrategy: pointerDragAnchorStrategy,
+        feedback: DraggingChip(dragKey: dragKey, label: widget.item.name),
+        childWhenDragging: Chip(
+          backgroundColor: Colors.black12,
+          label: Text(widget.item.name),
+          elevation: 16.0,
         ),
-        Checkbox(value: true, onChanged: (bool? checked) {}),
-        ElevatedButton(
-          onPressed: () {},
-          style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.redAccent), foregroundColor: WidgetStatePropertyAll(Colors.black)),
-          child: Text('Delete'),
-        )
-      ],
+        child: Chip(
+          label: Text(widget.item.name),
+        ),
+      ),
+      onLongPress: () => setEditing(true),
+      onDoubleTap: () => setEditing(true),
+    );
+  }
+}
+
+class DraggingChip extends StatelessWidget {
+  const DraggingChip({
+    super.key,
+    required this.dragKey,
+    required this.label,
+  });
+  final GlobalKey dragKey;
+  final String label;
+
+  @override
+  Widget build(BuildContext context) {
+    return Material(
+      color: Colors.transparent,
+      child: Chip(label: Text(label)),
     );
   }
 }

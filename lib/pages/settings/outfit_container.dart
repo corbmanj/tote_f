@@ -3,7 +3,7 @@ import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:collection/collection.dart';
 import 'package:tote_f/models/user/item_template.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
-import 'package:tote_f/pages/settings/item_chip.dart';
+import 'package:tote_f/pages/settings/item_draggable_chip.dart';
 import 'package:tote_f/pages/settings/outfit_header.dart';
 import 'package:tote_f/providers/user_items_provider.dart';
 import 'package:tote_f/providers/user_outfits_provider.dart';
