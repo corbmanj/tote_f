@@ -39,7 +39,8 @@ class OutfitContainer extends ConsumerWidget {
       child: Column(
         children: [
           OutfitHeader(outfit: outfit),
-          OutfitItemsList(itemList: itemsWithNames, outfit: outfit),
+          Expanded(
+              child: OutfitItemsList(itemList: itemsWithNames, outfit: outfit)),
         ],
       ),
     );
@@ -61,13 +62,14 @@ class OutfitItemsList extends ConsumerWidget {
     ) {
       return Container(
         width: 300,
-        padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 40.0),
+        padding: EdgeInsets.fromLTRB(8.0, 8.0, 8.0, 8.0),
         color: Colors.black12,
-        child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: itemList
-                .map((item) => OutfitItemRow(item: item!, outfit: outfit))
-                .toList()),
+        child: ListView.builder(
+          // TODO: add a scrollController to the listView to scroll to the bottom when a new item is added to the list
+          itemCount: itemList.length,
+          itemBuilder: (context, index) =>
+              OutfitItemRow(item: itemList[index]!, outfit: outfit),
+        ),
       );
     }, onAcceptWithDetails:
         (DragTargetDetails<ItemTemplateWithExtension> details) {
@@ -89,9 +91,12 @@ class OutfitItemRow extends ConsumerWidget {
     return Row(
       children: [
         DraggableOutfitItem(item: item, outfit: outfit),
-        Checkbox(value: item.defaultIncluded, onChanged: (bool? value) {
-          outfitNotifier.updateItemDefaultIncluded(outfit, item.id, value ?? false);
-        })
+        Checkbox(
+            value: item.defaultIncluded,
+            onChanged: (bool? value) {
+              outfitNotifier.updateItemDefaultIncluded(
+                  outfit, item.id, value ?? false);
+            })
       ],
     );
   }
@@ -110,7 +115,10 @@ class DraggableOutfitItem extends StatelessWidget {
       data: ItemTemplateWithExtension.fromItemWithOutfit(
           item: item, outfit: outfit),
       dragAnchorStrategy: pointerDragAnchorStrategy,
-      feedback: DraggingChip(dragKey: dragKey, label: item.name),
+      feedback: Transform.translate(
+        offset: Offset(-20.0, -50.0),
+        child: DraggingChip(dragKey: dragKey, label: item.name),
+      ),
       childWhenDragging: Chip(
         backgroundColor: Colors.black12,
         label: Text(item.name),

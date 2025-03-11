@@ -66,7 +66,10 @@ class _ItemChipState extends ConsumerState<ItemDraggableChip> {
       child: Draggable<ItemTemplateWithExtension>(
         data: ItemTemplateWithExtension.fromItemWithOutfit(item: widget.item),
         dragAnchorStrategy: pointerDragAnchorStrategy,
-        feedback: DraggingChip(dragKey: dragKey, label: widget.item.name),
+        feedback: Transform.translate(
+          offset: Offset(-20.0, -50.0),
+          child: DraggingChip(dragKey: dragKey, label: widget.item.name),
+        ),
         childWhenDragging: Chip(
           backgroundColor: Colors.black12,
           label: Text(widget.item.name),
