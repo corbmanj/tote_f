@@ -1,6 +1,5 @@
 import 'dart:convert';
 import 'package:collection/collection.dart';
-
 import 'outfit.dart';
 
 class Day {
@@ -72,11 +71,17 @@ class Day {
     );
   }
 
+  int getNextOrdering() {
+    return outfits?.length ?? 0;
+  }
+
   void addOutfitCopy(Outfit outfit) {
+    final newOrdering = getNextOrdering();
+    final newOutfit = outfit.copyWith(ordering: newOrdering);
     if (outfits == null) {
-      outfits = [outfit];
+      outfits = [newOutfit];
     } else {
-      outfits = [...outfits!, outfit];
+      outfits = [...outfits!, newOutfit];
     }
   }
 
