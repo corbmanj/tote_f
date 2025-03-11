@@ -89,8 +89,8 @@ AdditionalItemSection misc =
     AdditionalItemSection("misc", [umbrella, sunglasses, swimsuit]);
 
 // Build Days
-Outfit work0 = Outfit.fromTemplate(outfit1, 0);
-Outfit sleep0 = Outfit.fromTemplate(outfit2, 1);
+Outfit work0 = Outfit.fromTemplate(outfit1, 0, items);
+Outfit sleep0 = Outfit.fromTemplate(outfit2, 1, items);
 Day day0 = Day(
   dayCode: 84,
   day: DateTime(2022, 10, 18),
@@ -104,9 +104,9 @@ Day day0 = Day(
   outfits: [work0, sleep0],
 );
 
-Outfit workout1 = Outfit.fromTemplate(outfit1, 0);
+Outfit workout1 = Outfit.fromTemplate(outfit1, 0, items);
 
-Outfit work1 = Outfit.fromTemplate(outfit2, 1);
+Outfit work1 = Outfit.fromTemplate(outfit2, 1, items);
 
 Day day1 = Day(
   dayCode: 85,
@@ -121,9 +121,9 @@ Day day1 = Day(
   outfits: [workout1, work1],
 );
 
-Outfit workout2 = Outfit.fromTemplate(outfit1, 0);
+Outfit workout2 = Outfit.fromTemplate(outfit1, 0, items);
 
-Outfit work2 = Outfit.fromTemplate(outfit1, 1);
+Outfit work2 = Outfit.fromTemplate(outfit1, 1, items);
 
 Day day2 = Day(
   dayCode: 86,
@@ -138,7 +138,7 @@ Day day2 = Day(
   outfits: [workout2, work2],
 );
 
-Outfit work3 = Outfit.fromTemplate(outfit1, 0);
+Outfit work3 = Outfit.fromTemplate(outfit1, 0, items);
 
 Day day3 = Day(
   dayCode: 87,

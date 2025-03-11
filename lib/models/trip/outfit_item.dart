@@ -25,7 +25,7 @@ class OutfitItem {
     return OutfitItem(
       map['type'],
       map['grouping'],
-      map['generic'],
+      map['generic'] == 1,
       map['selected'] ?? false,
       map['namedItemId'],
     );

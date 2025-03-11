@@ -1,4 +1,5 @@
 import 'dart:convert';
+import 'package:tote_f/models/user/item_template.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 
 import 'outfit_item.dart';
@@ -33,11 +34,15 @@ class Outfit {
     );
   }
 
-  factory Outfit.fromTemplate(OutfitTemplate template, int ordering) {
+  factory Outfit.fromTemplate(
+      OutfitTemplate template, int ordering, List<ItemTemplate> items) {
     return Outfit(
         type: template.type,
         name: template.type,
-        items: template.outfitItems.map((i) => OutfitItem("type", "grouping", i.defaultIncluded)).toList(),
+        items: template.outfitItems.map((i) {
+          final templateItem = items.firstWhere((j) => j.id == i.itemId);
+          return OutfitItem(templateItem.name, templateItem.grouping ?? "", templateItem.generic, i.defaultIncluded);
+        }).toList(),
         ordering: ordering);
   }
 }
@@ -87,11 +92,6 @@ extension MutableOutfit on Outfit {
   ) {
     return copyWith(items: nameItemByType(itemType, newNamedId));
   }
-
-  // Outfit changeType(
-  //     OutfitTemplate newType, List<ItemTemplate> items, String name) {
-  //   return Outfit.fromTemplate(newType, items, ordering, name);
-  // }
 
   Outfit copyWith(
       {String? type, String? name, List<OutfitItem>? items, int? ordering}) {

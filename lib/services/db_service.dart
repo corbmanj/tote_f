@@ -14,6 +14,9 @@ class DatabaseService {
   factory DatabaseService() => _databaseService;
   DatabaseService._internal();
 
+  final mockTrip1 = jsonEncode(trips[0]);
+  final mockTrip2 = jsonEncode(trips[1]);
+
   static Database? _database;
   Future<Database> get database async {
     if (_database != null) {
@@ -26,7 +29,7 @@ class DatabaseService {
   Future<Database> _initDatabase() async {
     final path = join(await getDatabasesPath(), 'tote_database.db');
     // uncomment to delete the database with each app startup
-    await deleteDatabase(path);
+    // await deleteDatabase(path);
     return await openDatabase(
       path,
       onCreate: _onCreate,
@@ -36,6 +39,17 @@ class DatabaseService {
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    await deleteDatabase(join(await getDatabasesPath(), 'tote_database.db'));
+    _onCreate(db, 2);
+  }
+
+  Future<void> _onCreate(Database db, int version) async {
+    await db.execute(
+      "CREATE TABLE Trips (id INTEGER PRIMARY KEY, city TEXT, startDate INTEGER, endDate INTEGER, trip TEXT)",
+    );
+    await db.execute(
+      "INSERT INTO Trips (id, city, startDate, endDate, trip) VALUES (1, '${trips[0].city}', ${trips[0].dateRange.start.millisecondsSinceEpoch}, ${trips[0].dateRange.end.millisecondsSinceEpoch}, '$mockTrip1'), (2, '${trips[1].city}', ${trips[1].dateRange.start.millisecondsSinceEpoch}, ${trips[1].dateRange.end.millisecondsSinceEpoch}, '$mockTrip2')",
+    );
     await db.execute(
       "CREATE TABLE UserItems (id INTEGER PRIMARY KEY, name TEXT, grouping TEXT, generic INTEGER, deleted INTEGER)",
     );
@@ -69,22 +83,6 @@ class DatabaseService {
         });
       }
     }
-  }
-
-  Future<void> _onCreate(Database db, int version) async {
-    final mockTrip1 = jsonEncode(trips[0]);
-    final mockTrip2 = jsonEncode(trips[1]);
-
-    await db.execute(
-      "CREATE TABLE Trips (id INTEGER PRIMARY KEY, city TEXT, startDate INTEGER, endDate INTEGER, trip TEXT)",
-    );
-    // await db.execute(
-    //   "CREATE TABLE UserItems (id INTEGER PRIMARY KEY, type TEXT, parentType TEXT, defaultIncluded BOOL)",
-    // );
-    await db.execute(
-      "INSERT INTO Trips (id, city, startDate, endDate, trip) VALUES (1, '${trips[0].city}', ${trips[0].dateRange.start.millisecondsSinceEpoch}, ${trips[0].dateRange.end.millisecondsSinceEpoch}, '$mockTrip1'), (2, '${trips[1].city}', ${trips[1].dateRange.start.millisecondsSinceEpoch}, ${trips[1].dateRange.end.millisecondsSinceEpoch}, '$mockTrip2')",
-    );
-    await _onUpgrade(db, version, version + 1);
   }
 
   // Get list of all trips for load trip page
@@ -139,7 +137,9 @@ class DatabaseService {
 
     // Query the table for all the Items.
     final List<Map<String, dynamic>> maps = await db.query('UserItems',
-        columns: ['id', 'name', 'grouping', 'generic'], where: 'deleted = ?', whereArgs: [0]);
+        columns: ['id', 'name', 'grouping', 'generic'],
+        where: 'deleted = ?',
+        whereArgs: [0]);
 
     // Convert the List<Map<String, dynamic> into a List<UserItems>.
     return maps.map((item) => ItemTemplate.fromMap(item)).toList();
@@ -153,7 +153,8 @@ class DatabaseService {
       'generic': 0,
       'deleted': 0,
     });
-    return ItemTemplate(id: itemId, name: itemName, grouping: null, generic: false);
+    return ItemTemplate(
+        id: itemId, name: itemName, grouping: null, generic: false);
   }
 
   Future<void> renameItem(int id, String newName) async {

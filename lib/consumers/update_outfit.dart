@@ -43,7 +43,7 @@ class UpdateOutfit extends _$UpdateOutfit {
     final itemsRef = await ref.watch(userItemsProvider.future);
     return Outfit(
       type: template.type,
-      name: newName ?? 'new name',
+      name: newName ?? template.type,
       items: createItems(template.outfitItems, itemsRef.userItems),
       ordering: newOrdering,
     );
