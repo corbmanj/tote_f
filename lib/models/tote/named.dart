@@ -1,14 +1,14 @@
 class Named {
   String name;
-  String parentType;
+  String grouping;
   int ordering;
   bool isPacked;
 
-  Named(this.name, this.parentType, this.ordering, [this.isPacked = false]);
+  Named(this.name, this.grouping, this.ordering, [this.isPacked = false]);
 
   Map toJson() => {
         'name': name,
-        'parentType': parentType,
+        'grouping': grouping,
         'ordering': ordering,
         'isPacked': isPacked,
       };
@@ -16,7 +16,7 @@ class Named {
   factory Named.fromMap(Map<String, dynamic> map) {
     return Named(
       map['name'],
-      map['parentType'],
+      map['grouping'],
       map['ordering'],
       map['isPacked'] ?? false,
     );
@@ -28,8 +28,8 @@ class Named {
 }
 
 extension MutableNamed on Named {
-  Named copyWith({String? name, String? parentType, int? ordering, bool? isPacked}) {
-    return Named(name ?? this.name, parentType ?? this.parentType,
+  Named copyWith({String? name, String? grouping, int? ordering, bool? isPacked}) {
+    return Named(name ?? this.name, grouping ?? this.grouping,
         ordering ?? this.ordering, isPacked ?? this.isPacked);
   }
 

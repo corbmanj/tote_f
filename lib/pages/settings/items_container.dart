@@ -12,7 +12,7 @@ class ItemsContainer extends ConsumerWidget {
   Widget build(BuildContext context, WidgetRef ref) {
     final userItems = ref.watch(userItemsProvider);
     return switch (userItems) {
-      AsyncData(:final value) => NewBox(items: value),
+      AsyncData(:final value) => NewBox(items: value.userItems),
       AsyncError(:final error) => Text(error.toString()),
       _ => SizedBox(
           width: 50.0,

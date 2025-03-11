@@ -19,7 +19,7 @@ class OutfitContainer extends ConsumerWidget {
     List<ItemTemplateWithExtension?> itemsWithNames = [];
     switch (userItemsRef) {
       case AsyncData(:final value):
-        userItems = value;
+        userItems = value.userItems;
         itemsWithNames = outfit.outfitItems
             .map((i) {
               final foundItem =

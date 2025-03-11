@@ -26,7 +26,7 @@ class DatabaseService {
   Future<Database> _initDatabase() async {
     final path = join(await getDatabasesPath(), 'tote_database.db');
     // uncomment to delete the database with each app startup
-    // await deleteDatabase(path);
+    await deleteDatabase(path);
     return await openDatabase(
       path,
       onCreate: _onCreate,
@@ -37,7 +37,7 @@ class DatabaseService {
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
     await db.execute(
-      "CREATE TABLE UserItems (id INTEGER PRIMARY KEY, name TEXT, type TEXT, deleted INTEGER)",
+      "CREATE TABLE UserItems (id INTEGER PRIMARY KEY, name TEXT, grouping TEXT, generic INTEGER, deleted INTEGER)",
     );
     await db.execute(
       "CREATE TABLE UserOutfits (id INTEGER PRIMARY KEY, type TEXT)",
@@ -50,7 +50,8 @@ class DatabaseService {
       int itemId = await db.insert("UserItems", {
         'id': i.id,
         'name': i.name,
-        'type': i.type,
+        'grouping': i.grouping,
+        'generic': i.generic == true ? 1 : 0,
         'deleted': 0,
       });
       itemIds.add(itemId);
@@ -138,7 +139,7 @@ class DatabaseService {
 
     // Query the table for all the Items.
     final List<Map<String, dynamic>> maps = await db.query('UserItems',
-        columns: ['id', 'name', 'type'], where: 'deleted = ?', whereArgs: [0]);
+        columns: ['id', 'name', 'grouping', 'generic'], where: 'deleted = ?', whereArgs: [0]);
 
     // Convert the List<Map<String, dynamic> into a List<UserItems>.
     return maps.map((item) => ItemTemplate.fromMap(item)).toList();
@@ -146,14 +147,13 @@ class DatabaseService {
 
   Future<ItemTemplate> addUserItem(String itemName) async {
     final db = await _databaseService.database;
-    final items = await db.query('UserItems');
-    print(items);
     final itemId = await db.insert('UserItems', {
       'name': itemName,
-      'type': itemName,
+      'grouping': null,
+      'generic': 0,
       'deleted': 0,
     });
-    return ItemTemplate(id: itemId, name: itemName, type: itemName);
+    return ItemTemplate(id: itemId, name: itemName, grouping: null, generic: false);
   }
 
   Future<void> renameItem(int id, String newName) async {
@@ -162,7 +162,28 @@ class DatabaseService {
         'UserItems',
         {
           'name': newName,
-          'type': newName,
+        },
+        where: 'id = ?',
+        whereArgs: [id]);
+  }
+
+  Future<void> setItemIsGeneric(int id, bool newValue) async {
+    final db = await _databaseService.database;
+    await db.update(
+        'UserItems',
+        {
+          'generic': newValue == true ? 1 : 0,
+        },
+        where: 'id = ?',
+        whereArgs: [id]);
+  }
+
+  Future<void> updateItemGrouping(int id, String newGrouping) async {
+    final db = await _databaseService.database;
+    await db.update(
+        'UserItems',
+        {
+          'grouping': newGrouping,
         },
         where: 'id = ?',
         whereArgs: [id]);

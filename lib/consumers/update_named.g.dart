@@ -6,7 +6,7 @@ part of 'update_named.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateNamedHash() => r'76a77a72ebe99852301928304e8adb67f42ec3f5';
+String _$updateNamedHash() => r'c2a8273ecfd59cc04c25681a0afc6cb954b61e83';
 
 /// See also [UpdateNamed].
 @ProviderFor(UpdateNamed)

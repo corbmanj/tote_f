@@ -41,7 +41,7 @@ class NamedItemsNotifier extends _$NamedItemsNotifier {
   void packNamed(Named item, bool isPacked) {
     List<Named> newList = state
         .map((Named oldItem) =>
-            oldItem.parentType == item.parentType && oldItem.name == item.name
+            oldItem.grouping == item.grouping && oldItem.name == item.name
                 ? oldItem.copyWith(isPacked: isPacked)
                 : oldItem)
         .toList();

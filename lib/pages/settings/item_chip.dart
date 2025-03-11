@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/models/user/item_template.dart';
+import 'package:tote_f/pages/settings/grouping_selector.dart';
 import 'package:tote_f/providers/user_items_provider.dart';
+import 'package:tote_f/providers/user_outfits_provider.dart';
 
 class ItemChip extends ConsumerStatefulWidget {
   final ItemTemplate item;
@@ -36,6 +38,7 @@ class _ItemChipState extends ConsumerState<ItemChip> {
   @override
   Widget build(BuildContext context) {
     final itemTemplateController = ref.read(userItemsProvider.notifier);
+    final outfitTemplateController = ref.read(userOutfitsProvider.notifier);
     if (_isEditing) {
       _controller.text = widget.item.name;
       _controller.selection =
@@ -73,10 +76,22 @@ class _ItemChipState extends ConsumerState<ItemChip> {
           onLongPress: () => setEditing(true),
           onDoubleTap: () => setEditing(true),
         ),
-        Checkbox(value: true, onChanged: (bool? checked) {}),
+        GroupingSelector(item: widget.item),
+        Checkbox(
+            value: widget.item.generic,
+            onChanged: (bool? checked) {
+              if (checked != null) {
+                itemTemplateController.setItemIsGeneric(widget.item, checked);
+              }
+            }),
         ElevatedButton(
-          onPressed: () {},
-          style: ButtonStyle(backgroundColor: WidgetStatePropertyAll(Colors.redAccent), foregroundColor: WidgetStatePropertyAll(Colors.black)),
+          onPressed: () {
+            itemTemplateController.deleteItem(widget.item);
+            outfitTemplateController.deleteItemFromAllOutfits(widget.item);
+          },
+          style: ButtonStyle(
+              backgroundColor: WidgetStatePropertyAll(Colors.redAccent),
+              foregroundColor: WidgetStatePropertyAll(Colors.black)),
           child: Text('Delete'),
         )
       ],

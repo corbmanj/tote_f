@@ -26,7 +26,8 @@ class UpdateOutfit extends _$UpdateOutfit {
     if (itemToAdd != null) {
       result.add(OutfitItem(
         itemToAdd.name,
-        itemToAdd.type,
+        itemToAdd.grouping ?? "",
+        itemToAdd.generic,
         item.defaultIncluded,
       ));
     }
@@ -43,7 +44,7 @@ class UpdateOutfit extends _$UpdateOutfit {
     return Outfit(
       type: template.type,
       name: newName ?? 'new name',
-      items: createItems(template.outfitItems, itemsRef),
+      items: createItems(template.outfitItems, itemsRef.userItems),
       ordering: newOrdering,
     );
   }

@@ -12,8 +12,8 @@ class UpdateNamed extends _$UpdateNamed {
   @override
   void build() {}
 
-  void addNamed(String parentType) {
-    final newItem = Named('new name', parentType, -1);
+  void addNamed(String grouping) {
+    final newItem = Named('new name', grouping, -1);
     ref.read(namedItemsNotifierProvider.notifier).addNamed(newItem);
   }
 

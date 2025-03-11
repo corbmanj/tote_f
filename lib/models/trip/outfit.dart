@@ -37,7 +37,7 @@ class Outfit {
     return Outfit(
         type: template.type,
         name: template.type,
-        items: template.outfitItems.map((i) => OutfitItem("type", null, i.defaultIncluded)).toList(),
+        items: template.outfitItems.map((i) => OutfitItem("type", "grouping", i.defaultIncluded)).toList(),
         ordering: ordering);
   }
 }

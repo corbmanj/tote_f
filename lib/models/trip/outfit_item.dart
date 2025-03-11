@@ -1,19 +1,22 @@
 class OutfitItem {
   String type;
-  String? parentType;
+  String grouping;
+  bool? generic;
   bool? selected;
   int? namedItemId;
 
   OutfitItem(
-    this.type,[
-    this.parentType,
+    this.type,
+    this.grouping, [
+    this.generic,
     this.selected = false,
     this.namedItemId,
   ]);
 
   Map toJson() => {
     'type': type,
-    'parentType': parentType,
+    'grouping': grouping,
+    'generic': generic == true ? 1 : 0,
     'selected': selected,
     'namedItemId': namedItemId,
   };
@@ -21,7 +24,8 @@ class OutfitItem {
   factory OutfitItem.fromMap(Map<String, dynamic> map) {
     return OutfitItem(
       map['type'],
-      map['parentType'],
+      map['grouping'],
+      map['generic'],
       map['selected'] ?? false,
       map['namedItemId'],
     );
@@ -29,8 +33,8 @@ class OutfitItem {
 }
 
 extension MutableOutfitItem on OutfitItem {
-  OutfitItem copyWith({String? type, String? parentType, bool? selected, int? namedItemId}) {
-    return OutfitItem(type ?? this.type, parentType ?? this.parentType, selected ?? this.selected, namedItemId ?? this.namedItemId);
+  OutfitItem copyWith({String? type, String? grouping, bool? generic, bool? selected, int? namedItemId}) {
+    return OutfitItem(type ?? this.type, grouping ?? this.grouping, generic ?? this.generic, selected ?? this.selected, namedItemId ?? this.namedItemId);
   }
 
   OutfitItem nameItem({required int newNamedItemId}) {

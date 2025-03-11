@@ -6,7 +6,7 @@ part of 'update_day.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateDayHash() => r'ada7465c50909fbd8f705075f7cefe11e91a978d';
+String _$updateDayHash() => r'568f632cb18b9fcc773d367bd27ba965449dc19a';
 
 /// See also [UpdateDay].
 @ProviderFor(UpdateDay)

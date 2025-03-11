@@ -6,7 +6,7 @@ part of 'update_outfit.dart';
 // RiverpodGenerator
 // **************************************************************************
 
-String _$updateOutfitHash() => r'16a211e01dc7ae58b93cd6117f3c1f3aae6f99f8';
+String _$updateOutfitHash() => r'f00d56e87524b0e6a7ae08945d34a0878afd29b5';
 
 /// See also [UpdateOutfit].
 @ProviderFor(UpdateOutfit)

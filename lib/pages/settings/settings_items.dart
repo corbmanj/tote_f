@@ -28,10 +28,10 @@ class SettingsItems extends ConsumerWidget {
                 child: ListView.separated(
                     scrollDirection: Axis.vertical,
                     itemBuilder: (BuildContext context, int itemIndex) =>
-                        ItemChip(item: items[itemIndex]),
+                        ItemChip(item: items.userItems[itemIndex]),
                     separatorBuilder: (BuildContext context, int outfitIndex) =>
                         SizedBox(width: 30.0),
-                    itemCount: items.length),
+                    itemCount: items.userItems.length),
               ),
             )
           ],

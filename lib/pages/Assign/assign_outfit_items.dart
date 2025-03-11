@@ -26,7 +26,7 @@ class AssignOutfitItems extends ConsumerWidget {
     final selectedItemRef = ref.watch(assignItemsStateProvider).selected;
     final assignItemStateNotifier = ref.read(assignItemsStateProvider.notifier);
     final outfitItems = outfit.items
-        .where((item) => item.parentType != null && !!item.selected!)
+        .where((item) => item.generic == false && !!item.selected!)
         .toList();
     if (outfitItems.isEmpty) {
       return const Center(child: Text('No items to assign.'));
