@@ -3,10 +3,10 @@ import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/apis/fetch_weather.dart';
 import 'package:tote_f/consumers/load_trip.dart';
 import 'package:tote_f/fixtures/mock_trip.dart';
-import 'package:tote_f/models/tote/day.dart';
+import 'package:tote_f/models/trip/day.dart';
 import 'package:tote_f/models/tote/tote.dart';
-import 'package:tote_f/models/tote/weather.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/models/trip/weather.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 import 'package:tote_f/services/db_service.dart';
 
@@ -47,15 +47,15 @@ class CreateTripConsumer extends _$CreateTripConsumer {
         weather.days!.isNotEmpty) {
       return weather.days!
           .map((Weather day) => Day(
-                day.dateTime.millisecondsSinceEpoch,
-                day.dateTime,
-                day.low,
-                day.high,
-                day.icon,
-                day.precip,
-                day.sunset,
-                day.sunrise,
-                day.summary,
+                dayCode: day.dateTime.millisecondsSinceEpoch,
+                day: day.dateTime,
+                low: day.low,
+                high: day.high,
+                icon: day.icon,
+                precip: day.precip,
+                sunset: day.sunset,
+                sunrise: day.sunrise,
+                summary: day.summary,
               ))
           .toList();
     }

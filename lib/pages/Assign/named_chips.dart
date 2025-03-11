@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_named.dart';
 import 'package:tote_f/models/tote/named.dart';
-import 'package:tote_f/models/user/outfit_item.dart';
+import 'package:tote_f/models/trip/outfit_item.dart';
 import 'package:tote_f/pages/Assign/editable_chip.dart';
 import 'package:tote_f/providers/named_items_provider.dart';
 
@@ -36,7 +36,7 @@ class _NamedChipState extends ConsumerState<NamedChips> {
     final namedController = ref.read(updateNamedProvider.notifier);
     final namedItemsList = namedItemsRef
         .where(
-            (Named named) => named.parentType == widget.selectedItem.parentType)
+            (Named named) => named.grouping == widget.selectedItem.grouping)
         .map((Named named) => EditableChip(
               namedItem: named,
               outfitItem: widget.selectedItem,
@@ -53,8 +53,8 @@ class _NamedChipState extends ConsumerState<NamedChips> {
           ...namedItemsList,
           _isEditing ? Container() : ElevatedButton(
               onPressed: () {
-                if (widget.selectedItem.parentType != null) {
-                  namedController.addNamed(widget.selectedItem.parentType!);
+                if (widget.selectedItem.generic == false) {
+                  namedController.addNamed(widget.selectedItem.grouping);
                   setEditing(true);
                 }
               },

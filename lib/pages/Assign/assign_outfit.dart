@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:tote_f/models/tote/day.dart';
+import 'package:tote_f/models/trip/day.dart';
 
 import '../../view_models/expansion_outfit.dart';
 import 'assign_outfit_list.dart';

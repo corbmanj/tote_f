@@ -1,7 +1,8 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tote_f/models/tote/day.dart';
-import 'package:tote_f/models/tote/outfit.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/consumers/update_outfit.dart';
+import 'package:tote_f/models/trip/day.dart';
+import 'package:tote_f/models/trip/outfit.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 import 'package:tote_f/providers/outfit_list_expanded.dart';
 import 'package:tote_f/providers/trip_provider.dart';
@@ -19,8 +20,14 @@ class UpdateDay extends _$UpdateDay {
   ) async {
     final Trip tripRef = ref.watch(tripNotifierProvider);
     final newOutfitIndex = tripRef.days[dayIndex].outfits!.length;
-    Day newDay = tripRef.days[dayIndex].addOutfit(newType);
-    await ref.read(outfitListExpandedProvider.notifier).setEditingAndExpanded(dayIndex, newOutfitIndex, true);
+    final outfitConsumer = ref.read(updateOutfitProvider.notifier);
+    final newOrdering = tripRef.days[dayIndex].outfits == null ? 1 : tripRef.days[dayIndex].outfits!.length;
+    final newOutfit = await outfitConsumer.createOutfitFromTemplate(
+        newType, newOrdering);
+    Day newDay = tripRef.days[dayIndex].addOutfit(newOutfit);
+    await ref
+        .read(outfitListExpandedProvider.notifier)
+        .setEditingAndExpanded(dayIndex, newOutfitIndex, true);
     ref
         .read(tripNotifierProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
@@ -30,19 +37,21 @@ class UpdateDay extends _$UpdateDay {
     Outfit outfit,
     Day day,
   ) {
+    ref.read(outfitListExpandedProvider.notifier).resetExpanded();
     final Trip tripRef = ref.watch(tripNotifierProvider);
     day.deleteOutfit(outfit);
     ref
         .read(tripNotifierProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, day);
-
   }
 
   void expandOutfit(
     int dayIndex,
     int outfitIndex,
   ) {
-    ref.read(outfitListExpandedProvider.notifier).setExpanded(dayIndex, outfitIndex);
+    ref
+        .read(outfitListExpandedProvider.notifier)
+        .setExpanded(dayIndex, outfitIndex);
   }
 
   void editOutfitName(bool newEditing) {

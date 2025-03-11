@@ -1,8 +1,6 @@
 import 'dart:convert';
 import 'package:collection/collection.dart';
-import 'package:tote_f/models/user/outfit_template.dart';
-
-import './outfit.dart';
+import 'outfit.dart';
 
 class Day {
   int dayCode;
@@ -16,20 +14,18 @@ class Day {
   String summary;
   List<Outfit>? outfits;
 
-  Day(
-    this.dayCode,
-    this.day,
-    this.low,
-    this.high,
-    this.icon,
-    this.precip,
-    this.sunrise,
-    this.sunset,
-    this.summary, [
-    this.outfits,
-  ]) {
-    outfits = outfits ?? [];
-  }
+  Day({
+    required this.dayCode,
+    required this.day,
+    required this.low,
+    required this.high,
+    required this.icon,
+    required this.precip,
+    required this.sunrise,
+    required this.sunset,
+    required this.summary,
+    this.outfits = const [],
+  });
 
   Map toJson() => {
         'dayCode': dayCode,
@@ -45,31 +41,47 @@ class Day {
       };
 
   factory Day.defaultDay(DateTime day) {
-    return Day(day.millisecondsSinceEpoch, day, 0, 0, "", 0.0, 0, 0, "");
+    return Day(
+      dayCode: day.millisecondsSinceEpoch,
+      day: day,
+      low: 0,
+      high: 0,
+      icon: "",
+      precip: 0.0,
+      sunset: 0,
+      sunrise: 0,
+      summary: "",
+    );
   }
 
   factory Day.fromMap(Map<String, dynamic> map) {
     return Day(
-      map['dayCode'] ?? 0,
-      DateTime.fromMillisecondsSinceEpoch(map['day']),
-      map['low'],
-      map['high'],
-      map['icon'],
-      map['precip'],
-      map['sunset'],
-      map['sunrise'],
-      map['summary'],
-      jsonDecode(map['outfits'] ?? '[]')
+      dayCode: map['dayCode'] ?? 0,
+      day: DateTime.fromMillisecondsSinceEpoch(map['day']),
+      low: map['low'],
+      high: map['high'],
+      icon: map['icon'],
+      precip: map['precip'],
+      sunset: map['sunset'],
+      sunrise: map['sunrise'],
+      summary: map['summary'],
+      outfits: jsonDecode(map['outfits'] ?? '[]')
           .map<Outfit>((outfit) => Outfit.fromMap(outfit))
           .toList(),
     );
   }
 
+  int getNextOrdering() {
+    return outfits?.length ?? 0;
+  }
+
   void addOutfitCopy(Outfit outfit) {
+    final newOrdering = getNextOrdering();
+    final newOutfit = outfit.copyWith(ordering: newOrdering);
     if (outfits == null) {
-      outfits = [outfit];
+      outfits = [newOutfit];
     } else {
-      outfits = [...outfits!, outfit];
+      outfits = [...outfits!, newOutfit];
     }
   }
 
@@ -135,22 +147,32 @@ extension MutableDay on Day {
     List<Outfit>? outfits,
   }) {
     return Day(
-      dayCode ?? this.dayCode,
-      day ?? this.day,
-      low ?? this.low,
-      high ?? this.high,
-      icon ?? this.icon,
-      precip ?? this.precip,
-      sunrise ?? this.sunrise,
-      sunset ?? this.sunset,
-      summary ?? this.summary,
-      outfits ?? this.outfits,
+      dayCode: dayCode ?? this.dayCode,
+      day: day ?? this.day,
+      low: low ?? this.low,
+      high: high ?? this.high,
+      icon: icon ?? this.icon,
+      precip: precip ?? this.precip,
+      sunset: sunrise ?? this.sunrise,
+      sunrise: sunset ?? this.sunset,
+      summary: summary ?? this.summary,
+      outfits: outfits ?? this.outfits,
     );
   }
 
   Day updateOutfitList({required List<Outfit> newOutfits}) {
-    return Day(dayCode, day, low, high, icon, precip, sunrise, sunset, summary,
-        newOutfits);
+    return Day(
+      dayCode: dayCode,
+      day: day,
+      low: low,
+      high: high,
+      icon: icon,
+      precip: precip,
+      sunset: sunrise,
+      sunrise: sunset,
+      summary: summary,
+      outfits: newOutfits,
+    );
   }
 
   Day nameOutfitItem(
@@ -175,23 +197,21 @@ extension MutableDay on Day {
             newSelected: newSelected));
   }
 
-  Day addOutfit(OutfitTemplate newType) {
+  Day addOutfit(Outfit outfit) {
     if (outfits == null) {
-      return copyWith(outfits: [Outfit.fromTemplate(newType, 0)]);
+      return copyWith(outfits: [outfit]);
     }
-    return copyWith(
-        outfits: [...outfits!, Outfit.fromTemplate(newType, outfits!.length)]);
+    return copyWith(outfits: [...outfits!, outfit]);
   }
 
-  Day changeOutfitType(int outfitOrdering, OutfitTemplate newType) {
+  Day changeOutfitType(int outfitOrdering, Outfit newOutfit) {
     if (outfits == null) {
       return this;
     }
     return copyWith(
         outfits: outfits!
-            .map((Outfit outfit) => outfit.ordering == outfitOrdering
-                ? outfit.changeType(newType, outfit.name)
-                : outfit)
+            .map((Outfit outfit) =>
+                outfit.ordering == outfitOrdering ? newOutfit : outfit)
             .toList());
   }
 

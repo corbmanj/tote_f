@@ -7,7 +7,7 @@ part of 'create_trip_consumer.dart';
 // **************************************************************************
 
 String _$createTripConsumerHash() =>
-    r'10740af72d1f405f701cf53796bc3ccc3d742b7e';
+    r'a6cb865322dc47148a70c7df393064276a173505';
 
 /// See also [CreateTripConsumer].
 @ProviderFor(CreateTripConsumer)

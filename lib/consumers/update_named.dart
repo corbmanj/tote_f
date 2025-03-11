@@ -1,7 +1,7 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:tote_f/models/tote/day.dart';
+import 'package:tote_f/models/trip/day.dart';
 import 'package:tote_f/models/tote/named.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/providers/named_items_provider.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 
@@ -12,8 +12,8 @@ class UpdateNamed extends _$UpdateNamed {
   @override
   void build() {}
 
-  void addNamed(String parentType) {
-    final newItem = Named('new name', parentType, -1);
+  void addNamed(String grouping) {
+    final newItem = Named('new name', grouping, -1);
     ref.read(namedItemsNotifierProvider.notifier).addNamed(newItem);
   }
 

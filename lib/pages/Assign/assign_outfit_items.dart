@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/models/tote/outfit.dart';
-import 'package:tote_f/models/user/outfit_item.dart';
+import 'package:tote_f/models/trip/outfit.dart';
+import 'package:tote_f/models/trip/outfit_item.dart';
 import 'package:tote_f/pages/Assign/named_chips.dart';
 import 'package:tote_f/pages/Assign/named_items_for_outfit.dart';
 import 'package:tote_f/providers/assign_items_state.dart';
@@ -26,7 +26,7 @@ class AssignOutfitItems extends ConsumerWidget {
     final selectedItemRef = ref.watch(assignItemsStateProvider).selected;
     final assignItemStateNotifier = ref.read(assignItemsStateProvider.notifier);
     final outfitItems = outfit.items
-        .where((item) => !!item.hasDropdown && !!item.selected!)
+        .where((item) => item.generic == false && !!item.selected!)
         .toList();
     if (outfitItems.isEmpty) {
       return const Center(child: Text('No items to assign.'));

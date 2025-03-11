@@ -3,13 +3,10 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:tote_f/models/tote/additional_item_section.dart';
 import 'package:tote_f/models/tote/named.dart';
-import 'package:tote_f/models/tote/outfit.dart';
+import 'package:tote_f/models/trip/outfit.dart';
 import 'package:tote_f/models/tote/unnamed.dart';
-import 'package:uuid/uuid.dart';
-import './tote/day.dart';
-import './tote/tote.dart';
-
-const _uuid = Uuid();
+import 'day.dart';
+import '../tote/tote.dart';
 
 class Trip {
   int? id;

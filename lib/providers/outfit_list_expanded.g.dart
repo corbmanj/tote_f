@@ -7,7 +7,7 @@ part of 'outfit_list_expanded.dart';
 // **************************************************************************
 
 String _$outfitListExpandedHash() =>
-    r'02d2d5239696bbac1a3b70ffe67ee671d437a381';
+    r'7ea9cdf4f3bd0041f555987abbd13459da90c6fa';
 
 /// See also [OutfitListExpanded].
 @ProviderFor(OutfitListExpanded)

@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/pages/Assign/assign_items.dart';
 import 'package:tote_f/pages/Select/select_day.dart';
 import 'package:tote_f/providers/trip_provider.dart';
@@ -13,17 +13,18 @@ class SelectOutfits extends ConsumerWidget {
     Trip tripRef = ref.watch(tripNotifierProvider);
     int dayCount = tripRef.days.length;
     String cityName = tripRef.city;
-    if (dayCount == 0) {
-      return Container();
-    }
     return Scaffold(
       appBar: AppBar(title: Text(cityName)),
-      body: ListView.builder(
-        padding: const EdgeInsets.all(8.0),
-        itemCount: dayCount,
-        itemBuilder: (BuildContext context, int index) =>
-            SelectDay(day: tripRef.days[index], dayIndex: index,),
-      ),
+      body: dayCount == 0
+          ? Center(child: CircularProgressIndicator())
+          : ListView.builder(
+              padding: const EdgeInsets.all(8.0),
+              itemCount: dayCount,
+              itemBuilder: (BuildContext context, int index) => SelectDay(
+                day: tripRef.days[index],
+                dayIndex: index,
+              ),
+            ),
       bottomNavigationBar: BottomNavigationBar(
         selectedIconTheme: const IconThemeData(color: Colors.blueGrey),
         selectedItemColor: Colors.blueGrey,

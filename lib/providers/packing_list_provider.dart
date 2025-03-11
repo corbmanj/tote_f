@@ -25,17 +25,17 @@ class PackingListNotifier extends _$PackingListNotifier {
         for (var outfit in outfits) {
           final items = outfit.items;
           for (var item in items) {
-            if (item.selected == true && item.parentType == null) {
+            if (item.selected == true && item.generic == true) {
               if (!unnamed.containsKey(item.type)) {
                 unnamed.addAll({item.type: 0});
               }
               unnamed.update(item.type, (value) => value + 1);
             } else if (item.namedItemId != null) {
-              if (!named.containsKey(item.parentType)) {
-                named.addAll({item.parentType!: {}});
+              if (!named.containsKey(item.grouping)) {
+                named.addAll({item.grouping: {}});
               }
               named.update(
-                  item.parentType!,
+                  item.grouping,
                   (value) => value.union({
                         namedItems.firstWhere(
                             (named) => named.ordering == item.namedItemId)

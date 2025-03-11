@@ -1,32 +1,20 @@
 import 'dart:convert';
-
+import 'package:tote_f/models/user/item_template.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
-import '../user/item_template.dart';
-import '../user/outfit_item.dart';
+
+import 'outfit_item.dart';
 
 class Outfit {
-  late String type;
-  late String name;
-  late List<OutfitItem> items;
-  late int ordering;
+  String type;
+  String name;
+  List<OutfitItem> items;
+  int ordering;
 
-  Outfit(this.type, this.name, this.items, this.ordering);
-
-  Outfit.fromTemplate(OutfitTemplate template, int newOrdering, [String? newName]) {
-    type = template.type;
-    name = newName ?? 'new name';
-    items = createItems(template.outfitItems);
-    ordering = newOrdering;
-  }
-
-  List<OutfitItem> createItems(List<ItemTemplate> items) {
-    final List<OutfitItem> result = [];
-    for (final item in items) {
-      result.add(OutfitItem(
-          item.type, item.hasDropdown, item.parentType, false, item.namedItemId));
-    }
-    return result;
-  }
+  Outfit(
+      {required this.type,
+      required this.name,
+      required this.items,
+      required this.ordering});
 
   Map toJson() => {
         'type': type,
@@ -37,11 +25,25 @@ class Outfit {
 
   factory Outfit.fromMap(Map<String, dynamic> map) {
     return Outfit(
-      map['type'],
-      map['name'],
-      jsonDecode(map['items'] ?? '[]').map<OutfitItem>((item) => OutfitItem.fromMap(item)).toList(),
-      map['ordering'],
+      type: map['type'],
+      name: map['name'],
+      items: jsonDecode(map['items'] ?? '[]')
+          .map<OutfitItem>((item) => OutfitItem.fromMap(item))
+          .toList(),
+      ordering: map['ordering'],
     );
+  }
+
+  factory Outfit.fromTemplate(
+      OutfitTemplate template, int ordering, List<ItemTemplate> items) {
+    return Outfit(
+        type: template.type,
+        name: template.type,
+        items: template.outfitItems.map((i) {
+          final templateItem = items.firstWhere((j) => j.id == i.itemId);
+          return OutfitItem(templateItem.name, templateItem.grouping ?? "", templateItem.generic, i.defaultIncluded);
+        }).toList(),
+        ordering: ordering);
   }
 }
 
@@ -91,13 +93,13 @@ extension MutableOutfit on Outfit {
     return copyWith(items: nameItemByType(itemType, newNamedId));
   }
 
-  Outfit changeType(OutfitTemplate newType, String name) {
-    return Outfit.fromTemplate(newType, ordering, name);
-  }
-
   Outfit copyWith(
       {String? type, String? name, List<OutfitItem>? items, int? ordering}) {
-    return Outfit(type ?? this.type, name ?? this.name, items ?? this.items,
-        ordering ?? this.ordering);
+    return Outfit(
+      type: type ?? this.type,
+      name: name ?? this.name,
+      items: items ?? this.items,
+      ordering: ordering ?? this.ordering,
+    );
   }
 }

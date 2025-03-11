@@ -1,4 +1,4 @@
-import 'package:tote_f/models/tote/outfit.dart';
+import 'package:tote_f/models/trip/outfit.dart';
 
 class ExpansionOutfit {
   ExpansionOutfit({

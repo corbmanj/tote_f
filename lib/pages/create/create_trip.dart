@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/create_trip_consumer.dart';
-import 'package:tote_f/models/trip.dart';
+import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/pages/Select/select_outfits.dart';
 import 'package:tote_f/providers/trip_provider.dart';
 import 'package:tote_f/shared/editable_text.dart';
@@ -95,17 +95,18 @@ class CreateTrip extends ConsumerWidget {
               ),
             ],
           ),
-          const SizedBox(height: 100.0),
+          const SizedBox(height: 50.0),
           Row(
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
-              SizedBox(
-                  width: 150.0,
-                  height: 40.0,
-                  child: EditText(
-                      textValue: tripRef.city,
-                      textLabel: "City, ST",
-                      updateText: tripProvider.updateCity))
+              Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: EditText(
+                        textValue: tripRef.city,
+                        textLabel: "City, ST",
+                        updateText: tripProvider.updateCity),
+                  ))
             ],
           )
         ],
