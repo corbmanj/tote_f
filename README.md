@@ -1,4 +1,4 @@
-# tote_f
+# Welcome to Tote Packer
 
 An app to help you pack
 
