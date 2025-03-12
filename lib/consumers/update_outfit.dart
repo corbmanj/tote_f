@@ -42,6 +42,7 @@ class UpdateOutfit extends _$UpdateOutfit {
   ]) async {
     final itemsRef = await ref.watch(userItemsProvider.future);
     return Outfit(
+      templateId: template.id,
       type: template.type,
       name: newName ?? template.type,
       items: createItems(template.outfitItems, itemsRef.userItems),

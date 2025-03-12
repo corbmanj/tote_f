@@ -1,3 +1,4 @@
+import 'package:collection/collection.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_outfit.dart';
@@ -24,7 +25,7 @@ class SelectOutfitType extends ConsumerWidget {
     }
 
     final OutfitTemplate outfitType =
-        options.firstWhere((template) => template.type == outfit!.type);
+        options.firstWhereOrNull((template) => template.id == outfit!.templateId) ?? options.first;
 
     return DropdownButton<OutfitTemplate>(
       value: outfitType,

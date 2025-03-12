@@ -5,18 +5,21 @@ import 'package:tote_f/models/user/outfit_template.dart';
 import 'outfit_item.dart';
 
 class Outfit {
+  int templateId;
   String type;
   String name;
   List<OutfitItem> items;
   int ordering;
 
   Outfit(
-      {required this.type,
+      {required this.templateId,
+      required this.type,
       required this.name,
       required this.items,
       required this.ordering});
 
   Map toJson() => {
+        'templateId': templateId,
         'type': type,
         'name': name,
         'items': jsonEncode(items),
@@ -25,6 +28,7 @@ class Outfit {
 
   factory Outfit.fromMap(Map<String, dynamic> map) {
     return Outfit(
+      templateId: map['templateId'],
       type: map['type'],
       name: map['name'],
       items: jsonDecode(map['items'] ?? '[]')
@@ -37,11 +41,13 @@ class Outfit {
   factory Outfit.fromTemplate(
       OutfitTemplate template, int ordering, List<ItemTemplate> items) {
     return Outfit(
+        templateId: template.id,
         type: template.type,
         name: template.type,
         items: template.outfitItems.map((i) {
           final templateItem = items.firstWhere((j) => j.id == i.itemId);
-          return OutfitItem(templateItem.name, templateItem.grouping ?? "", templateItem.generic, i.defaultIncluded);
+          return OutfitItem(templateItem.name, templateItem.grouping ?? "",
+              templateItem.generic, i.defaultIncluded);
         }).toList(),
         ordering: ordering);
   }
@@ -94,8 +100,9 @@ extension MutableOutfit on Outfit {
   }
 
   Outfit copyWith(
-      {String? type, String? name, List<OutfitItem>? items, int? ordering}) {
+      {int? templateId, String? type, String? name, List<OutfitItem>? items, int? ordering}) {
     return Outfit(
+      templateId: templateId ?? this.templateId,
       type: type ?? this.type,
       name: name ?? this.name,
       items: items ?? this.items,
