@@ -6,6 +6,7 @@ import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 import 'package:tote_f/providers/outfit_list_expanded.dart';
 import 'package:tote_f/providers/trip_provider.dart';
+import 'package:tote_f/providers/user_outfits_provider.dart';
 
 part 'update_day.g.dart';
 
@@ -16,14 +17,15 @@ class UpdateDay extends _$UpdateDay {
 
   Future<void> addOutfitToDay(
     int dayIndex,
-    OutfitTemplate newType,
+    [OutfitTemplate? newType,]
   ) async {
     final Trip tripRef = ref.watch(tripNotifierProvider);
+    final userOutfits = await ref.watch(userOutfitsProvider.future);
     final newOutfitIndex = tripRef.days[dayIndex].outfits!.length;
     final outfitConsumer = ref.read(updateOutfitProvider.notifier);
     final newOrdering = tripRef.days[dayIndex].outfits == null ? 1 : tripRef.days[dayIndex].outfits!.length;
     final newOutfit = await outfitConsumer.createOutfitFromTemplate(
-        newType, newOrdering);
+        newType ?? userOutfits.first, newOrdering);
     Day newDay = tripRef.days[dayIndex].addOutfit(newOutfit);
     await ref
         .read(outfitListExpandedProvider.notifier)

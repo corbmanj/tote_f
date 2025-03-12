@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/update_day.dart';
-import 'package:tote_f/fixtures/mock_trip.dart';
 import 'package:tote_f/models/trip/day.dart';
 
 import '../../view_models/expansion_outfit.dart';
@@ -17,7 +16,6 @@ class SelectOutfit extends ConsumerWidget {
     if (day == null || day!.outfits == null) {
       return Container();
     }
-    final newOutfitType = outfitTypeList[0];
     final outfits = day!.outfits!
         .map((outfit) => ExpansionOutfit(
               expandedValue: outfit,
@@ -36,7 +34,7 @@ class SelectOutfit extends ConsumerWidget {
                 onPressed: () {
                   ref
                       .read(updateDayProvider.notifier)
-                      .addOutfitToDay(dayIndex, newOutfitType);
+                      .addOutfitToDay(dayIndex);
                 },
                 icon: const Icon(Icons.add))
           ],
