@@ -89,10 +89,14 @@ class _ItemChipState extends ConsumerState<ItemChip> {
             itemTemplateController.deleteItem(widget.item);
             outfitTemplateController.deleteItemFromAllOutfits(widget.item);
           },
-          style: ButtonStyle(
-              backgroundColor: WidgetStatePropertyAll(Colors.redAccent),
-              foregroundColor: WidgetStatePropertyAll(Colors.black)),
-          child: Text('Delete'),
+          style: ElevatedButton.styleFrom(
+            minimumSize: Size(50, 30), // Width: 50, Height: 30
+            padding: EdgeInsets.symmetric(
+                horizontal: 8, vertical: 4),
+                backgroundColor: Colors.redAccent,
+              foregroundColor: Colors.black,
+          ),
+          child: Icon(Icons.delete),
         )
       ],
     );

@@ -18,6 +18,7 @@ class SettingsItems extends ConsumerWidget {
               mainAxisAlignment: MainAxisAlignment.spaceAround,
               children: [
                 Text('Item'),
+                Text('Grouping'),
                 Text('Is Generic'),
                 Text('Actions'),
               ],
