@@ -7,9 +7,6 @@ import 'package:tote_f/pages/settings/item_draggable_chip.dart';
 import 'package:tote_f/pages/settings/section_header.dart';
 import 'package:tote_f/providers/user_additional_items_provider.dart';
 
-// Check Item
-
-
 class SettingsAdditionalItems extends ConsumerWidget {
   const SettingsAdditionalItems({super.key});
 
