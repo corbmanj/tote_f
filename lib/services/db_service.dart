@@ -1,21 +1,19 @@
 import 'dart:convert';
-
 import 'package:path/path.dart';
 import 'package:sqflite/sqflite.dart';
-import 'package:tote_f/fixtures/mock_settings.dart';
-import 'package:tote_f/fixtures/mock_trip.dart';
 import 'package:tote_f/models/trip/trip.dart';
 import 'package:tote_f/models/trip_meta.dart';
+import 'package:tote_f/models/user/additional_item_section_template.dart';
+import 'package:tote_f/models/user/additional_item_template.dart';
 import 'package:tote_f/models/user/item_template.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
+import 'package:tote_f/services/db_creation.dart';
+import 'package:tote_f/services/db_migrations.dart';
 
 class DatabaseService {
   static final DatabaseService _databaseService = DatabaseService._internal();
   factory DatabaseService() => _databaseService;
   DatabaseService._internal();
-
-  final mockTrip1 = jsonEncode(trips[0]);
-  final mockTrip2 = jsonEncode(trips[1]);
 
   static Database? _database;
   Future<Database> get database async {
@@ -34,55 +32,25 @@ class DatabaseService {
       path,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
-      version: 2,
+      version: 3,
     );
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    await deleteDatabase(join(await getDatabasesPath(), 'tote_database.db'));
-    _onCreate(db, 2);
+    for (int i = oldVersion + 1; i <= newVersion; i++) {
+      // for (String query in migrations[i] ?? []) {
+      //   await db.execute(query);
+      // }
+      if (migrations[i] != null) {
+        await migrations[i]!(db);
+      }
+    }
+    // await deleteDatabase(join(await getDatabasesPath(), 'tote_database.db'));
+    // onCreate(db, 2);
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    await db.execute(
-      "CREATE TABLE Trips (id INTEGER PRIMARY KEY, city TEXT, startDate INTEGER, endDate INTEGER, trip TEXT)",
-    );
-    await db.execute(
-      "INSERT INTO Trips (id, city, startDate, endDate, trip) VALUES (1, '${trips[0].city}', ${trips[0].dateRange.start.millisecondsSinceEpoch}, ${trips[0].dateRange.end.millisecondsSinceEpoch}, '$mockTrip1'), (2, '${trips[1].city}', ${trips[1].dateRange.start.millisecondsSinceEpoch}, ${trips[1].dateRange.end.millisecondsSinceEpoch}, '$mockTrip2')",
-    );
-    await db.execute(
-      "CREATE TABLE UserItems (id INTEGER PRIMARY KEY, name TEXT, grouping TEXT, generic INTEGER, deleted INTEGER)",
-    );
-    await db.execute(
-      "CREATE TABLE UserOutfits (id INTEGER PRIMARY KEY, type TEXT)",
-    );
-    await db.execute(
-      "CREATE TABLE UserOutfitItems (id INTEGER PRIMARY KEY, outfitId INTEGER, itemId INTEGER, defaultIncluded INTEGER)",
-    );
-    List<int> itemIds = [];
-    for (var i in items) {
-      int itemId = await db.insert("UserItems", {
-        'id': i.id,
-        'name': i.name,
-        'grouping': i.grouping,
-        'generic': i.generic == true ? 1 : 0,
-        'deleted': 0,
-      });
-      itemIds.add(itemId);
-    }
-    for (var outfit in outfits) {
-      int outfitId = await db.insert("UserOutfits", {
-        'id': outfit.id,
-        'type': outfit.type,
-      });
-      for (var item in outfit.outfitItems) {
-        await db.insert("UserOutfitItems", {
-          'outfitId': outfitId,
-          'itemId': item.itemId,
-          'defaultIncluded': item.defaultIncluded ? 1 : 0
-        });
-      }
-    }
+    onCreate(db, version);
   }
 
   // Get list of all trips for load trip page
@@ -266,5 +234,84 @@ class DatabaseService {
     final db = await _databaseService.database;
     await db
         .delete("UserOutfitItems", where: "itemId = ?", whereArgs: [itemId]);
+  }
+
+  // Get list of all user additional item templates
+  Future<List<AdditionalItemTemplate>> userAdditionalItems() async {
+    final db = await _databaseService.database;
+
+    // Query the table for all the Items.
+    final List<Map<String, dynamic>> maps = await db.query(
+        'UserAdditionalItems',
+        columns: ['id', 'name', 'sectionId', 'defaultIncluded'],
+        where: 'deleted = ?',
+        whereArgs: [0]);
+
+    // Convert the List<Map<String, dynamic> into a List<AdditionalUserItemTemplates>.
+    return maps.map((item) => AdditionalItemTemplate.fromMap(item)).toList();
+  }
+
+  // Get list of all user additional item templates
+  Future<List<AdditionalItemSectionTemplate>>
+      userAdditionalItemSections() async {
+    final db = await _databaseService.database;
+
+    // Query the table for all the Items.
+    final List<Map<String, dynamic>> maps = await db.query(
+        'UserAdditionalItemSections',
+        columns: ['id', 'name'],
+        where: 'deleted = ?',
+        whereArgs: [0]);
+
+    // Convert the List<Map<String, dynamic> into a List<AdditionalUserItemSectionTemplates>.
+    return maps
+        .map((item) => AdditionalItemSectionTemplate.fromMap(item))
+        .toList();
+  }
+
+  Future<void> removeAdditionalItemFromSection(int id) async {
+    final db = await _databaseService.database;
+    await db.update('UserAdditionalItems', {'sectionId': null},
+        where: 'id = ?', whereArgs: [id]);
+  }
+
+  Future<void> addAdditionalItemToSection(int itemId, int sectionId) async {
+    final db = await _databaseService.database;
+    await db.update('UserAdditionalItems', {'sectionId': sectionId},
+        where: 'id = ?', whereArgs: [itemId]);
+  }
+
+  Future<void> renameAdditionalItem(int itemId, String name) async {
+    final db = await _databaseService.database;
+    await db.update("UserAdditionalItems", {'name': name},
+        where: 'id = ?', whereArgs: [itemId]);
+  }
+
+  Future<void> updateAdditionalItemDefaultIncluded(int itemId, bool newValue) async {
+    final db = await _databaseService.database;
+    await db.update("UserAdditionalItems", {'defaultIncluded': newValue ? 1 : 0 },
+        where: 'id = ?', whereArgs: [itemId]);
+  }
+
+  Future<int> addAdditionalItem(String name) async {
+    final db = await _databaseService.database;
+    return await db.insert("UserAdditionalItems", {
+      'name': name,
+      'sectionId': null,
+      'defaultIncluded': 0,
+      'deleted': 0
+    });
+  }
+
+  Future<int> addAdditionalItemSection(String name) async {
+    final db = await _databaseService.database;
+    return await db
+        .insert("UserAdditionalItemSections", {'name': name, 'deleted': 0});
+  }
+
+  Future<void> renameAdditionalItemSection(int sectionId, String name) async {
+    final db = await _databaseService.database;
+    await db.update("UserAdditionalItemSections", {'name': name},
+        where: 'id = ?', whereArgs: [sectionId]);
   }
 }

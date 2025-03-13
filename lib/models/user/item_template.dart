@@ -25,7 +25,7 @@ class ItemTemplate {
       id: map['id'] ?? -1,
       name: map['name'],
       grouping: map['grouping'],
-      generic: map['generic'] == 1 ? true : false,
+      generic: map['generic'] == 1,
     );
   }
 }

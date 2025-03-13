@@ -66,20 +66,6 @@ class NewBox extends StatelessWidget {
   }
 }
 
-class Header extends StatelessWidget {
-  const Header({super.key});
-
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-        decoration: BoxDecoration(
-            border: Border.all(color: Colors.black12, width: 2.0)),
-        child: Center(
-          child: Text("All Items"),
-        ));
-  }
-}
-
 class AddChip extends ConsumerWidget {
   const AddChip({super.key});
 
