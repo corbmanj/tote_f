@@ -1,4 +1,4 @@
-package com.example.tote_f
+package com.corbmanj.tote_f
 
 import io.flutter.embedding.android.FlutterActivity
 

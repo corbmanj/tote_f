@@ -50,7 +50,7 @@ class DatabaseService {
   }
 
   Future<void> _onCreate(Database db, int version) async {
-    onCreate(db, version);
+    await onCreate(db, version);
   }
 
   // Get list of all trips for load trip page

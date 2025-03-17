@@ -1,0 +1,2 @@
+/Users/jordancorbman/Repos/tote_f/android/app/.cxx/RelWithDebInfo/202974m2/arm64-v8a/CMakeFiles/edit_cache.dir
+/Users/jordancorbman/Repos/tote_f/android/app/.cxx/RelWithDebInfo/202974m2/arm64-v8a/CMakeFiles/rebuild_cache.dir
