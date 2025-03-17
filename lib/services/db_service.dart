@@ -303,6 +303,11 @@ class DatabaseService {
     });
   }
 
+  Future<void> deleteAdditionalItem(int itemId) async {
+    final db = await _databaseService.database;
+    await db.delete('UserAdditionalItems', where: 'id = ?', whereArgs: [itemId]);
+  }
+
   Future<int> addAdditionalItemSection(String name) async {
     final db = await _databaseService.database;
     return await db

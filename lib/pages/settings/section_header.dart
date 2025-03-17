@@ -7,7 +7,8 @@ class SectionHeader extends ConsumerStatefulWidget {
   final AdditionalItemSectionTemplate section;
   final UserAdditionalItems notifier;
 
-  const SectionHeader({super.key, required this.section, required this.notifier});
+  const SectionHeader(
+      {super.key, required this.section, required this.notifier});
 
   @override
   ConsumerState createState() => _SectionHeaderState();
@@ -37,6 +38,13 @@ class _SectionHeaderState extends ConsumerState<SectionHeader> {
 
   @override
   Widget build(BuildContext context) {
+    void openMenu(AdditionalItemSectionTemplate section) {
+      showModalBottomSheet(
+        context: context,
+        builder: (context) => SectionActions(section: section),
+      );
+    }
+
     if (_isEditing) {
       _controller.text = widget.section.name;
       _controller.selection =
@@ -56,22 +64,90 @@ class _SectionHeaderState extends ConsumerState<SectionHeader> {
         },
         onTapOutside: (ev) {
           if (_controller.text != "") {
-            widget.notifier.renameAdditionalItemSection(widget.section, _controller.text);
+            widget.notifier
+                .renameAdditionalItemSection(widget.section, _controller.text);
             setEditing(false);
           }
         },
       );
     }
-    return GestureDetector(
-      child: Container(
-        decoration:
-            BoxDecoration(border: Border.all(color: Colors.black12, width: 2.0)),
-        child: Center(
-          child: Text(widget.section.name),
-        ),
-      ),
-      onLongPress: () => setEditing(true),
-      onDoubleTap: () => setEditing(true),
+    return Container(
+        decoration: BoxDecoration(
+            border: Border.all(color: Colors.black12, width: 2.0)),
+        child: Row(
+          children: [
+            Align(
+              alignment: Alignment.centerLeft,
+              child: GestureDetector(
+                onTap: () => openMenu(widget.section),
+                child: const Icon(
+                  Icons.menu,
+                  size: 16,
+                ),
+              ),
+            ),
+            Spacer(),
+            Align(
+              alignment: Alignment.center,
+              child: GestureDetector(
+                child: Center(
+                  child: Text(widget.section.name),
+                ),
+                onLongPress: () => setEditing(true),
+                onDoubleTap: () => setEditing(true),
+              ),
+            ),
+            Spacer(),
+          ],
+        ));
+  }
+}
+
+class SectionActions extends ConsumerWidget {
+  final AdditionalItemSectionTemplate section;
+  const SectionActions({
+    super.key,
+    required this.section,
+  });
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    void deleteSection() {
+      showModalBottomSheet(
+          context: context,
+          builder: (context) => DeleteSectionModal(section: section));
+    }
+
+    return Column(
+      children: [
+        Text(section.name),
+        ListTile(
+            leading: const Icon(Icons.delete),
+            title: const Text('Delete Section'),
+            onTap: () {
+              Navigator.pop(context);
+              deleteSection();
+            }),
+      ],
+    );
+  }
+}
+
+class DeleteSectionModal extends ConsumerWidget {
+  final AdditionalItemSectionTemplate section;
+  const DeleteSectionModal({super.key, required this.section});
+
+  @override
+  Widget build(BuildContext context, WidgetRef ref) {
+    return Column(
+      children: [
+        Align(alignment: Alignment.topCenter, child: Text(section.name)),
+        Spacer(),
+        ElevatedButton(onPressed: () {}, child: Text("Delete section and all items")),
+        Spacer(),
+        ElevatedButton(onPressed: () {}, child: Text("Unassign items and delete section")),
+        Spacer(),
+      ],
     );
   }
 }

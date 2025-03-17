@@ -72,7 +72,16 @@ class UserAdditionalItems extends _$UserAdditionalItems {
     ));
   }
 
-  Future<void> deleteAdditionalItem(String itemName) async {}
+  Future<void> deleteAdditionalItem(AdditionalItemTemplate item) async {
+    final DatabaseService dbService = DatabaseService();
+    await dbService.deleteAdditionalItem(item.id);
+    final previousState = await future;
+    final newAdditionalItems = previousState.userAdditionalItems.where((i) => i.id != item.id).toList();
+    state = AsyncData(UserAdditionalItemsAndSections(
+      userAdditionalItems: newAdditionalItems,
+      userAdditionalItemSections: previousState.userAdditionalItemSections,
+    ));
+  }
 
   Future<void> addItemToSection(AdditionalItemTemplate item,
       AdditionalItemSectionTemplate section) async {
