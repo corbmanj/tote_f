@@ -287,25 +287,24 @@ class DatabaseService {
         where: 'id = ?', whereArgs: [itemId]);
   }
 
-  Future<void> updateAdditionalItemDefaultIncluded(int itemId, bool newValue) async {
+  Future<void> updateAdditionalItemDefaultIncluded(
+      int itemId, bool newValue) async {
     final db = await _databaseService.database;
-    await db.update("UserAdditionalItems", {'defaultIncluded': newValue ? 1 : 0 },
+    await db.update(
+        "UserAdditionalItems", {'defaultIncluded': newValue ? 1 : 0},
         where: 'id = ?', whereArgs: [itemId]);
   }
 
   Future<int> addAdditionalItem(String name) async {
     final db = await _databaseService.database;
-    return await db.insert("UserAdditionalItems", {
-      'name': name,
-      'sectionId': null,
-      'defaultIncluded': 0,
-      'deleted': 0
-    });
+    return await db.insert("UserAdditionalItems",
+        {'name': name, 'sectionId': null, 'defaultIncluded': 0, 'deleted': 0});
   }
 
   Future<void> deleteAdditionalItem(int itemId) async {
     final db = await _databaseService.database;
-    await db.delete('UserAdditionalItems', where: 'id = ?', whereArgs: [itemId]);
+    await db
+        .delete('UserAdditionalItems', where: 'id = ?', whereArgs: [itemId]);
   }
 
   Future<int> addAdditionalItemSection(String name) async {
@@ -317,6 +316,12 @@ class DatabaseService {
   Future<void> renameAdditionalItemSection(int sectionId, String name) async {
     final db = await _databaseService.database;
     await db.update("UserAdditionalItemSections", {'name': name},
+        where: 'id = ?', whereArgs: [sectionId]);
+  }
+
+  Future<void> deleteAdditionalItemSection(int sectionId) async {
+    final db = await _databaseService.database;
+    await db.delete("UserAdditionalItemSections",
         where: 'id = ?', whereArgs: [sectionId]);
   }
 }

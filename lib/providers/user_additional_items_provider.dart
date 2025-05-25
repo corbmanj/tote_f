@@ -76,7 +76,9 @@ class UserAdditionalItems extends _$UserAdditionalItems {
     final DatabaseService dbService = DatabaseService();
     await dbService.deleteAdditionalItem(item.id);
     final previousState = await future;
-    final newAdditionalItems = previousState.userAdditionalItems.where((i) => i.id != item.id).toList();
+    final newAdditionalItems = previousState.userAdditionalItems
+        .where((i) => i.id != item.id)
+        .toList();
     state = AsyncData(UserAdditionalItemsAndSections(
       userAdditionalItems: newAdditionalItems,
       userAdditionalItemSections: previousState.userAdditionalItemSections,
@@ -139,5 +141,34 @@ class UserAdditionalItems extends _$UserAdditionalItems {
         ]));
   }
 
-  Future<void> deleteAdditionalItemSection(String itemName) async {}
+  Future<void> deleteAdditionalItemSection(
+      AdditionalItemSectionTemplate section, bool deleteItems) async {
+    final DatabaseService dbService = DatabaseService();
+    final previousState = await future;
+    previousState.userAdditionalItems
+        .where((i) => i.sectionId == section.id)
+        .forEach((item) async {
+      await dbService.removeAdditionalItemFromSection(item.id);
+      if (deleteItems) {
+        await dbService.deleteAdditionalItem(item.id);
+      }
+    });
+    await dbService.deleteAdditionalItemSection(section.id);
+    final newAdditionalItemSections = previousState.userAdditionalItemSections
+        .where((s) => s.id != section.id)
+        .toList();
+    final newAdditionalItems = previousState.userAdditionalItems
+        .map((i) {
+          if (i.sectionId == section.id) {
+            return deleteItems ? null : i.clearSection();
+          }
+          return i;
+        })
+        .whereType<AdditionalItemTemplate>()
+        .toList();
+    state = AsyncData(UserAdditionalItemsAndSections(
+      userAdditionalItems: newAdditionalItems,
+      userAdditionalItemSections: newAdditionalItemSections,
+    ));
+  }
 }

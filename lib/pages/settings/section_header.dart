@@ -41,7 +41,8 @@ class _SectionHeaderState extends ConsumerState<SectionHeader> {
     void openMenu(AdditionalItemSectionTemplate section) {
       showModalBottomSheet(
         context: context,
-        builder: (context) => SectionActions(section: section),
+        builder: (context) =>
+            SectionActions(section: section, notifier: widget.notifier),
       );
     }
 
@@ -105,9 +106,11 @@ class _SectionHeaderState extends ConsumerState<SectionHeader> {
 
 class SectionActions extends ConsumerWidget {
   final AdditionalItemSectionTemplate section;
+  final UserAdditionalItems notifier;
   const SectionActions({
     super.key,
     required this.section,
+    required this.notifier,
   });
 
   @override
@@ -115,7 +118,8 @@ class SectionActions extends ConsumerWidget {
     void deleteSection() {
       showModalBottomSheet(
           context: context,
-          builder: (context) => DeleteSectionModal(section: section));
+          builder: (context) =>
+              DeleteSectionModal(section: section, notifier: notifier));
     }
 
     return Column(
@@ -135,7 +139,9 @@ class SectionActions extends ConsumerWidget {
 
 class DeleteSectionModal extends ConsumerWidget {
   final AdditionalItemSectionTemplate section;
-  const DeleteSectionModal({super.key, required this.section});
+  final UserAdditionalItems notifier;
+  const DeleteSectionModal(
+      {super.key, required this.section, required this.notifier});
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
@@ -143,9 +149,19 @@ class DeleteSectionModal extends ConsumerWidget {
       children: [
         Align(alignment: Alignment.topCenter, child: Text(section.name)),
         Spacer(),
-        ElevatedButton(onPressed: () {}, child: Text("Delete section and all items")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              notifier.deleteAdditionalItemSection(section, true);
+            },
+            child: Text("Delete section and all items")),
         Spacer(),
-        ElevatedButton(onPressed: () {}, child: Text("Unassign items and delete section")),
+        ElevatedButton(
+            onPressed: () {
+              Navigator.pop(context);
+              notifier.deleteAdditionalItemSection(section, false);
+            },
+            child: Text("Unassign items and delete section")),
         Spacer(),
       ],
     );
