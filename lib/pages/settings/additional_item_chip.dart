@@ -73,18 +73,21 @@ class _ItemChipState extends ConsumerState<AdditionalItemChip> {
           onLongPress: () => setEditing(true),
           onDoubleTap: () => setEditing(true),
         ),
-        ElevatedButton(
-          onPressed: () {
-            additionalItemController.deleteAdditionalItem(widget.item);
-          },
-          style: ElevatedButton.styleFrom(
-            minimumSize: Size(50.0, 30.0),
-            padding: EdgeInsets.symmetric(
-                horizontal: 8, vertical: 4),
-                backgroundColor: Colors.redAccent,
-              foregroundColor: Colors.black,
+        Padding(
+          padding: const EdgeInsets.only(right: 48.0),
+          child: ElevatedButton(
+            onPressed: () {
+              additionalItemController.deleteAdditionalItem(widget.item);
+            },
+            style: ElevatedButton.styleFrom(
+              minimumSize: Size(50.0, 30.0),
+              padding: EdgeInsets.symmetric(
+                  horizontal: 8, vertical: 4),
+                  backgroundColor: Colors.redAccent,
+                foregroundColor: Colors.black,
+            ),
+            child: Icon(Icons.delete),
           ),
-          child: Icon(Icons.delete),
         )
       ],
     );
