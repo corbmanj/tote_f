@@ -45,6 +45,7 @@ dependencies:
   collection: ^1.18.0
   flutter_slidable: ^4.0.0
   http: ^1.2.2
+  split_view: ^3.2.1
 
 dev_dependencies:
   flutter_test:
