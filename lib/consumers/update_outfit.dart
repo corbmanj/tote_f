@@ -18,22 +18,22 @@ class UpdateOutfit extends _$UpdateOutfit {
   void build() {}
 
   List<OutfitItem> createItems(
-    List<UserOutfitItem> userOutfitItems, List<ItemTemplate> templateItems) {
-  final List<OutfitItem> result = [];
-  for (final item in userOutfitItems) {
-    final itemToAdd = templateItems
-        .firstWhereOrNull((template) => item.itemId == template.id);
-    if (itemToAdd != null) {
-      result.add(OutfitItem(
-        itemToAdd.name,
-        itemToAdd.grouping ?? "",
-        itemToAdd.generic,
-        item.defaultIncluded,
-      ));
+      List<UserOutfitItem> userOutfitItems, List<ItemTemplate> templateItems) {
+    final List<OutfitItem> result = [];
+    for (final item in userOutfitItems) {
+      final itemToAdd = templateItems
+          .firstWhereOrNull((template) => item.itemId == template.id);
+      if (itemToAdd != null) {
+        result.add(OutfitItem(
+          itemToAdd.name,
+          itemToAdd.grouping ?? "",
+          itemToAdd.generic,
+          item.defaultIncluded,
+        ));
+      }
     }
+    return result;
   }
-  return result;
-}
 
   Future<Outfit> createOutfitFromTemplate(
     OutfitTemplate template,
@@ -56,7 +56,17 @@ class UpdateOutfit extends _$UpdateOutfit {
     OutfitTemplate newType,
   ) async {
     final Trip tripRef = ref.watch(tripNotifierProvider);
-    final Outfit newOutfit = await createOutfitFromTemplate(newType, outfitOrdering);
+    Outfit? currentOutfit;
+    String? userOutfitName;
+    if (tripRef.days[dayIndex].outfits != null) {
+      currentOutfit = tripRef.days[dayIndex].outfits!
+          .firstWhereOrNull((outfit) => outfit.ordering == outfitOrdering);
+    }
+    if (currentOutfit != null && currentOutfit.type != currentOutfit.name) {
+      userOutfitName = currentOutfit.name;
+    }
+    final Outfit newOutfit =
+        await createOutfitFromTemplate(newType, outfitOrdering, userOutfitName);
     Day newDay =
         tripRef.days[dayIndex].changeOutfitType(outfitOrdering, newOutfit);
     ref
