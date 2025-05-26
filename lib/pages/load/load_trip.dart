@@ -31,8 +31,11 @@ class TripList extends StatelessWidget {
   final List<TripMeta> tripList;
   const TripList({super.key, required this.tripList});
 
+  
+
   @override
   Widget build(BuildContext context) {
+    tripList.sort((a, b) => b.dateRange.start.compareTo(a.dateRange.start));
     return ListView.separated(
       padding: const EdgeInsets.all(8.0),
       itemCount: tripList.length,

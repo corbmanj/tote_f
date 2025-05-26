@@ -49,8 +49,8 @@ class CreateTrip extends ConsumerWidget {
               actions: <Widget>[
                 TextButton(
                   child: const Text('RESET'),
-                  onPressed: () {
-                    tripProvider.createTripFromSchedule(reset: true);
+                  onPressed: () async {
+                    await tripProvider.createTripFromSchedule(reset: true);
                     Navigator.pop(context, 'reset');
                     Navigator.push(
                         context,
@@ -128,12 +128,12 @@ class CreateTrip extends ConsumerWidget {
             label: "next",
           ),
         ],
-        onTap: (value) {
+        onTap: (value) async {
           if (value == 1) {
             if (hasOutfits) {
               openWarningDialog();
             } else {
-              tripProvider.createTripFromSchedule();
+              await tripProvider.createTripFromSchedule();
               Navigator.push(
                   context,
                   MaterialPageRoute(

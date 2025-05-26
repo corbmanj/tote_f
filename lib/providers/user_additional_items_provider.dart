@@ -15,7 +15,7 @@ class UserAdditionalItemsAndSections {
   });
 }
 
-@riverpod
+@Riverpod(keepAlive: true)
 class UserAdditionalItems extends _$UserAdditionalItems {
   @override
   Future<UserAdditionalItemsAndSections> build() async {

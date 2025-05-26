@@ -1,6 +1,7 @@
 import 'dart:convert';
-
+import 'package:tote_f/providers/user_additional_items_provider.dart';
 import 'additional_item_section.dart';
+import './additional_item.dart';
 import './named.dart';
 import './unnamed.dart';
 
@@ -34,6 +35,30 @@ class Tote {
               (additional) => AdditionalItemSection.fromMap(additional))
           .toList(),
     );
+  }
+
+  factory Tote.fromUserAdditionalItemsAndSections({
+    required List<Named> named,
+    required List<Unnamed> unnamed,
+    required UserAdditionalItemsAndSections userData,
+  }) {
+    // Map section templates to AdditionalItemSection
+    final sections = userData.userAdditionalItemSections.map((sectionTemplate) {
+      final items = userData.userAdditionalItems
+          .where((item) => item.sectionId == sectionTemplate.id)
+          .map((item) => AdditionalItem(item.name, item.defaultIncluded))
+          .toList();
+      return AdditionalItemSection(sectionTemplate.name, items);
+    }).toList();
+    // Handle unassigned items (sectionId == null)
+    final unassignedItems = userData.userAdditionalItems
+        .where((item) => item.sectionId == null)
+        .map((item) => AdditionalItem(item.name, item.defaultIncluded))
+        .toList();
+    if (unassignedItems.isNotEmpty) {
+      sections.add(AdditionalItemSection('Unassigned', unassignedItems));
+    }
+    return Tote(named: named, unnamed: unnamed, additionalItems: sections);
   }
 }
 
