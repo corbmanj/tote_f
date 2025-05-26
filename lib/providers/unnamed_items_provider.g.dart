@@ -7,7 +7,7 @@ part of 'unnamed_items_provider.dart';
 // **************************************************************************
 
 String _$unnamedItemsNotifierHash() =>
-    r'497cd27470de5a1fa69723add652d65523773efd';
+    r'66b545752a42f5b1a4fc3c9b53589aa3948465ad';
 
 /// See also [UnnamedItemsNotifier].
 @ProviderFor(UnnamedItemsNotifier)
