@@ -4,6 +4,7 @@ import 'package:tote_f/providers/additional_items_provider.dart';
 import 'package:tote_f/providers/named_items_provider.dart';
 import 'package:tote_f/providers/trip_list_provider.dart';
 import 'package:tote_f/providers/trip_provider.dart';
+import 'package:tote_f/providers/unnamed_items_provider.dart';
 import 'package:tote_f/services/db_service.dart';
 
 part 'load_trip.g.dart';
@@ -19,6 +20,7 @@ class LoadTrip extends _$LoadTrip {
     ref.read(tripNotifierProvider.notifier).loadTrip(trip);
     ref.read(namedItemsNotifierProvider.notifier).loadList(trip.tote != null ? trip.tote!.named : []);
     ref.read(additionalItemsNotifierProvider.notifier).loadList(trip.tote != null ? trip.tote!.additionalItems : []);
+    ref.read(unnamedItemsNotifierProvider.notifier).initializeFromTote(trip.tote != null ? trip.tote!.unnamed : []);
   }
 
   void deleteTrip (int tripId) async {

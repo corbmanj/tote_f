@@ -15,6 +15,10 @@ class UnnamedItemsNotifier extends _$UnnamedItemsNotifier {
     state = newList;
   }
 
+  void initializeFromTote(List<Unnamed> toteUnnamed) {
+    state = [...toteUnnamed];
+  }
+
 // todo change to an unnamed item provider
   void incrementCount(String name) {
     final List<Unnamed> newList = [...state];
