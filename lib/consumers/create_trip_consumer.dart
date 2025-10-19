@@ -66,12 +66,10 @@ class CreateTripConsumer extends _$CreateTripConsumer {
   }
 
   Future<Trip?> createTripFromSchedule(TripMeta tripMeta, {bool? reset = false}) async {
-    print('Creating trip from schedule with TripMeta: ${tripMeta.name}, ${tripMeta.city}');
     final DatabaseService dbService = DatabaseService();
     final weatherResponse =
         await fetchWeather(tripMeta.city, tripMeta.dateRange);
     final List<Day> dayList = createDayListFromWeather(weatherResponse, tripMeta.dateRange);
-    print('Created ${dayList.length} days for trip');
     final userAdditionalItemsAsync = await ref.watch(userAdditionalItemsProvider.future);
     final userData = userAdditionalItemsAsync;
     
@@ -95,7 +93,6 @@ class CreateTripConsumer extends _$CreateTripConsumer {
       return newTrip;
     } else {
       newId = await dbService.createTrip(newTrip, name: tripMeta.name);
-      print('Created trip in database with ID: $newId');
       // Create a new trip with the assigned ID and load it directly
       final tripWithId = Trip(
         id: newId,
@@ -105,7 +102,6 @@ class CreateTripConsumer extends _$CreateTripConsumer {
         tote: newTrip.tote,
       );
       ref.read(tripNotifierProvider.notifier).loadTrip(tripWithId);
-      print('Loaded trip into provider with ${tripWithId.days.length} days');
       
       // Also load the related providers
       ref.read(namedItemsNotifierProvider.notifier).loadList(tripWithId.tote != null ? tripWithId.tote!.named : []);

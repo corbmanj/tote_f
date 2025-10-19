@@ -23,9 +23,7 @@ class TripNotifier extends _$TripNotifier {
   }
 
   void loadTrip(Trip trip) {
-    print('TripNotifier.loadTrip called with trip ID: ${trip.id}, days: ${trip.days.length}, city: ${trip.city}');
     state = trip;
-    print('TripNotifier.loadTrip completed, new state has ${state.days.length} days');
   }
 
   Future<void> saveTrip(Trip updatedTrip) async {

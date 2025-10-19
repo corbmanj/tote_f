@@ -37,13 +37,11 @@ class DatabaseService {
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
-    print('Database upgrading from version $oldVersion to $newVersion');
     for (int i = oldVersion + 1; i <= newVersion; i++) {
       // for (String query in migrations[i] ?? []) {
       //   await db.execute(query);
       // }
       if (migrations[i] != null) {
-        print('Running migration for version $i');
         await migrations[i]!(db);
       }
     }

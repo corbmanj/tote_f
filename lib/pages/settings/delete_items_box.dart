@@ -43,7 +43,6 @@ class DeleteItemsBox extends ConsumerWidget {
                   outfitsConsumer.deleteItemFromAllOutfits(details.data);
                   // delete item from items list
                   itemsConsumer.deleteItem(details.data);
-                  print("dragging from item list");
                 }
               },
             )

@@ -13,7 +13,6 @@ class SelectOutfits extends ConsumerWidget {
     Trip tripRef = ref.watch(tripNotifierProvider);
     int dayCount = tripRef.days.length;
     String cityName = tripRef.city;
-    print('SelectOutfits: Trip has ${dayCount} days, city: $cityName, trip ID: ${tripRef.id}');
     return Scaffold(
       appBar: AppBar(title: Text(cityName)),
       body: dayCount == 0
