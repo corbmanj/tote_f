@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import 'package:flutter/material.dart';
 import 'package:tote_f/models/tote/additional_item_section.dart';
 import 'package:tote_f/models/tote/named.dart';
@@ -26,8 +24,8 @@ class Trip {
   Map toJson() => {
         'id': id,
         'city': city,
-        'days': jsonEncode(days),
-        'tote': jsonEncode(tote),
+        'days': days,
+        'tote': tote,
         'startDate': dateRange.start.millisecondsSinceEpoch,
         'endDate': dateRange.end.millisecondsSinceEpoch,
       };
@@ -36,15 +34,15 @@ class Trip {
     return Trip(
         id: tripId,
         city: map['city'],
-        days: jsonDecode(map['days'])
+        days: (map['days'] as List)
             .map<Day>((day) => Day.fromMap(day))
             .toList(),
         dateRange: DateTimeRange(
             start: DateTime.fromMillisecondsSinceEpoch(map['startDate']),
             end: DateTime.fromMillisecondsSinceEpoch(map['endDate'])),
-        tote: map['tote'] == 'null'
+        tote: map['tote'] == null
             ? Tote(named: [], unnamed: [], additionalItems: [])
-            : Tote.fromMap(jsonDecode(map['tote'])));
+            : Tote.fromMap(map['tote']));
   }
 }
 

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:collection/collection.dart';
 import 'outfit.dart';
 
@@ -37,7 +36,7 @@ class Day {
         'sunset': sunset,
         'sunrise': sunrise,
         'summary': summary,
-        'outfits': jsonEncode(outfits)
+        'outfits': outfits
       };
 
   factory Day.defaultDay(DateTime day) {
@@ -65,7 +64,7 @@ class Day {
       sunset: map['sunset'],
       sunrise: map['sunrise'],
       summary: map['summary'],
-      outfits: jsonDecode(map['outfits'] ?? '[]')
+      outfits: (map['outfits'] as List? ?? [])
           .map<Outfit>((outfit) => Outfit.fromMap(outfit))
           .toList(),
     );

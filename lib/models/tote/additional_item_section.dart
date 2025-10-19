@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 import './additional_item.dart';
 
 class AdditionalItemSection {
@@ -10,13 +8,13 @@ class AdditionalItemSection {
 
   Map toJson() => {
         'name': name,
-        'items': jsonEncode(items),
+        'items': items,
       };
 
   factory AdditionalItemSection.fromMap(Map<String, dynamic> map) {
     return AdditionalItemSection(
       map['name'],
-      jsonDecode(map['items'] ?? '[]')
+      (map['items'] as List? ?? [])
           .map<AdditionalItem>((item) => AdditionalItem.fromMap(item))
           .toList(),
     );

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:tote_f/providers/user_additional_items_provider.dart';
 import 'additional_item_section.dart';
 import './additional_item.dart';
@@ -17,20 +16,20 @@ class Tote {
   });
 
   Map toJson() => {
-        'unnamed': jsonEncode(unnamed),
-        'named': jsonEncode(named),
-        'additionalItems': jsonEncode(additionalItems)
+        'unnamed': unnamed,
+        'named': named,
+        'additionalItems': additionalItems
       };
 
   factory Tote.fromMap(Map<String, dynamic> map) {
     return Tote(
-      named: jsonDecode(map['named'] ?? '[]')
+      named: (map['named'] as List? ?? [])
           .map<Named>((named) => Named.fromMap(named))
           .toList(),
-      unnamed: jsonDecode(map['unnamed'] ?? '[]')
+      unnamed: (map['unnamed'] as List? ?? [])
           .map<Unnamed>((unnamed) => Unnamed.fromMap(unnamed))
           .toList(),
-      additionalItems: jsonDecode(map['additionalItems'] ?? '[]')
+      additionalItems: (map['additionalItems'] as List? ?? [])
           .map<AdditionalItemSection>(
               (additional) => AdditionalItemSection.fromMap(additional))
           .toList(),

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:tote_f/models/user/item_template.dart';
 import 'package:tote_f/models/user/outfit_template.dart';
 
@@ -22,7 +21,7 @@ class Outfit {
         'templateId': templateId,
         'type': type,
         'name': name,
-        'items': jsonEncode(items),
+        'items': items,
         'ordering': ordering,
       };
 
@@ -31,7 +30,7 @@ class Outfit {
       templateId: map['templateId'],
       type: map['type'],
       name: map['name'],
-      items: jsonDecode(map['items'] ?? '[]')
+      items: (map['items'] as List? ?? [])
           .map<OutfitItem>((item) => OutfitItem.fromMap(item))
           .toList(),
       ordering: map['ordering'],

@@ -1,4 +1,3 @@
-import 'dart:convert';
 import 'package:tote_f/models/user/user_outfit_item.dart';
 import './item_template.dart';
 
@@ -18,7 +17,7 @@ class OutfitTemplate {
   Map toJson() => {
         'id': id,
         'type': type,
-        'outfitItems': jsonEncode(outfitItems),
+        'outfitItems': outfitItems,
       };
 
   factory OutfitTemplate.fromMap(

@@ -73,7 +73,60 @@ class DatabaseService {
     final tripJsonList = await db.query('Trips',
         columns: ['id', 'trip'], where: 'id = ?', whereArgs: [tripId]);
     final tripJson = tripJsonList.first;
-    return Trip.fromMap(jsonDecode(tripJson['trip']!.toString()), tripId);
+    
+    // Decode the trip JSON
+    var tripData = jsonDecode(tripJson['trip']!.toString());
+    
+    // Handle backwards compatibility - if nested data is still JSON strings, decode them
+    if (tripData['days'] is String) {
+      tripData['days'] = jsonDecode(tripData['days']);
+    }
+    if (tripData['tote'] is String) {
+      tripData['tote'] = jsonDecode(tripData['tote']);
+    }
+    
+    // Handle deeply nested string encoding in days
+    if (tripData['days'] is List) {
+      for (var day in tripData['days']) {
+        if (day is Map && day['outfits'] is String) {
+          day['outfits'] = jsonDecode(day['outfits']);
+          
+          // Handle even deeper nesting - outfit items
+          if (day['outfits'] is List) {
+            for (var outfit in day['outfits']) {
+              if (outfit is Map && outfit['items'] is String) {
+                outfit['items'] = jsonDecode(outfit['items']);
+              }
+            }
+          }
+        }
+      }
+    }
+    
+    // Handle deeply nested string encoding in tote
+    if (tripData['tote'] is Map) {
+      var tote = tripData['tote'];
+      if (tote['named'] is String) {
+        tote['named'] = jsonDecode(tote['named']);
+      }
+      if (tote['unnamed'] is String) {
+        tote['unnamed'] = jsonDecode(tote['unnamed']);
+      }
+      if (tote['additionalItems'] is String) {
+        tote['additionalItems'] = jsonDecode(tote['additionalItems']);
+        
+        // Handle additional item sections with nested items
+        if (tote['additionalItems'] is List) {
+          for (var section in tote['additionalItems']) {
+            if (section is Map && section['items'] is String) {
+              section['items'] = jsonDecode(section['items']);
+            }
+          }
+        }
+      }
+    }
+    
+    return Trip.fromMap(tripData, tripId);
   }
 
   Future<int> createTrip(Trip trip, {String name = ""}) async {
