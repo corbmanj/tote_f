@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/consumers/create_trip_consumer.dart';
-import 'package:tote_f/models/trip/trip.dart';
+import 'package:tote_f/models/trip_meta.dart';
 import 'package:tote_f/pages/Select/select_outfits.dart';
-import 'package:tote_f/providers/trip_provider.dart';
+import 'package:tote_f/providers/trip_meta_provider.dart';
 import 'package:tote_f/shared/editable_text.dart';
 import 'package:tote_f/utils/date_formatter.dart';
 
@@ -12,69 +12,26 @@ class CreateTrip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final TripMeta tripMetaRef = ref.watch(tripMetaNotifierProvider);
+    final tripMetaProvider = ref.read(tripMetaNotifierProvider.notifier);
     final tripProvider = ref.read(createTripConsumerProvider.notifier);
-    final bool hasOutfits = tripRef.days
-        .any((day) => day.outfits != null && day.outfits!.isNotEmpty);
 
     Future openDatePicker() async {
       final result = await showDateRangePicker(
         context: context,
         initialDateRange: DateTimeRange(
-            start: tripRef.dateRange.start, end: tripRef.dateRange.end),
+            start: tripMetaRef.dateRange.start, end: tripMetaRef.dateRange.end),
         firstDate: DateTime.now(),
         lastDate: DateTime(2050),
       );
 
       if (result != null) {
-        tripProvider.updateDates(result);
+        tripMetaProvider.updateDates(result);
       }
     }
 
-    Future<void> openWarningDialog() async {
-      return showDialog<void>(
-          context: context,
-          builder: (BuildContext context) {
-            return AlertDialog(
-              title: const Text("Reset Current Trip?"),
-              content: const SingleChildScrollView(
-                child: ListBody(
-                  children: <Widget>[
-                    Text(
-                        'Warning, you have already added outfits to your trip.'),
-                    Text('Would you like to RESET the trip with new dates or leave the trip unchanged'),
-                  ],
-                ),
-              ),
-              actions: <Widget>[
-                TextButton(
-                  child: const Text('RESET'),
-                  onPressed: () async {
-                    await tripProvider.createTripFromSchedule(reset: true);
-                    Navigator.pop(context, 'reset');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SelectOutfits()));
-                  },
-                ),
-                TextButton(
-                  child: const Text('Continue unchanged'),
-                  onPressed: () {
-                    Navigator.pop(context, 'continue');
-                    Navigator.push(
-                        context,
-                        MaterialPageRoute(
-                            builder: (context) => const SelectOutfits()));
-                  },
-                ),
-              ],
-            );
-          });
-    }
-
-    final formattedStartDate = formatter.format(tripRef.dateRange.start);
-    final formattedEndDate = formatter.format(tripRef.dateRange.end);
+    final formattedStartDate = formatter.format(tripMetaRef.dateRange.start);
+    final formattedEndDate = formatter.format(tripMetaRef.dateRange.end);
     return Scaffold(
       appBar: AppBar(title: const Text("Create a Trip")),
       body: Center(
@@ -103,9 +60,23 @@ class CreateTrip extends ConsumerWidget {
                   child: Padding(
                     padding: const EdgeInsets.symmetric(horizontal: 40.0),
                     child: EditText(
-                        textValue: tripRef.city,
+                        textValue: tripMetaRef.name,
+                        textLabel: "Trip Name",
+                        updateText: tripMetaProvider.updateName),
+                  ))
+            ],
+          ),
+          const SizedBox(height: 50.0),
+          Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: [
+              Expanded(
+                  child: Padding(
+                    padding: const EdgeInsets.symmetric(horizontal: 40.0),
+                    child: EditText(
+                        textValue: tripMetaRef.city,
                         textLabel: "City, ST",
-                        updateText: tripProvider.updateCity),
+                        updateText: tripMetaProvider.updateCity),
                   ))
             ],
           )
@@ -130,14 +101,14 @@ class CreateTrip extends ConsumerWidget {
         ],
         onTap: (value) async {
           if (value == 1) {
-            if (hasOutfits) {
-              openWarningDialog();
-            } else {
-              await tripProvider.createTripFromSchedule();
+            final trip = await tripProvider.createTripFromSchedule(tripMetaRef);
+            if (trip != null && trip.days.isNotEmpty) {
               Navigator.push(
                   context,
                   MaterialPageRoute(
                       builder: (context) => const SelectOutfits()));
+            } else {
+              print('Error: Trip creation failed or has no days');
             }
           } else {
             Navigator.pop(context);

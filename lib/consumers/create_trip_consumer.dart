@@ -1,12 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:riverpod_annotation/riverpod_annotation.dart';
 import 'package:tote_f/apis/fetch_weather.dart';
-import 'package:tote_f/consumers/load_trip.dart';
 import 'package:tote_f/models/trip/day.dart';
 import 'package:tote_f/models/tote/tote.dart';
 import 'package:tote_f/models/trip/weather.dart';
 import 'package:tote_f/models/trip/trip.dart';
+import 'package:tote_f/models/trip_meta.dart';
+import 'package:tote_f/providers/additional_items_provider.dart';
+import 'package:tote_f/providers/named_items_provider.dart';
 import 'package:tote_f/providers/trip_provider.dart';
+import 'package:tote_f/providers/unnamed_items_provider.dart';
 import 'package:tote_f/providers/user_additional_items_provider.dart';
 import 'package:tote_f/services/db_service.dart';
 
@@ -32,12 +35,6 @@ class CreateTripConsumer extends _$CreateTripConsumer {
     final currentTrip = ref.watch(tripNotifierProvider);
     final newTrip = currentTrip.copyWith(city: city);
     loadTrip(newTrip);
-  }
-
-  Future<void> initializeNewTrip() async {
-    final DatabaseService dbService = DatabaseService();
-    final newId = await dbService.createTrip(defaultTrip);
-    ref.read(loadTripProvider.notifier).loadTrip(newId);
   }
 
   List<Day> createDayListFromWeather(
@@ -68,29 +65,53 @@ class CreateTripConsumer extends _$CreateTripConsumer {
     return dayList;
   }
 
-  Future<void> createTripFromSchedule({bool? reset = false}) async {
+  Future<Trip?> createTripFromSchedule(TripMeta tripMeta, {bool? reset = false}) async {
+    print('Creating trip from schedule with TripMeta: ${tripMeta.name}, ${tripMeta.city}');
     final DatabaseService dbService = DatabaseService();
-    final currentTrip = ref.watch(tripNotifierProvider);
     final weatherResponse =
-        await fetchWeather(currentTrip.city, currentTrip.dateRange);
-    final List<Day> dayList = createDayListFromWeather(weatherResponse, currentTrip.dateRange);
+        await fetchWeather(tripMeta.city, tripMeta.dateRange);
+    final List<Day> dayList = createDayListFromWeather(weatherResponse, tripMeta.dateRange);
+    print('Created ${dayList.length} days for trip');
     final userAdditionalItemsAsync = await ref.watch(userAdditionalItemsProvider.future);
     final userData = userAdditionalItemsAsync;
-    final newTrip = currentTrip.copyWith(
+    
+    // Create a Trip from TripMeta
+    final newTrip = Trip(
+        id: tripMeta.id == -1 ? null : tripMeta.id,
+        city: tripMeta.city,
         days: dayList,
+        dateRange: tripMeta.dateRange,
         tote: Tote.fromUserAdditionalItemsAndSections(
           named: [],
           unnamed: [],
           userData: userData,
         ));
+        
     int? newId = newTrip.id;
-    if (reset == true) {
+    if (reset == true && newTrip.id != null) {
       await dbService.saveTripById(newTrip, newTrip.id!);
+      // Load the updated trip directly
+      ref.read(tripNotifierProvider.notifier).loadTrip(newTrip);
+      return newTrip;
     } else {
-      newId = await dbService.createTrip(newTrip);
-    }
-    if (newId != null) {
-      ref.read(loadTripProvider.notifier).loadTrip(newId);
+      newId = await dbService.createTrip(newTrip, name: tripMeta.name);
+      print('Created trip in database with ID: $newId');
+      // Create a new trip with the assigned ID and load it directly
+      final tripWithId = Trip(
+        id: newId,
+        city: newTrip.city,
+        days: newTrip.days,
+        dateRange: newTrip.dateRange,
+        tote: newTrip.tote,
+      );
+      ref.read(tripNotifierProvider.notifier).loadTrip(tripWithId);
+      print('Loaded trip into provider with ${tripWithId.days.length} days');
+      
+      // Also load the related providers
+      ref.read(namedItemsNotifierProvider.notifier).loadList(tripWithId.tote != null ? tripWithId.tote!.named : []);
+      ref.read(additionalItemsNotifierProvider.notifier).loadList(tripWithId.tote != null ? tripWithId.tote!.additionalItems : []);
+      ref.read(unnamedItemsNotifierProvider.notifier).initializeFromTote(tripWithId.tote != null ? tripWithId.tote!.unnamed : []);
+      return tripWithId;
     }
   }
 }

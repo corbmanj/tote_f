@@ -1,27 +1,26 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'create_trip_consumer.dart';
+part of 'trip_meta_provider.dart';
 
 // **************************************************************************
 // RiverpodGenerator
 // **************************************************************************
 
-String _$createTripConsumerHash() =>
-    r'bc577255b73057dd72f0da4a4a600b24e2d384af';
+String _$tripMetaNotifierHash() => r'8619f1b863c355b2e58f01e9c2c5295e77e33769';
 
-/// See also [CreateTripConsumer].
-@ProviderFor(CreateTripConsumer)
-final createTripConsumerProvider =
-    AutoDisposeNotifierProvider<CreateTripConsumer, void>.internal(
-  CreateTripConsumer.new,
-  name: r'createTripConsumerProvider',
+/// See also [TripMetaNotifier].
+@ProviderFor(TripMetaNotifier)
+final tripMetaNotifierProvider =
+    AutoDisposeNotifierProvider<TripMetaNotifier, TripMeta>.internal(
+  TripMetaNotifier.new,
+  name: r'tripMetaNotifierProvider',
   debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
       ? null
-      : _$createTripConsumerHash,
+      : _$tripMetaNotifierHash,
   dependencies: null,
   allTransitiveDependencies: null,
 );
 
-typedef _$CreateTripConsumer = AutoDisposeNotifier<void>;
+typedef _$TripMetaNotifier = AutoDisposeNotifier<TripMeta>;
 // ignore_for_file: type=lint
 // ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package

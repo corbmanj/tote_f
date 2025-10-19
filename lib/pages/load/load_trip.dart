@@ -92,8 +92,8 @@ class TripTile extends ConsumerWidget {
               MaterialPageRoute(builder: (context) => const SelectOutfits()));
         },
         leading: CircleAvatar(child: Text(state)),
-        title: Text(trip.city),
-        subtitle: Text('$startDateString - $endDateString'),
+        title: Text(trip.name),
+        subtitle: Text('${trip.city} • $startDateString - $endDateString'),
       ),
     );
   }

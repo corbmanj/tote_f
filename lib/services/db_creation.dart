@@ -9,10 +9,10 @@ final mockTrip2 = jsonEncode(trips[1]);
 
 Future<void> onCreate(Database db, int version) async {
   await db.execute(
-    "CREATE TABLE Trips (id INTEGER PRIMARY KEY, city TEXT, startDate INTEGER, endDate INTEGER, trip TEXT)",
+    "CREATE TABLE Trips (id INTEGER PRIMARY KEY, name TEXT DEFAULT '', city TEXT, startDate INTEGER, endDate INTEGER, trip TEXT)",
   );
   await db.execute(
-    "INSERT INTO Trips (id, city, startDate, endDate, trip) VALUES (1, '${trips[0].city}', ${trips[0].dateRange.start.millisecondsSinceEpoch}, ${trips[0].dateRange.end.millisecondsSinceEpoch}, '$mockTrip1'), (2, '${trips[1].city}', ${trips[1].dateRange.start.millisecondsSinceEpoch}, ${trips[1].dateRange.end.millisecondsSinceEpoch}, '$mockTrip2')",
+    "INSERT INTO Trips (id, name, city, startDate, endDate, trip) VALUES (1, 'Boulder Weekend Getaway', '${trips[0].city}', ${trips[0].dateRange.start.millisecondsSinceEpoch}, ${trips[0].dateRange.end.millisecondsSinceEpoch}, '$mockTrip1'), (2, 'Austin Business Trip', '${trips[1].city}', ${trips[1].dateRange.start.millisecondsSinceEpoch}, ${trips[1].dateRange.end.millisecondsSinceEpoch}, '$mockTrip2')",
   );
   await db.execute(
     "CREATE TABLE UserItems (id INTEGER PRIMARY KEY, name TEXT, grouping TEXT, generic INTEGER, deleted INTEGER)",

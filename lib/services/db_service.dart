@@ -32,16 +32,18 @@ class DatabaseService {
       path,
       onCreate: _onCreate,
       onUpgrade: _onUpgrade,
-      version: 3,
+      version: 4,
     );
   }
 
   Future<void> _onUpgrade(Database db, int oldVersion, int newVersion) async {
+    print('Database upgrading from version $oldVersion to $newVersion');
     for (int i = oldVersion + 1; i <= newVersion; i++) {
       // for (String query in migrations[i] ?? []) {
       //   await db.execute(query);
       // }
       if (migrations[i] != null) {
+        print('Running migration for version $i');
         await migrations[i]!(db);
       }
     }
@@ -60,7 +62,7 @@ class DatabaseService {
 
     // Query the table for all the Trips.
     final List<Map<String, dynamic>> maps = await db
-        .query('Trips', columns: ['id', 'city', 'startDate', 'endDate']);
+        .query('Trips', columns: ['id', 'name', 'city', 'startDate', 'endDate']);
 
     // Convert the List<Map<String, dynamic> into a List<TripMeta>.
     return maps.map((trip) => TripMeta.fromMap(trip)).toList();
@@ -74,9 +76,10 @@ class DatabaseService {
     return Trip.fromMap(jsonDecode(tripJson['trip']!.toString()), tripId);
   }
 
-  Future<int> createTrip(Trip trip) async {
+  Future<int> createTrip(Trip trip, {String name = ""}) async {
     final db = await _databaseService.database;
     return await db.insert('Trips', {
+      'name': name,
       'city': trip.city,
       'startDate': trip.dateRange.start.millisecondsSinceEpoch,
       'endDate': trip.dateRange.end.millisecondsSinceEpoch,
@@ -84,13 +87,18 @@ class DatabaseService {
     });
   }
 
-  Future<void> saveTripById(Trip trip, int tripId) async {
+  Future<void> saveTripById(Trip trip, int tripId, {String? name}) async {
     if (tripId == -1) {
       print('cannot update trip with id = -1');
     }
     final db = await _databaseService.database;
-    await db.update('Trips', {'trip': jsonEncode(trip)},
-        where: 'id = ?', whereArgs: [tripId]);
+    final Map<String, dynamic> updateData = {
+      'trip': jsonEncode(trip)
+    };
+    if (name != null) {
+      updateData['name'] = name;
+    }
+    await db.update('Trips', updateData, where: 'id = ?', whereArgs: [tripId]);
   }
 
   Future<void> deleteTripById(int tripId) async {

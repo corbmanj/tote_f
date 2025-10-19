@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
-import 'package:tote_f/consumers/create_trip_consumer.dart';
 import 'package:tote_f/pages/create/create_trip.dart';
 import 'package:tote_f/pages/settings/settings_page.dart';
+import 'package:tote_f/providers/trip_meta_provider.dart';
 import '../load/load_trip.dart';
 
 class Home extends ConsumerWidget {
@@ -26,7 +26,7 @@ class Home extends ConsumerWidget {
                 minimumSize: const Size(200, 50),
               ),
               onPressed: () {
-                ref.read(createTripConsumerProvider.notifier).initializeNewTrip();
+                ref.read(tripMetaNotifierProvider.notifier).reset();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: ((context) => const CreateTrip())),
