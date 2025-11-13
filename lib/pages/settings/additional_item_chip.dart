@@ -62,31 +62,38 @@ class _ItemChipState extends ConsumerState<AdditionalItemChip> {
       );
     }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        GestureDetector(
-          child: Chip(
-            label: Text(widget.item.name),
-            deleteIcon: Icon(Icons.edit),
-            onDeleted: () => setEditing(true),
-          ),
-          onLongPress: () => setEditing(true),
-          onDoubleTap: () => setEditing(true),
-        ),
-        Padding(
-          padding: const EdgeInsets.only(right: 48.0),
-          child: ElevatedButton(
-            onPressed: () {
-              additionalItemController.deleteAdditionalItem(widget.item);
-            },
-            style: ElevatedButton.styleFrom(
-              minimumSize: Size(50.0, 30.0),
-              padding: EdgeInsets.symmetric(
-                  horizontal: 8, vertical: 4),
-                  backgroundColor: Colors.redAccent,
-                foregroundColor: Colors.black,
+        Expanded(
+          flex: 3,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              child: Chip(
+                label: Text(widget.item.name),
+                deleteIcon: Icon(Icons.edit),
+                onDeleted: () => setEditing(true),
+              ),
+              onLongPress: () => setEditing(true),
+              onDoubleTap: () => setEditing(true),
             ),
-            child: Icon(Icons.delete),
+          ),
+        ),
+        Expanded(
+          flex: 1,
+          child: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                additionalItemController.deleteAdditionalItem(widget.item);
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(50.0, 30.0),
+                padding: EdgeInsets.symmetric(
+                    horizontal: 8, vertical: 4),
+                    backgroundColor: Colors.redAccent,
+                  foregroundColor: Colors.black,
+              ),
+              child: Icon(Icons.delete),
+            ),
           ),
         )
       ],

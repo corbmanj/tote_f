@@ -65,38 +65,56 @@ class _ItemChipState extends ConsumerState<ItemChip> {
       );
     }
     return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        GestureDetector(
-          child: Chip(
-            label: Text(widget.item.name),
-            deleteIcon: Icon(Icons.edit),
-            onDeleted: () => setEditing(true),
+        Expanded(
+          flex: 2,
+          child: Align(
+            alignment: Alignment.centerLeft,
+            child: GestureDetector(
+              child: Chip(
+                label: Text(widget.item.name),
+                deleteIcon: Icon(Icons.edit),
+                onDeleted: () => setEditing(true),
+              ),
+              onLongPress: () => setEditing(true),
+              onDoubleTap: () => setEditing(true),
+            ),
           ),
-          onLongPress: () => setEditing(true),
-          onDoubleTap: () => setEditing(true),
         ),
-        GroupingSelector(item: widget.item),
-        Checkbox(
-            value: widget.item.generic,
-            onChanged: (bool? checked) {
-              if (checked != null) {
-                itemTemplateController.setItemIsGeneric(widget.item, checked);
-              }
-            }),
-        ElevatedButton(
-          onPressed: () {
-            itemTemplateController.deleteItem(widget.item);
-            outfitTemplateController.deleteItemFromAllOutfits(widget.item);
-          },
-          style: ElevatedButton.styleFrom(
-            minimumSize: Size(50, 30), // Width: 50, Height: 30
-            padding: EdgeInsets.symmetric(
-                horizontal: 8, vertical: 4),
-                backgroundColor: Colors.redAccent,
-              foregroundColor: Colors.black,
+        Expanded(
+          flex: 2,
+          child: Center(child: GroupingSelector(item: widget.item)),
+        ),
+        Expanded(
+          flex: 1,
+          child: Center(
+            child: Checkbox(
+                value: widget.item.generic,
+                onChanged: (bool? checked) {
+                  if (checked != null) {
+                    itemTemplateController.setItemIsGeneric(widget.item, checked);
+                  }
+                }),
           ),
-          child: Icon(Icons.delete),
+        ),
+        Expanded(
+          flex: 1,
+          child: Center(
+            child: ElevatedButton(
+              onPressed: () {
+                itemTemplateController.deleteItem(widget.item);
+                outfitTemplateController.deleteItemFromAllOutfits(widget.item);
+              },
+              style: ElevatedButton.styleFrom(
+                minimumSize: Size(50, 30), // Width: 50, Height: 30
+                padding: EdgeInsets.symmetric(
+                    horizontal: 8, vertical: 4),
+                    backgroundColor: Colors.redAccent,
+                  foregroundColor: Colors.black,
+              ),
+              child: Icon(Icons.delete),
+            ),
+          ),
         )
       ],
     );

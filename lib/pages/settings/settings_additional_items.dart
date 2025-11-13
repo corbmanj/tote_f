@@ -13,12 +13,17 @@ class SettingsAdditionalItems extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final additionalItemsRef = ref.watch(userAdditionalItemsProvider);
-    return switch (additionalItemsRef) {
-      AsyncData(:final value) => ItemsAndSections(
-          additionalItems: value.userAdditionalItems,
-          sections: value.userAdditionalItemSections),
-      _ => CircularProgressIndicator()
-    };
+    return Scaffold(
+      appBar: AppBar(
+        title: const Text('Additional Items'),
+      ),
+      body: switch (additionalItemsRef) {
+        AsyncData(:final value) => ItemsAndSections(
+            additionalItems: value.userAdditionalItems,
+            sections: value.userAdditionalItemSections),
+        _ => CircularProgressIndicator()
+      },
+    );
   }
 }
 
@@ -72,8 +77,9 @@ class ItemsSection extends StatelessWidget {
           color: Colors.black12,
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
-            itemBuilder: (_, int index) => index == items.length ? AddChip(notifier: notifier) :
-                DraggableSectionItem(item: items[index]),
+            itemBuilder: (_, int index) => index == items.length
+                ? AddChip(notifier: notifier)
+                : DraggableSectionItem(item: items[index]),
             separatorBuilder: (_, __) => SizedBox(width: 10.0),
             itemCount: items.length + 1,
           ),
@@ -146,7 +152,8 @@ class Section extends StatelessWidget {
           SectionHeader(section: section, notifier: notifier),
           Expanded(
               child: SectionItemsList(
-            items: items.sorted((a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase())),
+            items: items.sorted(
+                (a, b) => a.name.toLowerCase().compareTo(b.name.toLowerCase())),
             section: section,
             notifier: notifier,
           )),
@@ -251,7 +258,8 @@ class _ItemChipState extends ConsumerState<DraggableSectionItem> {
       _controller.text = widget.item.name;
       _controller.selection =
           TextSelection(baseOffset: 0, extentOffset: _controller.text.length);
-      return IntrinsicWidth(child: TextField(
+      return IntrinsicWidth(
+          child: TextField(
         autofocus: true,
         controller: _controller,
         decoration: const InputDecoration(
@@ -266,7 +274,8 @@ class _ItemChipState extends ConsumerState<DraggableSectionItem> {
         },
         onTapOutside: (ev) {
           if (_controller.text != "") {
-            additionalItemRef.renameAdditionalItem(widget.item, _controller.text);
+            additionalItemRef.renameAdditionalItem(
+                widget.item, _controller.text);
             setEditing(false);
           }
         },

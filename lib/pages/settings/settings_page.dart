@@ -20,7 +20,7 @@ class SettingsPage extends StatelessWidget {
           title: const Text('Settings'),
         ),
         body: const TabBarView(children: [
-          SettingsItems(),
+          SettingsItemsTabView(),
           SettingsOutfits(),
           SettingsAdditionalItems(),
         ]),

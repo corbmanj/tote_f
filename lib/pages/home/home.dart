@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:tote_f/pages/create/create_trip.dart';
-import 'package:tote_f/pages/settings/settings_page.dart';
+import 'package:tote_f/pages/settings/settings_home.dart';
 import 'package:tote_f/providers/trip_meta_provider.dart';
 import '../load/load_trip.dart';
 
@@ -61,7 +61,7 @@ class Home extends ConsumerWidget {
               onPressed: () {
                 Navigator.push(
                   context,
-                  MaterialPageRoute(builder: ((context) => const SettingsPage())),
+                  MaterialPageRoute(builder: ((context) => const SettingsHome())),
                 );
               },
               child: const Text("Setup Outfits"),
