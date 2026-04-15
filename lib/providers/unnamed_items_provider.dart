@@ -28,7 +28,7 @@ class UnnamedItemsNotifier extends _$UnnamedItemsNotifier {
       }
     }
     state = newList;
-    ref.read(tripNotifierProvider.notifier).replaceUnnamedAndUpdateTrip(newList);
+    ref.read(tripProvider.notifier).replaceUnnamedAndUpdateTrip(newList);
   }
 
   void decrementCount(String name) {
@@ -39,13 +39,13 @@ class UnnamedItemsNotifier extends _$UnnamedItemsNotifier {
       }
     }
     state = newList;
-    ref.read(tripNotifierProvider.notifier).replaceUnnamedAndUpdateTrip(newList);
+    ref.read(tripProvider.notifier).replaceUnnamedAndUpdateTrip(newList);
   }
 
   void addAndPackItem(String itemName, int itemCount) {
     final newList = [...state, Unnamed(itemName, itemCount, true)];
     state = newList;
-    ref.read(tripNotifierProvider.notifier).replaceUnnamedAndUpdateTrip(newList);
+    ref.read(tripProvider.notifier).replaceUnnamedAndUpdateTrip(newList);
   }
 
   void packUnnamed(Unnamed item, bool isPacked) {
@@ -56,6 +56,6 @@ class UnnamedItemsNotifier extends _$UnnamedItemsNotifier {
       }
     }
     state = newList;
-    ref.read(tripNotifierProvider.notifier).replaceUnnamedAndUpdateTrip(newList);
+    ref.read(tripProvider.notifier).replaceUnnamedAndUpdateTrip(newList);
   }
 }

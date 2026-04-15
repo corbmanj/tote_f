@@ -75,7 +75,7 @@ extension MutableTrip on Trip {
         dateRange: dateRange);
   }
 
-  Trip changeOutfitType(dayCode, outfitOrdering, newType) {
+  Trip changeOutfitType(int dayCode, int outfitOrdering, Outfit newType) {
     final dayToUpdate = days.firstWhere((Day day) => day.dayCode == dayCode);
     return copyWith(
         city: city,

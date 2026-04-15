@@ -10,7 +10,7 @@ class SelectOutfits extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    Trip tripRef = ref.watch(tripNotifierProvider);
+    Trip tripRef = ref.watch(tripProvider);
     int dayCount = tripRef.days.length;
     String cityName = tripRef.city;
     return Scaffold(

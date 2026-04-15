@@ -6,20 +6,47 @@ part of 'user_items_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(UserItems)
+final userItemsProvider = UserItemsProvider._();
+
+final class UserItemsProvider
+    extends $AsyncNotifierProvider<UserItems, UserItemsAndGroups> {
+  UserItemsProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'userItemsProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$userItemsHash();
+
+  @$internal
+  @override
+  UserItems create() => UserItems();
+}
+
 String _$userItemsHash() => r'292162dd8e9aeb5d3174c5fc0146272e0abee135';
 
-/// See also [UserItems].
-@ProviderFor(UserItems)
-final userItemsProvider =
-    AutoDisposeAsyncNotifierProvider<UserItems, UserItemsAndGroups>.internal(
-  UserItems.new,
-  name: r'userItemsProvider',
-  debugGetCreateSourceHash:
-      const bool.fromEnvironment('dart.vm.product') ? null : _$userItemsHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$UserItems = AutoDisposeAsyncNotifier<UserItemsAndGroups>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$UserItems extends $AsyncNotifier<UserItemsAndGroups> {
+  FutureOr<UserItemsAndGroups> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref =
+        this.ref as $Ref<AsyncValue<UserItemsAndGroups>, UserItemsAndGroups>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<AsyncValue<UserItemsAndGroups>, UserItemsAndGroups>,
+        AsyncValue<UserItemsAndGroups>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}

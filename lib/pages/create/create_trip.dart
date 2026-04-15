@@ -12,9 +12,9 @@ class CreateTrip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final TripMeta tripMetaRef = ref.watch(tripMetaNotifierProvider);
-    final tripMetaProvider = ref.read(tripMetaNotifierProvider.notifier);
-    final tripProvider = ref.read(createTripConsumerProvider.notifier);
+    final TripMeta tripMetaRef = ref.watch(tripMetaProvider);
+    final tripMetaNotifier = ref.read(tripMetaProvider.notifier);
+    final createTripNotifier = ref.read(createTripConsumerProvider.notifier);
 
     Future openDatePicker() async {
       final result = await showDateRangePicker(
@@ -26,7 +26,7 @@ class CreateTrip extends ConsumerWidget {
       );
 
       if (result != null) {
-        tripMetaProvider.updateDates(result);
+        tripMetaNotifier.updateDates(result);
       }
     }
 
@@ -62,7 +62,7 @@ class CreateTrip extends ConsumerWidget {
                     child: EditText(
                         textValue: tripMetaRef.name,
                         textLabel: "Trip Name",
-                        updateText: tripMetaProvider.updateName),
+                        updateText: tripMetaNotifier.updateName),
                   ))
             ],
           ),
@@ -76,7 +76,7 @@ class CreateTrip extends ConsumerWidget {
                     child: EditText(
                         textValue: tripMetaRef.city,
                         textLabel: "City, ST",
-                        updateText: tripMetaProvider.updateCity),
+                        updateText: tripMetaNotifier.updateCity),
                   ))
             ],
           )
@@ -101,8 +101,9 @@ class CreateTrip extends ConsumerWidget {
         ],
         onTap: (value) async {
           if (value == 1) {
-            final trip = await tripProvider.createTripFromSchedule(tripMetaRef);
+            final trip = await createTripNotifier.createTripFromSchedule(tripMetaRef);
             if (trip != null && trip.days.isNotEmpty) {
+              if (!context.mounted) return;
               Navigator.push(
                   context,
                   MaterialPageRoute(

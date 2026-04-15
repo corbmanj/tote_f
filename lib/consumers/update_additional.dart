@@ -13,25 +13,25 @@ class UpdateAdditional extends _$UpdateAdditional {
   void addAdditionalToSection(AdditionalItemSection section) {
     final newItem = AdditionalItem('New Item', true);
     section.addItem(newItem);
-    ref.read(additionalItemsNotifierProvider.notifier).updateSectionInList(section);
+    ref.read(additionalItemsProvider.notifier).updateSectionInList(section);
   }
 
   void selectAdditionalItem(AdditionalItem item, AdditionalItemSection section, bool isSelected) {
     item.updateSelected(isSelected);
     section.updateItem(item, item.name);
-    ref.read(additionalItemsNotifierProvider.notifier).updateSectionInList(section);
+    ref.read(additionalItemsProvider.notifier).updateSectionInList(section);
   }
 
   void renameAdditionalItem(AdditionalItem item, AdditionalItemSection section, String newName) {
     final oldName = item.name;
     item.updateName(newName);
     section.updateItem(item, oldName);
-    ref.read(additionalItemsNotifierProvider.notifier).updateSectionInList(section);
+    ref.read(additionalItemsProvider.notifier).updateSectionInList(section);
   }
 
   void packAdditionalItem(AdditionalItem item, AdditionalItemSection section, bool isPacked) {
     item.updatePacked(isPacked);
     section.updateItem(item, item.name);
-    ref.read(additionalItemsNotifierProvider.notifier).updateSectionInList(section);
+    ref.read(additionalItemsProvider.notifier).updateSectionInList(section);
   }
 }

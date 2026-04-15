@@ -31,7 +31,7 @@ class _AssignAdditionalItemsState extends ConsumerState<AssignAdditionalItems> {
   @override
   Widget build(BuildContext context) {
     final List<AdditionalItemSection> sections =
-        ref.watch(additionalItemsNotifierProvider);
+        ref.watch(additionalItemsProvider);
     if (_selectedItem == null) {
       setSelected(sections.firstOrNull);
     }

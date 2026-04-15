@@ -36,7 +36,7 @@ class AssignOutfitItems extends ConsumerWidget {
             (item) =>
                 selectedItemRef != null && item.type == selectedItemRef.type,
             orElse: () => outfitItems[0]);
-    final outfitItemRef = ref.watch(tripNotifierProvider.select((trip) => trip
+    final outfitItemRef = ref.watch(tripProvider.select((trip) => trip
         .days[dayIndex].outfits![outfit.ordering].items
         .firstWhere((item) => selectedOutfitItem.type == item.type)));
     return Column(

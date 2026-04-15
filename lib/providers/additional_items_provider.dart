@@ -20,6 +20,6 @@ class AdditionalItemsNotifier extends _$AdditionalItemsNotifier {
         .map((AdditionalItemSection section) =>
             section.name == itemSection.name ? itemSection : section)
         .toList();
-    ref.read(tripNotifierProvider.notifier).replaceAdditionalItemsAndUpdateTrip(state);
+    ref.read(tripProvider.notifier).replaceAdditionalItemsAndUpdateTrip(state);
   }
 }

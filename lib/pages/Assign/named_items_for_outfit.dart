@@ -11,7 +11,7 @@ class NamedItemsForOutfit extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final List<Named> namedItemsRef = ref.watch(namedItemsNotifierProvider);
+    final List<Named> namedItemsRef = ref.watch(namedItemsProvider);
     final List<Named> namedList = outfit.items
         .where((item) => item.namedItemId != null)
         .map((OutfitItem item) => namedItemsRef.firstWhere((named) => named.ordering == item.namedItemId))

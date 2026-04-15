@@ -11,7 +11,7 @@ class AssignItems extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final tripRef = ref.watch(tripNotifierProvider);
+    final tripRef = ref.watch(tripProvider);
     if (tripRef.days.isEmpty) {
       return Container();
     }

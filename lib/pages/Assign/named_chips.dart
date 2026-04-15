@@ -32,7 +32,7 @@ class _NamedChipState extends ConsumerState<NamedChips> {
 
   @override
   Widget build(BuildContext context) {
-    final List<Named> namedItemsRef = ref.watch(namedItemsNotifierProvider);
+    final List<Named> namedItemsRef = ref.watch(namedItemsProvider);
     final namedController = ref.read(updateNamedProvider.notifier);
     final namedItemsList = namedItemsRef
         .where(

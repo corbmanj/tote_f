@@ -14,11 +14,11 @@ class UpdateNamed extends _$UpdateNamed {
 
   void addNamed(String grouping) {
     final newItem = Named('new name', grouping, -1);
-    ref.read(namedItemsNotifierProvider.notifier).addNamed(newItem);
+    ref.read(namedItemsProvider.notifier).addNamed(newItem);
   }
 
   void updateNameAndSelect(String newName, int ordering, int dayIndex, int outfitOrdering, String itemType) async {
-    Named newItem = ref.read(namedItemsNotifierProvider.notifier).updateName(newName, ordering);
+    Named newItem = ref.read(namedItemsProvider.notifier).updateName(newName, ordering);
     selectNamedItem(dayIndex, outfitOrdering, itemType, newItem.ordering);
   }
 
@@ -28,17 +28,17 @@ class UpdateNamed extends _$UpdateNamed {
     String itemType,
     int namedItemId,
   ) {
-    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final Trip tripRef = ref.watch(tripProvider);
     Day newDay = tripRef.days[dayIndex].nameOutfitItem(
         outfitOrdering: outfitOrdering,
         itemType: itemType,
         newNamedId: namedItemId);
     ref
-        .read(tripNotifierProvider.notifier)
+        .read(tripProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
   }
 
   void packNamedItem(Named namedItem, bool isPacked) {
-    ref.read(namedItemsNotifierProvider.notifier).packNamed(namedItem, isPacked);
+    ref.read(namedItemsProvider.notifier).packNamed(namedItem, isPacked);
   }
 }

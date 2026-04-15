@@ -1,6 +1,7 @@
+import 'package:sqflite/sqflite.dart';
 import 'package:tote_f/fixtures/mock_settings.dart';
 
-version3(db) async {
+Future<void> version3(Database db) async {
   await db.execute(
     "CREATE TABLE UserAdditionalItems (id INTEGER PRIMARY KEY, name TEXT, sectionId INTEGER, defaultIncluded INTEGER, deleted INTEGER)",
   );

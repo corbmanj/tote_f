@@ -21,18 +21,18 @@ class CreateTripConsumer extends _$CreateTripConsumer {
   void build() {}
 
   void loadTrip(Trip trip) {
-    ref.read(tripNotifierProvider.notifier).loadTrip(trip);
+    ref.read(tripProvider.notifier).loadTrip(trip);
   }
 
   void updateDates(DateTimeRange newDates) {
-    final currentTrip = ref.watch(tripNotifierProvider);
+    final currentTrip = ref.watch(tripProvider);
     final newTrip = currentTrip.copyWith(
         dateRange: DateTimeRange(start: newDates.start, end: newDates.end));
     loadTrip(newTrip);
   }
 
   void updateCity(String city) {
-    final currentTrip = ref.watch(tripNotifierProvider);
+    final currentTrip = ref.watch(tripProvider);
     final newTrip = currentTrip.copyWith(city: city);
     loadTrip(newTrip);
   }
@@ -89,7 +89,7 @@ class CreateTripConsumer extends _$CreateTripConsumer {
     if (reset == true && newTrip.id != null) {
       await dbService.saveTripById(newTrip, newTrip.id!);
       // Load the updated trip directly
-      ref.read(tripNotifierProvider.notifier).loadTrip(newTrip);
+      ref.read(tripProvider.notifier).loadTrip(newTrip);
       return newTrip;
     } else {
       newId = await dbService.createTrip(newTrip, name: tripMeta.name);
@@ -101,12 +101,12 @@ class CreateTripConsumer extends _$CreateTripConsumer {
         dateRange: newTrip.dateRange,
         tote: newTrip.tote,
       );
-      ref.read(tripNotifierProvider.notifier).loadTrip(tripWithId);
+      ref.read(tripProvider.notifier).loadTrip(tripWithId);
       
       // Also load the related providers
-      ref.read(namedItemsNotifierProvider.notifier).loadList(tripWithId.tote != null ? tripWithId.tote!.named : []);
-      ref.read(additionalItemsNotifierProvider.notifier).loadList(tripWithId.tote != null ? tripWithId.tote!.additionalItems : []);
-      ref.read(unnamedItemsNotifierProvider.notifier).initializeFromTote(tripWithId.tote != null ? tripWithId.tote!.unnamed : []);
+      ref.read(namedItemsProvider.notifier).loadList(tripWithId.tote != null ? tripWithId.tote!.named : []);
+      ref.read(additionalItemsProvider.notifier).loadList(tripWithId.tote != null ? tripWithId.tote!.additionalItems : []);
+      ref.read(unnamedItemsProvider.notifier).initializeFromTote(tripWithId.tote != null ? tripWithId.tote!.unnamed : []);
       return tripWithId;
     }
   }

@@ -1,4 +1,6 @@
-version4(db) async {
+import 'package:sqflite/sqflite.dart';
+
+Future<void> version4(Database db) async {
   // Add 'name' column to Trips table with default value ''
   await db.execute(
     "ALTER TABLE Trips ADD COLUMN name TEXT DEFAULT ''",

@@ -10,18 +10,18 @@ class UpdateUnnamed extends _$UpdateUnnamed {
   void build() {}
 
   void selectUnnamed(String itemName) {
-    ref.read(unnamedItemsNotifierProvider.notifier).incrementCount(itemName);
+    ref.read(unnamedItemsProvider.notifier).incrementCount(itemName);
   }
 
   void deselectUnnamed(String itemName) async {
-    ref.read(unnamedItemsNotifierProvider.notifier).decrementCount(itemName);
+    ref.read(unnamedItemsProvider.notifier).decrementCount(itemName);
   }
 
   void addAndPackItem(String itemName, int itemCount) {
-    ref.read(unnamedItemsNotifierProvider.notifier).addAndPackItem(itemName, itemCount);
+    ref.read(unnamedItemsProvider.notifier).addAndPackItem(itemName, itemCount);
   }
 
   void packUnnamedItem(Unnamed item, bool isPacked) {
-    ref.read(unnamedItemsNotifierProvider.notifier).packUnnamed(item, isPacked);
+    ref.read(unnamedItemsProvider.notifier).packUnnamed(item, isPacked);
   }
 }

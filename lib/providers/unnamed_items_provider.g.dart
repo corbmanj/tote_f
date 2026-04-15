@@ -6,22 +6,55 @@ part of 'unnamed_items_provider.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(UnnamedItemsNotifier)
+final unnamedItemsProvider = UnnamedItemsNotifierProvider._();
+
+final class UnnamedItemsNotifierProvider
+    extends $NotifierProvider<UnnamedItemsNotifier, List<Unnamed>> {
+  UnnamedItemsNotifierProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'unnamedItemsProvider',
+          isAutoDispose: false,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$unnamedItemsNotifierHash();
+
+  @$internal
+  @override
+  UnnamedItemsNotifier create() => UnnamedItemsNotifier();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(List<Unnamed> value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<List<Unnamed>>(value),
+    );
+  }
+}
+
 String _$unnamedItemsNotifierHash() =>
     r'66b545752a42f5b1a4fc3c9b53589aa3948465ad';
 
-/// See also [UnnamedItemsNotifier].
-@ProviderFor(UnnamedItemsNotifier)
-final unnamedItemsNotifierProvider =
-    NotifierProvider<UnnamedItemsNotifier, List<Unnamed>>.internal(
-  UnnamedItemsNotifier.new,
-  name: r'unnamedItemsNotifierProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$unnamedItemsNotifierHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$UnnamedItemsNotifier = Notifier<List<Unnamed>>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$UnnamedItemsNotifier extends $Notifier<List<Unnamed>> {
+  List<Unnamed> build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<List<Unnamed>, List<Unnamed>>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<List<Unnamed>, List<Unnamed>>,
+        List<Unnamed>,
+        Object?,
+        Object?>;
+    element.handleCreate(ref, build);
+  }
+}

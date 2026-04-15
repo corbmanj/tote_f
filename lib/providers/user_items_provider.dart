@@ -1,5 +1,4 @@
 import 'package:riverpod_annotation/riverpod_annotation.dart';
-import 'package:collection/collection.dart';
 import 'package:tote_f/models/user/item_template.dart';
 import 'package:tote_f/services/db_service.dart';
 
@@ -23,7 +22,7 @@ class UserItems extends _$UserItems {
     List<ItemTemplate> userItems = await dbService.userItems();
     return UserItemsAndGroups(
       userItems: userItems,
-      groupings: userItems.map((item) => item.grouping).whereNotNull().toSet(),
+      groupings: userItems.map((item) => item.grouping).nonNulls.toSet(),
     );
   }
 

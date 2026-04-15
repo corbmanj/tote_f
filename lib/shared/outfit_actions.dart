@@ -20,7 +20,7 @@ class OutfitActions extends ConsumerWidget {
   @override
   Widget build(BuildContext context, WidgetRef ref) {
     final List<Day> daysRef =
-        ref.watch(tripNotifierProvider.select((Trip trip) => trip.days));
+        ref.watch(tripProvider.select((Trip trip) => trip.days));
     final Day day = daysRef[dayIndex];
 
     void openCopyModal() {

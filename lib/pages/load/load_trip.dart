@@ -13,7 +13,7 @@ class LoadTrip extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    ref.watch(tripNotifierProvider);
+    ref.watch(tripProvider);
     final AsyncValue<List<TripMeta>> tripList = ref.watch(tripListProvider);
     return Scaffold(
         appBar: AppBar(

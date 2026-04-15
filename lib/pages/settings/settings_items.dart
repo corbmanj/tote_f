@@ -16,7 +16,7 @@ class CombinedResult {
   });
 }
 
-final combinedProvider = FutureProvider((ref) async {
+final FutureProvider<CombinedResult> combinedProvider = FutureProvider((ref) async {
   final userItemsAndGroups = await ref.watch(userItemsProvider.future);
   final userAdditionalItemsAndSections =
       await ref.watch(userAdditionalItemsProvider.future);
@@ -67,7 +67,7 @@ class SettingsAdditionalItemList extends ConsumerWidget {
                   Expanded(
                     flex: 3,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
+                      padding: EdgeInsets.only(left: 15.0),
                       child: Text(
                         'Item',
                         style: TextStyle(fontWeight: FontWeight.bold),
@@ -129,7 +129,7 @@ class SettingsOutfitItemList extends ConsumerWidget {
                   Expanded(
                     flex: 2,
                     child: Padding(
-                      padding: const EdgeInsets.only(left: 15.0),
+                      padding: EdgeInsets.only(left: 15.0),
                       child: Text(
                         'Item',
                         style: TextStyle(fontWeight: FontWeight.bold),

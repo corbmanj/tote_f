@@ -23,7 +23,7 @@ class OutfitItems extends ConsumerWidget {
 
   Widget _buildItem(
       OutfitItem item, int dayIndex, int outfitOrdering, WidgetRef ref) {
-    final itemRef = ref.watch(tripNotifierProvider.select((trip) {
+    final itemRef = ref.watch(tripProvider.select((trip) {
       try {
         return trip.days[dayIndex].outfits
             ?.firstWhere((element) => element.ordering == outfitOrdering)

@@ -26,7 +26,7 @@ class Home extends ConsumerWidget {
                 minimumSize: const Size(200, 50),
               ),
               onPressed: () {
-                ref.read(tripMetaNotifierProvider.notifier).reset();
+                ref.read(tripMetaProvider.notifier).reset();
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: ((context) => const CreateTrip())),

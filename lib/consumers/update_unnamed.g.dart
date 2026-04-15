@@ -6,21 +6,51 @@ part of 'update_unnamed.dart';
 // RiverpodGenerator
 // **************************************************************************
 
+// GENERATED CODE - DO NOT MODIFY BY HAND
+// ignore_for_file: type=lint, type=warning
+
+@ProviderFor(UpdateUnnamed)
+final updateUnnamedProvider = UpdateUnnamedProvider._();
+
+final class UpdateUnnamedProvider
+    extends $NotifierProvider<UpdateUnnamed, void> {
+  UpdateUnnamedProvider._()
+      : super(
+          from: null,
+          argument: null,
+          retry: null,
+          name: r'updateUnnamedProvider',
+          isAutoDispose: true,
+          dependencies: null,
+          $allTransitiveDependencies: null,
+        );
+
+  @override
+  String debugGetCreateSourceHash() => _$updateUnnamedHash();
+
+  @$internal
+  @override
+  UpdateUnnamed create() => UpdateUnnamed();
+
+  /// {@macro riverpod.override_with_value}
+  Override overrideWithValue(void value) {
+    return $ProviderOverride(
+      origin: this,
+      providerOverride: $SyncValueProvider<void>(value),
+    );
+  }
+}
+
 String _$updateUnnamedHash() => r'ce3e4af31c5c2a8695cac01c86b5197950684e70';
 
-/// See also [UpdateUnnamed].
-@ProviderFor(UpdateUnnamed)
-final updateUnnamedProvider =
-    AutoDisposeNotifierProvider<UpdateUnnamed, void>.internal(
-  UpdateUnnamed.new,
-  name: r'updateUnnamedProvider',
-  debugGetCreateSourceHash: const bool.fromEnvironment('dart.vm.product')
-      ? null
-      : _$updateUnnamedHash,
-  dependencies: null,
-  allTransitiveDependencies: null,
-);
-
-typedef _$UpdateUnnamed = AutoDisposeNotifier<void>;
-// ignore_for_file: type=lint
-// ignore_for_file: subtype_of_sealed_class, invalid_use_of_internal_member, invalid_use_of_visible_for_testing_member, deprecated_member_use_from_same_package
+abstract class _$UpdateUnnamed extends $Notifier<void> {
+  void build();
+  @$mustCallSuper
+  @override
+  void runBuild() {
+    final ref = this.ref as $Ref<void, void>;
+    final element = ref.element as $ClassProviderElement<
+        AnyNotifier<void, void>, void, Object?, Object?>;
+    element.handleCreate(ref, build);
+  }
+}

@@ -12,8 +12,8 @@ class PackingList extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final additionalItemsRef = ref.watch(additionalItemsNotifierProvider);
-    final packingListRef = ref.watch(packingListNotifierProvider);
+    final additionalItemsRef = ref.watch(additionalItemsProvider);
+    final packingListRef = ref.watch(packingListProvider);
     return Scaffold(
       appBar: AppBar(title: const Text('Packing List')),
       body: Padding(

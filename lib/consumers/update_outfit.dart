@@ -55,7 +55,7 @@ class UpdateOutfit extends _$UpdateOutfit {
     int outfitOrdering,
     OutfitTemplate newType,
   ) async {
-    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final Trip tripRef = ref.watch(tripProvider);
     Outfit? currentOutfit;
     String? userOutfitName;
     if (tripRef.days[dayIndex].outfits != null) {
@@ -70,7 +70,7 @@ class UpdateOutfit extends _$UpdateOutfit {
     Day newDay =
         tripRef.days[dayIndex].changeOutfitType(outfitOrdering, newOutfit);
     ref
-        .read(tripNotifierProvider.notifier)
+        .read(tripProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
   }
 
@@ -79,29 +79,29 @@ class UpdateOutfit extends _$UpdateOutfit {
     int outfitOrdering,
     String newName,
   ) {
-    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final Trip tripRef = ref.watch(tripProvider);
     Day newDay =
         tripRef.days[dayIndex].changeOutfitName(outfitOrdering, newName);
     ref
-        .read(tripNotifierProvider.notifier)
+        .read(tripProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
   }
 
   void selectItem(
       int dayIndex, int outfitOrdering, OutfitItem item, bool value) {
-    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final Trip tripRef = ref.watch(tripProvider);
     Day newDay = tripRef.days[dayIndex].selectOutfitItem(
         outfitOrdering: outfitOrdering,
         itemType: item.type,
         newSelected: value);
     ref
-        .read(tripNotifierProvider.notifier)
+        .read(tripProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
   }
 
   void copyOutfitToDays(List<int> daysToCopyTo, Outfit outfit) {
-    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final Trip tripRef = ref.watch(tripProvider);
     final updatedTrip = tripRef.copyOutfitToDays(daysToCopyTo, outfit);
-    ref.read(tripNotifierProvider.notifier).saveTrip(updatedTrip);
+    ref.read(tripProvider.notifier).saveTrip(updatedTrip);
   }
 }

@@ -32,6 +32,8 @@ class OutfitContainer extends ConsumerWidget {
             })
             .where((i) => i != null)
             .toList();
+      case _:
+        break;
     }
 
     return SizedBox(

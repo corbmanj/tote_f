@@ -16,7 +16,7 @@ class UnnamedCheckboxItem extends ConsumerWidget {
 
   @override
   Widget build(BuildContext context, WidgetRef ref) {
-    final Unnamed? unnamedItem = ref.watch(unnamedItemsNotifierProvider.select(
+    final Unnamed? unnamedItem = ref.watch(unnamedItemsProvider.select(
         (unnamedList) =>
             unnamedList.firstWhereOrNull((item) => item.name == itemName)));
 

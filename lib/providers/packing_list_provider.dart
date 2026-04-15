@@ -17,8 +17,8 @@ class PackingListNotifier extends _$PackingListNotifier {
   PackingListType build() {
     Map<String, Set<Named>> named = {};
     Map<String, int> unnamed = {};
-    final days = ref.watch(tripNotifierProvider).days;
-    final namedItems = ref.watch(namedItemsNotifierProvider);
+    final days = ref.watch(tripProvider).days;
+    final namedItems = ref.watch(namedItemsProvider);
     for (var day in days) {
       final outfits = day.outfits;
       if (outfits != null && outfits.isNotEmpty) {

@@ -17,10 +17,10 @@ class LoadTrip extends _$LoadTrip {
   void loadTrip (int tripId) async {
     final DatabaseService dbService = DatabaseService();
     final Trip trip = await dbService.getTripById(tripId);
-    ref.read(tripNotifierProvider.notifier).loadTrip(trip);
-    ref.read(namedItemsNotifierProvider.notifier).loadList(trip.tote != null ? trip.tote!.named : []);
-    ref.read(additionalItemsNotifierProvider.notifier).loadList(trip.tote != null ? trip.tote!.additionalItems : []);
-    ref.read(unnamedItemsNotifierProvider.notifier).initializeFromTote(trip.tote != null ? trip.tote!.unnamed : []);
+    ref.read(tripProvider.notifier).loadTrip(trip);
+    ref.read(namedItemsProvider.notifier).loadList(trip.tote != null ? trip.tote!.named : []);
+    ref.read(additionalItemsProvider.notifier).loadList(trip.tote != null ? trip.tote!.additionalItems : []);
+    ref.read(unnamedItemsProvider.notifier).initializeFromTote(trip.tote != null ? trip.tote!.unnamed : []);
   }
 
   void deleteTrip (int tripId) async {

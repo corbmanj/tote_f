@@ -19,7 +19,7 @@ class UpdateDay extends _$UpdateDay {
     int dayIndex,
     [OutfitTemplate? newType,]
   ) async {
-    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final Trip tripRef = ref.watch(tripProvider);
     final userOutfits = await ref.watch(userOutfitsProvider.future);
     final newOutfitIndex = tripRef.days[dayIndex].outfits!.length;
     final outfitConsumer = ref.read(updateOutfitProvider.notifier);
@@ -31,7 +31,7 @@ class UpdateDay extends _$UpdateDay {
         .read(outfitListExpandedProvider.notifier)
         .setEditingAndExpanded(dayIndex, newOutfitIndex, true);
     ref
-        .read(tripNotifierProvider.notifier)
+        .read(tripProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, newDay);
   }
 
@@ -40,10 +40,10 @@ class UpdateDay extends _$UpdateDay {
     Day day,
   ) {
     ref.read(outfitListExpandedProvider.notifier).resetExpanded();
-    final Trip tripRef = ref.watch(tripNotifierProvider);
+    final Trip tripRef = ref.watch(tripProvider);
     day.deleteOutfit(outfit);
     ref
-        .read(tripNotifierProvider.notifier)
+        .read(tripProvider.notifier)
         .replaceDayAndUpdateTrip(tripRef, day);
   }
 

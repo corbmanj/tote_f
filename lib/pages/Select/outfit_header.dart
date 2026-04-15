@@ -9,8 +9,6 @@ import 'package:tote_f/providers/user_outfits_provider.dart';
 import 'package:tote_f/shared/outfit_actions.dart';
 import 'package:tote_f/view_models/expansion_outfit.dart';
 
-final editingProvider = StateProvider<bool>((ref) => false);
-
 class OutfitHeader extends ConsumerStatefulWidget {
   final bool isExpanded;
   final ExpansionOutfit outfit;
